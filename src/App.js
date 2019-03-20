@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 import './App.css';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import MainLayout from './components/MainLayout';
+import { Provider } from 'react-redux';
 
-import ProductList from './modules/ProductList/ProductList';
-import ProductPage from './components/ProductPage/ProductPage.component';
+import store from './store';
+
+import MainLayout from './components/MainLayout';
+import ProductList from './components/ProductList/ProductList';
+import ProductPage from './components/ProductPage/ProductPageContainer';
 import Cart from './components/Cart/Cart.component';
 import Faq from './modules/Faq/Faq';
 import Terms from './modules/Terms/Terms';
 import NotFound from './modules/NotFound/NotFound';
 
+import DevTools from './DevTools';
+
 class App extends Component {
+
   render() {
       return (
+        <Provider store={store}>
           <BrowserRouter>
               <MainLayout>
                   <Switch>
@@ -24,7 +31,9 @@ class App extends Component {
                     <Route component={NotFound} />
                   </Switch>
               </MainLayout>
+              <DevTools />
           </BrowserRouter>
+        </Provider>
       )
   }
 }

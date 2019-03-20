@@ -1,10 +1,47 @@
-.HeaderNav {
-
-    a, a:visited {
-        color: purple;
+.Header {
+    position: fixed;
+    background: #fefefe;
+    width: 100vw;
+    height: 110px;
+    
+    &Wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1.61fr;
+        height: 100%;
     }
-    a.NavLinkActive {
-        color: red;
+
+    &Logo {
+        text-align: center;
+        padding: 40px 0;
+        font-size: 1.7rem;
+        letter-spacing: 4px;
+        font-weight: 300;
+
+        a {
+            text-decoration: none;
+            color: #222222;
+        }
     }
 
+
+    &Nav {
+        font-size: 20px;
+        padding: 45px 0;
+        text-align: right;
+
+        a {
+            color: #222222;
+            text-decoration: none;
+            margin: 20px;
+
+            &:visited {
+                color: #222222;
+            }
+            &.NavLinkActive {
+                font-weight: 500;
+            }
+        }
+    }
 }

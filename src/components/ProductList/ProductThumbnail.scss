@@ -1,0 +1,31 @@
+.ProductThumbnail {
+    background: #efefef;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    margin: 20px;
+
+    &Photo {
+        height: 500px;
+        width: auto;
+    }
+
+    &Title {
+        font-weight: 300;
+        letter-spacing: 2px;
+        margin-bottom: 10px;;
+        font-size: 1.3rem;
+        text-align: center;
+    }
+
+    &Price {
+        margin: 0;
+        font-weight: 500;
+        font-size: 1.2rem;
+    }
+
+    &ToCartBtn {
+
+    }
+}

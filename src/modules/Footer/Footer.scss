@@ -1,0 +1,38 @@
+.Footer {
+    background: #fefefe;
+    height: 110px;
+    
+    &Wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &Text {
+        padding: 50px 0;
+        font-size: .9rem;
+        letter-spacing: 2px;
+        font-weight: 500;
+    }
+
+
+    &Nav {
+        font-size: .9rem;
+        padding: 50px 0;
+        text-align: right;
+
+        a {
+            color: #222222;
+            text-decoration: none;
+            margin: 20px;
+
+            &:visited {
+                color: #222222;
+            }
+            &.NavLinkActive {
+                font-weight: 500;
+            }
+        }
+    }
+}

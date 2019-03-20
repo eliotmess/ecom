@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../modules/Header/Header';
 import Footer from '../modules/Footer/Footer';
+import './MainLayout.scss';
 
 
 class MainLayout extends Component {

@@ -4,13 +4,14 @@ import './Footer.scss';
 
 const Footer = props => (
     <div className='Footer'>
-        <div className='Footer-Logo'>Logo</div>
-        <nav className='Footer-Nav'>
-            <Link to='/'>Home</Link>
-            <Link to='/faq'>Faq</Link>
-            <Link to='/terms'>Terms, Conditions</Link>
-            <Link to='/cart'>Cart</Link>
-        </nav>
+        <div className='FooterWrapper'>
+            <div className='FooterText'>©2019 O_G</div>
+            <nav className='FooterNav'>
+                <Link exact to='/'>Home</Link>
+                <Link to='/faq'>Faq</Link>
+                <Link to='/terms'>Terms & Conditions</Link>
+            </nav>
+        </div>
     </div>
 )
 

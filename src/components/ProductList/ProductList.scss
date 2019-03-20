@@ -1,0 +1,33 @@
+.ProductList {
+    padding-top: 230px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 180px;
+    row-gap: 60px;
+}
+
+.PageNumbers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    li {
+        list-style: none;
+        margin: 10px;
+        padding: 3px 10px;
+
+        &:hover {
+            cursor: pointer;
+            margin: 10px 9px;
+            border: 1px solid #666666;
+            
+        }
+
+        &.active {
+            margin: 10px;
+            border: 1px solid #222222;
+        }
+    }
+}
