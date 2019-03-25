@@ -2,4 +2,12 @@
     padding-top: 230px;
     max-width: 1200px;
     margin: 0 auto;
+
+    &Cover {
+
+        &Photo {
+            width: 100%;
+            height: auto;
+        }
+    }
 }

@@ -7,7 +7,7 @@ const ProductThumbnail = props => {
     const { title, cover, id, price } = props.product;
 
     return(
-        <div className='ProductThumbnail' >
+        <div className='ProductThumbnail col-12 col-md-5' >
             <Link to={'product/' + id}>
                 <img 
                     className='ProductThumbnailPhoto' 

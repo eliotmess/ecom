@@ -20,7 +20,11 @@ const ProductPage = (props) => {
                 <h1>{title}</h1>
                 <h2>${price}</h2>
                 <p>{desc}</p>
-                <button className="ProductPageToCartBtn" variant="primary" onClick={() => addToCart(id, price)}>Add to cart</button>
+                <button
+                    className="ProductPageToCartBtn" 
+                    variant="primary" 
+                    onClick={() => addToCart(id, price)}
+                > Add to cart </button>
             </div>
         </Row>
     )

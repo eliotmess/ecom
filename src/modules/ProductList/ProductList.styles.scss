@@ -1,11 +1,23 @@
-.ProductList {
+.ProductListWrapper {
     padding-top: 230px;
     max-width: 1200px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 180px;
-    row-gap: 60px;
+    // display: grid;
+    // grid-template-columns: repeat(2, 1fr);
+    // column-gap: 180px;
+    // row-gap: 60px;
+
+    .SpinnerWrapper {
+        margin: 0 auto;
+    }
+
+    .sk-spinner {
+        transform: scale(2.5);
+    }
+}
+
+.ProductList {
+    padding: 0 40px;
 }
 
 .PageNumbers {
