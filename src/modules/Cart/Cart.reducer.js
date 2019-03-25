@@ -12,10 +12,11 @@ export default function cart(state = initialState, action) {
         case ADD_TO_CART: {
             const addedProduct = { 'id': action.id, 'price': action.price };
             const existedProduct = find(state.productsInCart, { 'id': action.id });
-            (existedProduct) ?
+            (existedProduct) ? (
                 addedProduct.quantity = ++existedProduct.quantity
-            :
-                addedProduct.quantity = 1;
+            ) : (
+                addedProduct.quantity = 1
+            );
             const productsInCart = uniqBy([...state.productsInCart, addedProduct], 'id');
             return { ...state, productsInCart };
         }

@@ -1,14 +1,25 @@
 import React, { Component } from 'react';
+import { forEach } from 'lodash';
 import Header from '../modules/Header/Header';
 import Footer from '../modules/Footer/Footer';
 import './MainLayout.scss';
+import { connect } from 'react-redux';
 
 
 class MainLayout extends Component {
+
+    getProductsInCart() {
+        let numberInCart = 0;
+        forEach(this.props.productsInCart, (product) => {
+            numberInCart += product.quantity;
+        });
+        return numberInCart;
+    }
+
     render() {
         return(
-            <div className='container'>
-                <Header />
+            <div className='MainLayoutWrapper'>
+                <Header productsInCart={this.getProductsInCart()} />
                 {this.props.children}
                 <Footer />
             </div>
@@ -16,4 +27,13 @@ class MainLayout extends Component {
     }
 }
 
-export default MainLayout;
+
+const mapStateToProps = (state) => {
+    const { productsInCart } = state.cartReducer;
+
+    return {
+        productsInCart
+    }
+};
+
+export default connect(mapStateToProps)(MainLayout);

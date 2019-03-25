@@ -6,6 +6,12 @@
     padding: 40px 20px;
     margin: 20px;
 
+    a {
+        text-decoration: none;
+        color: #222222;
+        text-align: center;
+    }
+
     &Photo {
         height: 500px;
         width: auto;
@@ -16,16 +22,11 @@
         letter-spacing: 2px;
         margin-bottom: 10px;;
         font-size: 1.3rem;
-        text-align: center;
     }
 
     &Price {
         margin: 0;
         font-weight: 500;
         font-size: 1.2rem;
-    }
-
-    &ToCartBtn {
-
     }
 }
