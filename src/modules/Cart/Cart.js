@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { round } from 'lodash';
+import { find } from 'lodash';
 import CartItem from './CartItem';
-import { removeFromCart, changeQuantity } from './CartActions';
-import './Cart.component.scss';
+import { removeFromCart, changeQuantity, calculateCart } from './Cart.actions';
+import './Cart.styles.scss';
 
 class Cart extends Component {
+
+    componentDidMount() {
+        this.props.calculateCart();
+    }
+
+    componentDidUpdate() {
+        this.props.calculateCart();
+    }
     
     render() {
         return (
@@ -13,8 +21,9 @@ class Cart extends Component {
                 {(this.props.productsInCart.length > 0) ?
                     this.props.productsInCart.map(item =>
                         <CartItem 
-                            key={item.id} 
-                            item={item} 
+                            key={item.id}
+                            quantity={item.quantity}
+                            item={find(this.props.products, { 'id': item.id })} 
                             removeFromCart={this.props.removeFromCart}
                             changeQuantity={this.props.changeQuantity}
                         />    
@@ -22,26 +31,27 @@ class Cart extends Component {
                     :
                     <h2>cart is empty</h2>
                 }
-            {/* w którym miejscu powinno być zaokrąglenie? */}
-            <h3>${round(this.props.valueInCart, 2)}</h3>
+            <h3>${this.props.valueInCart.toFixed(2)}</h3>
             </div>
         );
     }
 }
 
 const mapStateToProps = (state) => {
-    const { productsInCart, valueInCart } = state.productList;
-    // const { cartValue } = state.cartReducer;
+    const { products } = state.productList;
+    const { productsInCart, valueInCart } = state.cartReducer;
+
     return {
-         productsInCart,
-         valueInCart
-        //  cartValue
+        products,
+        productsInCart,
+        valueInCart
     }
 };
 
 const mapDispatchToProps = {
     removeFromCart,
-    changeQuantity
+    changeQuantity,
+    calculateCart
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

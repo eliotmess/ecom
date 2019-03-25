@@ -1,12 +1,14 @@
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const CHANGE_QUANTITY = 'CHANGE_QUANTITY';
+export const CALCULATE_CART = 'CALCULATE_CART';
 
 
-export function addToCart(id) {
+export function addToCart(id, price) {
     return {
         type: ADD_TO_CART,
-        id
+        id,
+        price
     }
 }
 
@@ -22,5 +24,11 @@ export function changeQuantity(id, quantity) {
         type: CHANGE_QUANTITY,
         id,
         quantity,
+    }
+}
+
+export function calculateCart() {
+    return {
+        type: CALCULATE_CART,
     }
 }

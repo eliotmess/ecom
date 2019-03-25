@@ -1,16 +1,14 @@
 import { connect } from 'react-redux';
 import ProductList from './ProductList';
-import { getProducts, fetchProductList } from './ProductListActions';
-
+import { fetchProductList } from './ProductList.actions';
 
 const mapStateToProps = (state) => {
-    const { products } = state.productList;
-    return { products }
+    const { products, isLoading } = state.productList;
+    return { products, isLoading };
 };
 
 const mapDispatchToProps = {
-    getProducts,
-    fetchProductList,
+    fetchProductList
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductList);
