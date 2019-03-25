@@ -48,7 +48,7 @@ class ProductFilters extends Component {
                             type="checkbox" 
                             name={genre}
                             // checked={this.state.genreCheckboxes[genre]}
-                            onChange={() => this.handleFilterSettings({genre})} 
+                            // onChange={() => this.handleFilterSettings({genre})} 
                             key={genre} 
                         />
                         {genre}

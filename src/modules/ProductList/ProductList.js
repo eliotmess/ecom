@@ -52,10 +52,10 @@ class ProductList extends Component {
     }
 
     render() {
-        const { products } = this.props;
+        const { products, isLoading } = this.props;
         return (
             <div className="ProductListWrapper d-flex flex-wrap">
-                {(this.props.isLoading === true) ? (
+                {(isLoading === true) ? (
                     <Spinner
                         name="wave"
                         fadeIn="none"
