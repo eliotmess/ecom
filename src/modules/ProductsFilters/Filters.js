@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { orderBy, forEach, uniq, some, includes, filter, pull } from 'lodash';
 import PropTypes from 'prop-types';
 import './ProductFilters.styles.scss';
 import uuid from 'uuid';
@@ -10,20 +9,20 @@ class Filters extends Component {
     // constructor(props) {
     //     super(props);
     //     const { filters } = this.props;
-    //     this.state = {
-    //         activeFilters: [],
-    //         checkboxes: filters.reduce(
-    //             (filters, filter) => ({
-    //                 ...filters,
-    //                 [filter]: false
-    //             }),
-    //             {}
-    //         )
-    //     }
+        // this.state = {
+        //     activeFilters: [],
+        //     checkboxes: filters.reduce(
+        //         (filters, filter) => ({
+        //             ...filters,
+        //             [filter]: false
+        //         }),
+        //         {}
+        //     )
+        // }
     // }
 
     // componentDidUpdate() {
-    //     // console.log(this.props.genreFilters);
+    //     console.log('zmiana');
     // }
 
     // handleFilterChange = e => {
@@ -68,7 +67,8 @@ class Filters extends Component {
                         label={filter}
                         key={filter}
                         isSelected={this.props.genreFilters[filter]}
-                        onFilterChange={this.props.handleFilterChange}
+                        onFilterCheck={this.props.handleFilterChange}
+                        // onFilterChange={this.props.handleFilterSettings}
                     />
                 )
             })

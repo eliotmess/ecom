@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import './ProductFilters.styles.scss';
 
 
-const Checkbox = ({ label, isSelected, onFilterChange }) => (
+const Checkbox = ({ label, isSelected, onFilterCheck, onFilterChange }) => (
     <label>
         <input
             type="checkbox" 
             name={label}
             checked={isSelected}
-            onChange={onFilterChange}
+            onChange={onFilterCheck}
+            // onClick={onFilterChange}
         />
         {label}
     </label>

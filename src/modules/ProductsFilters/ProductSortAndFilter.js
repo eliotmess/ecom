@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { orderBy, forEach, uniq, some, pull, mapValues } from 'lodash';
+import { orderBy, forEach, uniq, some, pull, mapValues, pickBy, keys, includes } from 'lodash';
 import PropTypes from 'prop-types';
 import './ProductFilters.styles.scss';
 import Filters from './Filters';
@@ -9,7 +9,7 @@ class ProductFilters extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeFilters: [],
+            filteredProducts: [],
             genreFilters: this.getGenreFilters().reduce(
                 (filters, filter) => ({
                     ...filters,
@@ -21,7 +21,9 @@ class ProductFilters extends Component {
     }
 
     componentDidUpdate() {
-        // console.log(this.state.genreFilters)
+        this.handleFilterSettings();
+        console.log(this.state.filteredProducts)
+        // console.log(this.props.products)
     }
 
     handleSortSettings = (key, order) => {
@@ -39,16 +41,23 @@ class ProductFilters extends Component {
 
     }
 
-    // handleFilterSettings = (genre) => {
-    //     let { activeFilters } = this.state;
-    //     if (some(activeFilters, genre)) {
-    //         activeFilters = activeFilters.filter(genre => genre !== genre);
-    //     } else {
-    //         activeFilters.push(genre);
-    //     }
-    //     console.log(this.state.activeFilters);
-    //     this.setState({ activeFilters })
-    // }
+    handleFilterSettings = () => {
+        const { genreFilters } = this.state;
+        const { handleFilteringProducts } = this.props;
+        const products = (this.props.sortedProducts.length === 0) ? this.props.products : this.props.sortedProducts;
+        const activeGenreFilters = keys(pickBy(genreFilters));
+        console.log(activeGenreFilters);
+        let filteredProducts = [];
+        for(let i = 0; i < products.length; i++) {
+            forEach(activeGenreFilters, (genre) => {
+                if(products[i].genre === genre) {
+                    filteredProducts.push(products[i]);
+                }
+            })
+        }
+        // this.setState({ filteredProducts })
+        handleFilteringProducts(filteredProducts);
+    }
 
     getGenreFilters = () => {
         const { products } = this.props;
@@ -78,6 +87,7 @@ class ProductFilters extends Component {
                     filters={this.getGenreFilters()}
                     genreFilters={this.state.genreFilters}
                     handleFilterChange={(e) => this.handleGenreFilterChange(e)}
+                    // handleFilterSettings={() => this.handleFilterSettings()}
                 />
                 <input
                     type="button"

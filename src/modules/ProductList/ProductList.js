@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Spinner from 'react-spinkit';
 import './ProductList.styles.scss';
@@ -13,7 +13,8 @@ class ProductList extends Component {
         this.state = {
             currentPage: 1,
             productsPerPage: 6,
-            sortedProducts: []
+            sortedProducts: [],
+            filteredProducts: []
         }
     }
 
@@ -28,12 +29,18 @@ class ProductList extends Component {
     handleSortingProducts = (sortedProducts) => {
         this.setState({ sortedProducts });
     }
+
+    handleFilteringProducts = (filteredProducts) => {
+        console.log(filteredProducts);
+        this.setState({ filteredProducts });
+    }
     
     renderProducts = () => {
         const { products } = this.props;
-        const { currentPage, productsPerPage, sortedProducts } = this.state;
+        const { currentPage, productsPerPage, sortedProducts, filteredProducts } = this.state;
         const indexOfLastProduct = currentPage * productsPerPage;
         const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+        // console.log(filteredProducts);
         const displayedProducts = (sortedProducts.length === 0) ? (
             products.slice(indexOfFirstProduct, indexOfLastProduct)
         ) : (
@@ -52,6 +59,7 @@ class ProductList extends Component {
 
     render() {
         const { products, isLoading } = this.props;
+        const { sortedProducts, productsPerPage, currentPage } = this.state;
         return (
             <div className="ProductListWrapper d-flex flex-wrap">
                 {(isLoading === true) ? (
@@ -61,9 +69,11 @@ class ProductList extends Component {
                         className="SpinnerWrapper"
                     />
                 ) : (
-                    <React.Fragment>
+                    <Fragment>
                         <ProductFilters 
                             products={products}
+                            sortedProducts={sortedProducts}
+                            handleFilteringProducts={(filteredProducts) => this.handleFilteringProducts(filteredProducts)}
                             handleSortingProducts={(sortedProducts) => this.handleSortingProducts(sortedProducts)}
                         />
                         <div className="ProductList col-12 col-md-9">
@@ -72,12 +82,12 @@ class ProductList extends Component {
                             </div>
                             <PagePagination
                                 products={products}
-                                pageNumber={Math.ceil(products.length / this.state.productsPerPage)}
-                                currentPage={this.state.currentPage}
+                                pageNumber={Math.ceil(products.length / productsPerPage)}
+                                currentPage={currentPage}
                                 handleTurningPage={(currentPage) => this.handleTurningPage(currentPage)}
                             />
                         </div>
-                    </React.Fragment>
+                    </Fragment>
                 )}
             </div>
         );
