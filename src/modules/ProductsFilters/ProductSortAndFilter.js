@@ -1,23 +1,42 @@
 import React, { Component } from 'react';
-import { orderBy, forEach, uniq, some, pull } from 'lodash';
+import { orderBy, forEach, uniq, some, pull, mapValues } from 'lodash';
 import PropTypes from 'prop-types';
 import './ProductFilters.styles.scss';
-import uuid from 'uuid';
+import Filters from './Filters';
 
 
 class ProductFilters extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = {
-            activeFilters: []
+            activeFilters: [],
+            genreFilters: this.getGenreFilters().reduce(
+                (filters, filter) => ({
+                    ...filters,
+                    [filter]: false
+                }),
+                {}
+            )
         }
+    }
+
+    componentDidUpdate() {
+        // console.log(this.state.genreFilters)
     }
 
     handleSortSettings = (key, order) => {
         const { products } = this.props;
         const sortedProducts = orderBy(products, key, order);
         this.props.handleSortingProducts(sortedProducts);
+    }
+
+    handleResetSettings = () => {
+        this.props.handleSortingProducts(this.props.products);
+        const genreFilters = mapValues(this.state.genreFilters, () => false);
+        this.setState({
+            genreFilters
+        });
+
     }
 
     // handleFilterSettings = (genre) => {
@@ -31,39 +50,35 @@ class ProductFilters extends Component {
     //     this.setState({ activeFilters })
     // }
 
-    renderFilters = () => {
+    getGenreFilters = () => {
         const { products } = this.props;
         let genreFilters = [];
         forEach(products, (product) =>
             genreFilters.push(product.genre)
         )
-        genreFilters = uniq(genreFilters);
-        console.log(genreFilters);
-
-        return(
-            genreFilters.map(genre => {
-                return(
-                    <label htmlFor={genre} key={uuid.v4()}>
-                        <input
-                            type="checkbox" 
-                            name={genre}
-                            // checked={this.state.genreCheckboxes[genre]}
-                            // onChange={() => this.handleFilterSettings({genre})} 
-                            key={genre} 
-                        />
-                        {genre}
-                    </label>
-                )
-            })
-        )
+        return genreFilters = uniq(genreFilters);
     }
+
+    handleGenreFilterChange = (e) => {
+        const { name } = e.target;
+        this.setState(prevState => ({
+            genreFilters: {
+                ...prevState.genreFilters,
+                [name]: !prevState.genreFilters[name]
+            }
+        }));
+    };
     
 
     render() {
         return (
             <div className="ProductFilters col-12 col-md-3">
                 <p>filtry</p>
-                {this.renderFilters()}
+                <Filters 
+                    filters={this.getGenreFilters()}
+                    genreFilters={this.state.genreFilters}
+                    handleFilterChange={(e) => this.handleGenreFilterChange(e)}
+                />
                 <input
                     type="button"
                     onClick={() => this.handleSortSettings('price', 'asc')}
@@ -86,7 +101,7 @@ class ProductFilters extends Component {
                 />
                 <input
                     type="button"
-                    onClick={() => this.props.handleSortingProducts(this.props.products)}
+                    onClick={() => this.handleResetSettings()}
                     value="reset"
                 />
             </div>

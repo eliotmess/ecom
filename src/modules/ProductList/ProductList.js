@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Spinner from 'react-spinkit';
-import uuid from 'uuid';
 import './ProductList.styles.scss';
 import ProductThumbnail from '../ProductThumbnail/ProductThumbnail';
-import ProductFilters from '../ProductsFilters/ProductFilters';
-import PagePagination from '../PagePagination.js/PagePagination';
+import ProductFilters from '../ProductsFilters/ProductSortAndFilter';
+import PagePagination from '../PagePagination/PagePagination';
 
 
 class ProductList extends Component {
