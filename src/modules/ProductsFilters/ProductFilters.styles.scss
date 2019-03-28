@@ -1,0 +1,22 @@
+.ProductFilters {
+    padding: 25px;
+
+    &Button {
+        margin: 5px 0;
+    }
+
+    &Header {
+        margin: 10px 0 0 0;
+    }
+
+    &PriceRange {
+        width: 100%;
+        margin: 20px 0;
+    }
+
+    &FiltersCheckList {
+        margin: 10px 0;
+        max-height: 200px;
+        overflow-y: scroll;
+    }
+}

@@ -14,7 +14,8 @@ class ProductList extends Component {
             currentPage: 1,
             productsPerPage: 6,
             sortedProducts: [],
-            filteredProducts: []
+            filteredProducts: [],
+            currentProducts: []
         }
     }
 
@@ -22,31 +23,45 @@ class ProductList extends Component {
         this.props.fetchProductList();
     }
 
+    componentDidUpdate() {
+        // moving to last visible page after filtering product list
+        const { currentPage } = this.state;
+        const pageNumber = this.handlePageNumeration();
+        if(currentPage > pageNumber) {
+            this.handleTurningPage(pageNumber);
+        };
+    }
+
     handleTurningPage = (currentPage) => {
         this.setState({ currentPage });
     }
 
     handleSortingProducts = (sortedProducts) => {
-        this.setState({ sortedProducts });
+        this.setState({ sortedProducts, currentProducts: sortedProducts });
     }
 
     handleFilteringProducts = (filteredProducts) => {
-        console.log(filteredProducts);
-        this.setState({ filteredProducts });
+        console.log(filteredProducts)
+        this.setState({ filteredProducts, currentProducts: filteredProducts });
+    }
+
+    handlePageNumeration = () => {
+        const { currentProducts, productsPerPage } = this.state;
+        const products = (currentProducts.length === 0) ? this.props.products : currentProducts;
+        return Math.ceil(products.length / productsPerPage);
     }
     
     renderProducts = () => {
+        const { currentPage, productsPerPage, currentProducts } = this.state;
         const { products } = this.props;
-        const { currentPage, productsPerPage, sortedProducts, filteredProducts } = this.state;
         const indexOfLastProduct = currentPage * productsPerPage;
         const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-        // console.log(filteredProducts);
-        const displayedProducts = (sortedProducts.length === 0) ? (
+        const displayedProducts = (currentProducts.length === 0) ? (
             products.slice(indexOfFirstProduct, indexOfLastProduct)
         ) : (
-            sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct)
+            currentProducts.slice(indexOfFirstProduct, indexOfLastProduct)
         );
-        
+
         return(
             displayedProducts.map(product => {
                 return <ProductThumbnail
@@ -59,7 +74,7 @@ class ProductList extends Component {
 
     render() {
         const { products, isLoading } = this.props;
-        const { sortedProducts, productsPerPage, currentPage } = this.state;
+        const { currentPage, currentProducts } = this.state;
         return (
             <div className="ProductListWrapper d-flex flex-wrap">
                 {(isLoading === true) ? (
@@ -72,7 +87,7 @@ class ProductList extends Component {
                     <Fragment>
                         <ProductFilters 
                             products={products}
-                            sortedProducts={sortedProducts}
+                            currentProducts={currentProducts}
                             handleFilteringProducts={(filteredProducts) => this.handleFilteringProducts(filteredProducts)}
                             handleSortingProducts={(sortedProducts) => this.handleSortingProducts(sortedProducts)}
                         />
@@ -82,7 +97,7 @@ class ProductList extends Component {
                             </div>
                             <PagePagination
                                 products={products}
-                                pageNumber={Math.ceil(products.length / productsPerPage)}
+                                pageNumber={this.handlePageNumeration()}
                                 currentPage={currentPage}
                                 handleTurningPage={(currentPage) => this.handleTurningPage(currentPage)}
                             />

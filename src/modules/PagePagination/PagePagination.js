@@ -4,9 +4,6 @@ import './PagePagination.styles.scss';
 
 
 class PagePagination extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     changeProductPage = (currentPage) => {
         this.props.handleTurningPage(currentPage);
