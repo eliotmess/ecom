@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { orderBy, forEach, uniq, mapValues, pickBy, keys, includes, minBy, maxBy, filter } from 'lodash';
+import { orderBy, forEach, uniq, mapValues, pickBy, keys, includes, filter, debounce } from 'lodash';
 import PropTypes from 'prop-types';
 import './ProductFilters.styles.scss';
 import Filters from './Filters';
@@ -14,7 +14,7 @@ class ProductFilters extends Component {
             priceRangeProducts: [],
             filteredProducts: [],
             rangeFilteredProducts: [],
-            priceRange: this.getMinMaxProductValues(),
+            resetPriceRange: false,
             genreFilters: this.getGenreFilters().reduce(
                 (filters, filter) => ({
                     ...filters,
@@ -25,6 +25,17 @@ class ProductFilters extends Component {
         }
     }
 
+    componentDidMount() {
+        const { products } = this.props;
+        this.setState({ priceRangeProducts: products })
+    }
+
+    componentDidUpdate() {
+       if (this.state.resetPriceRange) {
+           this.setState({ resetPriceRange: false })
+       }
+    }
+
     getGenreFilters = () => {
         const { products } = this.props;
         let genreFilters = [];
@@ -32,17 +43,6 @@ class ProductFilters extends Component {
             genreFilters.push(product.genre)
         )
         return genreFilters = uniq(genreFilters);
-    }
-
-    getMinMaxProductValues = () => {
-        const { products } = this.props;
-        const lowestVal = minBy(products, (p) => p.price);
-        const highestVal = maxBy(products, (p) => p.price);
-        return ({
-            value: [lowestVal.price, highestVal.price],
-            min: Math.floor(lowestVal.price),
-            max: Math.ceil(highestVal.price)
-        });
     }
 
     async handleFilterChanges(e) {
@@ -70,7 +70,7 @@ class ProductFilters extends Component {
         })
     }
 
-    handlePriceRange = (range) => {
+    handlePriceRange = debounce((range) => {
         const { products } = this.props;
         let priceRangeProducts = filter(products, (product) => (
             range[0] < product.price && product.price < range[1]
@@ -78,14 +78,14 @@ class ProductFilters extends Component {
         this.setState({ priceRangeProducts }, () => {
             this.handleFilteringProductList();
         });
-    }
+    }, 200)
 
     handleFilteringProductList = () => {
         const { filteredProducts, priceRangeProducts } = this.state;
         const rangeFilteredProducts = (filteredProducts.length > 0 && priceRangeProducts.length > 0) ? (
                 filter(priceRangeProducts, (product) => includes(filteredProducts, product))
             ) : (
-                (priceRangeProducts.length > 0) ? priceRangeProducts : filteredProducts
+                (filteredProducts.length > 0 && priceRangeProducts.length !== 0) ? filteredProducts : priceRangeProducts
         );
         this.setState({ rangeFilteredProducts }, () => {
             this.handleSortAndFilterSettings();
@@ -93,9 +93,9 @@ class ProductFilters extends Component {
     }
 
     handleSortAndFilterSettings = (key, order) => {
-        const { products, handleSortingAndFilteringProducts } = this.props;
+        const { currentProducts, handleSortingAndFilteringProducts } = this.props;
         const { rangeFilteredProducts, activeSortingFilter } = this.state;
-        const toSortProducts = (rangeFilteredProducts.length === 0) ? products : rangeFilteredProducts;
+        const toSortProducts = (rangeFilteredProducts.length === 0) ? currentProducts : rangeFilteredProducts;
         if ( key ) {
             handleSortingAndFilteringProducts(orderBy(toSortProducts, key, order))
             this.setState({ activeSortingFilter: [key, order] })
@@ -113,7 +113,8 @@ class ProductFilters extends Component {
         this.setState({
             genreFilters,
             activeSortingFilter: '',
-            priceRange: this.getMinMaxProductValues()
+            resetPriceRange: true,
+            priceRangeProducts: products
         });
     }
     
@@ -146,8 +147,9 @@ class ProductFilters extends Component {
                     onClick={() => this.handleSortAndFilterSettings("title", "desc")}
                     value="Po nazwie malejąco"
                 />
-                <PriceRangeSlider 
-                    values={this.getMinMaxProductValues()}
+                <PriceRangeSlider
+                    products={this.props.products}
+                    reset={this.state.resetPriceRange}
                     handlePriceRange={(range) => this.handlePriceRange(range)}
                 />
                 <p className="ProductFiltersHeader"> Pick a genre </p>

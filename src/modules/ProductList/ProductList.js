@@ -76,7 +76,7 @@ class ProductList extends Component {
 
     render() {
         const { products, isLoading } = this.props;
-        const { currentPage, noMatch } = this.state;
+        const { currentPage, noMatch, currentProducts } = this.state;
         return (
             <div className="ProductListWrapper d-flex flex-wrap">
                 {(isLoading === true) ? (
@@ -89,6 +89,7 @@ class ProductList extends Component {
                     <Fragment>
                         <ProductFilters 
                             products={products}
+                            currentProducts={currentProducts}
                             handleSortingAndFilteringProducts={(sortedProducts) => this.handleSortingAndFilteringProducts(sortedProducts)}
                         />
                         <div className="ProductList col-12 col-md-9">

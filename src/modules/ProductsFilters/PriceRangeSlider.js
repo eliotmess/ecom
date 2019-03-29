@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Slider, { Handle } from 'rc-slider';
-import Tooltip from 'rc-tooltip';
+import Slider from 'rc-slider';
+import { minBy, maxBy } from 'lodash';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
@@ -9,35 +9,43 @@ const Range = createSliderWithTooltip(Slider.Range);
 class PriceRangeSlider extends Component {
     constructor(props) {
         super(props);
-        // console.log(this.props)
-        const { min, max, value } = this.props.values;
         this.state = {
-            min,
-            max,
-            value
+            min: 0,
+            max: 0,
+            value: [],
+            reset: false
         };
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        // console.log(nextProps);
-        // console.log(this.state.value);
-        // this.setState({ value: this.props.values.value })
+    componentDidMount() {
+        this.getMinMaxProductValues();
     }
 
-    handle = (props) => {
-        const { value, dragging, index, ...restProps } = props;
-        return (
-            <Tooltip
-                prefixCls="rc-slider-tooltip"
-                overlay={value}
-                visible={dragging}
-                placement="top"
-                key={index}
-            >
-            <Handle value={value} {...restProps} />
-            </Tooltip>
-        );
-    };
+    componentDidUpdate(prevProps, prevState) {
+        if(prevState.reset !== this.state.reset) {
+            this.getMinMaxProductValues();
+            this.setState({ reset: false });
+        }
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.reset !== prevState.reset) {
+            return { reset: true }
+        } else {
+            return null;
+        }
+    }
+
+    getMinMaxProductValues = () => {
+        const { products } = this.props;
+        const lowestVal = minBy(products, (p) => p.price);
+        const highestVal = maxBy(products, (p) => p.price);
+        this.setState({
+            value: [lowestVal.price, highestVal.price],
+            min: Math.floor(lowestVal.price),
+            max: Math.ceil(highestVal.price)
+        });
+    }
 
     onSliderChange = (value) => {
         this.props.handlePriceRange(value);
@@ -45,9 +53,10 @@ class PriceRangeSlider extends Component {
     }
 
     render() {
+        const { min, max, value } = this.state;
         const marks = {
-            0: `$${this.state.min}`,
-            200: `$${this.state.max}`
+            [min]: `$${min}`,
+            [max]: `$${max}`
         }
         return(
             <div className="ProductFiltersPriceRange">
@@ -55,8 +64,9 @@ class PriceRangeSlider extends Component {
                 <Range
                     allowCross={false} 
                     defaultValue={[0, 200]}
-                    min={this.state.min}
-                    max={this.state.max}
+                    value={value}
+                    min={min}
+                    max={max}
                     onChange={this.onSliderChange}
                     tipFormatter={value => `$${value}`}
                     marks={marks}
