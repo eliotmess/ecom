@@ -22,7 +22,7 @@ class PriceRangeSlider extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if(prevState.reset !== this.state.reset) {
+        if (prevState.reset !== this.state.reset) {
             this.getMinMaxProductValues();
             this.setState({ reset: false });
         }

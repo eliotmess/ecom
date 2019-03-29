@@ -18,7 +18,7 @@ class App extends Component {
               <MainLayout>
                 {routes}
               </MainLayout>
-              <DevTools />
+              {/* <DevTools /> */}
           </BrowserRouter>
         </Provider>
       )

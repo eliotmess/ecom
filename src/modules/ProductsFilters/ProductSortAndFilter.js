@@ -95,8 +95,9 @@ class ProductFilters extends Component {
     handleSortAndFilterSettings = (key, order) => {
         const { currentProducts, handleSortingAndFilteringProducts } = this.props;
         const { rangeFilteredProducts, activeSortingFilter } = this.state;
-        const toSortProducts = (rangeFilteredProducts.length === 0) ? currentProducts : rangeFilteredProducts;
-        if ( key ) {
+        const products = (currentProducts.length > 0) ? currentProducts : this.props.products;
+        const toSortProducts = (rangeFilteredProducts.length === 0) ? products : rangeFilteredProducts;
+        if (key) {
             handleSortingAndFilteringProducts(orderBy(toSortProducts, key, order))
             this.setState({ activeSortingFilter: [key, order] })
         } else {
@@ -108,8 +109,8 @@ class ProductFilters extends Component {
 
     handleResetSettings = () => {
         const { handleSortingAndFilteringProducts, products } = this.props;
-        handleSortingAndFilteringProducts(products);
         const genreFilters = mapValues(this.state.genreFilters, () => false);
+        handleSortingAndFilteringProducts(products);
         this.setState({
             genreFilters,
             activeSortingFilter: '',
