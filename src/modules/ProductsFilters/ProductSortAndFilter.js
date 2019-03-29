@@ -13,6 +13,7 @@ class ProductFilters extends Component {
             activeSortingFilter: '',
             priceRangeProducts: [],
             filteredProducts: [],
+            rangeFilteredProducts: [],
             priceRange: this.getMinMaxProductValues(),
             genreFilters: this.getGenreFilters().reduce(
                 (filters, filter) => ({
@@ -33,22 +34,14 @@ class ProductFilters extends Component {
         return genreFilters = uniq(genreFilters);
     }
 
-    handleSortSettings = (key, order) => {
-        const { currentProducts, products, handleSortingProducts } = this.props;
-        const toSortProducts = (currentProducts.length === 0) ? products : currentProducts;
-        handleSortingProducts(orderBy(toSortProducts, key, order));
-        this.setState({ activeSortingFilter: [key, order] });
-    }
-
-    handleResetSettings = () => {
-        const { handleSortingProducts, handleFilteringProducts, products } = this.props;
-        handleSortingProducts(products);
-        handleFilteringProducts(products);
-        const genreFilters = mapValues(this.state.genreFilters, () => false);
-        this.setState({
-            genreFilters,
-            activeSortingFilter: '',
-            priceRange: this.getMinMaxProductValues()
+    getMinMaxProductValues = () => {
+        const { products } = this.props;
+        const lowestVal = minBy(products, (p) => p.price);
+        const highestVal = maxBy(products, (p) => p.price);
+        return ({
+            value: [lowestVal.price, highestVal.price],
+            min: Math.floor(lowestVal.price),
+            max: Math.ceil(highestVal.price)
         });
     }
 
@@ -77,41 +70,51 @@ class ProductFilters extends Component {
         })
     }
 
-    getMinMaxProductValues = () => {
-        const { products } = this.props;
-        const lowestVal = minBy(products, (p) => p.price);
-        const highestVal = maxBy(products, (p) => p.price);
-        return ({
-            value: [lowestVal.price, highestVal.price],
-            min: Math.floor(lowestVal.price),
-            max: Math.ceil(highestVal.price)
-        });
-    }
-
     handlePriceRange = (range) => {
         const { products } = this.props;
         let priceRangeProducts = filter(products, (product) => (
             range[0] < product.price && product.price < range[1]
         ));
-        priceRangeProducts = (priceRangeProducts.length === products.length) ? [] : priceRangeProducts;
         this.setState({ priceRangeProducts }, () => {
             this.handleFilteringProductList();
         });
     }
 
     handleFilteringProductList = () => {
-        const { handleFilteringProducts, products } = this.props;
-        const { filteredProducts, priceRangeProducts, activeSortingFilter } = this.state;
+        const { filteredProducts, priceRangeProducts } = this.state;
         const rangeFilteredProducts = (filteredProducts.length > 0 && priceRangeProducts.length > 0) ? (
                 filter(priceRangeProducts, (product) => includes(filteredProducts, product))
             ) : (
                 (priceRangeProducts.length > 0) ? priceRangeProducts : filteredProducts
         );
-        (rangeFilteredProducts.length === 0 && activeSortingFilter.length !== 0) ? (
-            handleFilteringProducts(orderBy(products, activeSortingFilter))
-        ) : (
-            handleFilteringProducts(orderBy(rangeFilteredProducts, activeSortingFilter))
-        );
+        this.setState({ rangeFilteredProducts }, () => {
+            this.handleSortAndFilterSettings();
+        })
+    }
+
+    handleSortAndFilterSettings = (key, order) => {
+        const { products, handleSortingAndFilteringProducts } = this.props;
+        const { rangeFilteredProducts, activeSortingFilter } = this.state;
+        const toSortProducts = (rangeFilteredProducts.length === 0) ? products : rangeFilteredProducts;
+        if ( key ) {
+            handleSortingAndFilteringProducts(orderBy(toSortProducts, key, order))
+            this.setState({ activeSortingFilter: [key, order] })
+        } else {
+            const key = activeSortingFilter[0];
+            const order = activeSortingFilter[1];
+            handleSortingAndFilteringProducts(orderBy(rangeFilteredProducts, key, order))
+        }
+    }
+
+    handleResetSettings = () => {
+        const { handleSortingAndFilteringProducts, products } = this.props;
+        handleSortingAndFilteringProducts(products);
+        const genreFilters = mapValues(this.state.genreFilters, () => false);
+        this.setState({
+            genreFilters,
+            activeSortingFilter: '',
+            priceRange: this.getMinMaxProductValues()
+        });
     }
     
 
@@ -122,25 +125,25 @@ class ProductFilters extends Component {
                 <input
                     className="ProductFiltersButton"
                     type="button"
-                    onClick={() => this.handleSortSettings("price", "asc")}
+                    onClick={() => this.handleSortAndFilterSettings("price", "asc")}
                     value="Po cenie rosnąco"
                 />
                 <input
                     className="ProductFiltersButton"
                     type="button"
-                    onClick={() => this.handleSortSettings("price", "desc")}
+                    onClick={() => this.handleSortAndFilterSettings("price", "desc")}
                     value="Po cenie malejąco"
                 />
                 <input
                     className="ProductFiltersButton"
                     type="button"
-                    onClick={() => this.handleSortSettings("title", "asc")}
+                    onClick={() => this.handleSortAndFilterSettings("title", "asc")}
                     value="Po nazwie rosnąco"
                 />
                 <input
                     className="ProductFiltersButton"
                     type="button"
-                    onClick={() => this.handleSortSettings("title", "desc")}
+                    onClick={() => this.handleSortAndFilterSettings("title", "desc")}
                     value="Po nazwie malejąco"
                 />
                 <PriceRangeSlider 

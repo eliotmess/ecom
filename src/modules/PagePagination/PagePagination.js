@@ -46,19 +46,23 @@ class PagePagination extends Component {
 
     render() {
         return (
-            <div className='PageNumbers'>
-                <input
-                    type='button' 
-                    onClick={() => this.decreaseProductPage()} 
-                    value='<' 
-                />
-                {this.renderPageNumbers()}
-                <input 
-                    type='button' 
-                    onClick={() => this.increaseProductPage()} 
-                    value='>' 
-                />
-            </div>
+            (this.props.noMatch) ? (
+                <div></div>
+            ) : (
+                <div className='PageNumbers'>
+                    <input
+                        type='button' 
+                        onClick={() => this.decreaseProductPage()} 
+                        value='<' 
+                    />
+                    {this.renderPageNumbers()}
+                    <input 
+                        type='button' 
+                        onClick={() => this.increaseProductPage()} 
+                        value='>' 
+                    />
+                </div>
+            )
         );
     }
 };

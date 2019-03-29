@@ -13,8 +13,7 @@ class ProductList extends Component {
         this.state = {
             currentPage: 1,
             productsPerPage: 6,
-            sortedProducts: [],
-            filteredProducts: [],
+            noMatch: false,
             currentProducts: []
         }
     }
@@ -36,13 +35,12 @@ class ProductList extends Component {
         this.setState({ currentPage });
     }
 
-    handleSortingProducts = (sortedProducts) => {
-        this.setState({ sortedProducts, currentProducts: sortedProducts });
-    }
-
-    handleFilteringProducts = (filteredProducts) => {
-        console.log(filteredProducts)
-        this.setState({ filteredProducts, currentProducts: filteredProducts });
+    handleSortingAndFilteringProducts = (currentProducts) => {
+        (currentProducts.length > 0) ? (
+            this.setState({ currentProducts, noMatch: false })
+        ) : (
+            this.setState({ currentProducts, noMatch: true })
+        )
     }
 
     handlePageNumeration = () => {
@@ -63,18 +61,22 @@ class ProductList extends Component {
         );
 
         return(
-            displayedProducts.map(product => {
-                return <ProductThumbnail
-                    key={product.id}
-                    product={product}
-                />  
-            })
+            (this.state.noMatch) ? (
+                <div><p>no match sorry</p></div>
+            ) : (
+                displayedProducts.map(product => {
+                    return <ProductThumbnail
+                        key={product.id}
+                        product={product}
+                    />  
+                })
+            )
         );
     }
 
     render() {
         const { products, isLoading } = this.props;
-        const { currentPage, currentProducts } = this.state;
+        const { currentPage, noMatch } = this.state;
         return (
             <div className="ProductListWrapper d-flex flex-wrap">
                 {(isLoading === true) ? (
@@ -87,9 +89,7 @@ class ProductList extends Component {
                     <Fragment>
                         <ProductFilters 
                             products={products}
-                            currentProducts={currentProducts}
-                            handleFilteringProducts={(filteredProducts) => this.handleFilteringProducts(filteredProducts)}
-                            handleSortingProducts={(sortedProducts) => this.handleSortingProducts(sortedProducts)}
+                            handleSortingAndFilteringProducts={(sortedProducts) => this.handleSortingAndFilteringProducts(sortedProducts)}
                         />
                         <div className="ProductList col-12 col-md-9">
                             <div className="d-flex justify-content-around flex-wrap">
@@ -100,6 +100,7 @@ class ProductList extends Component {
                                 pageNumber={this.handlePageNumeration()}
                                 currentPage={currentPage}
                                 handleTurningPage={(currentPage) => this.handleTurningPage(currentPage)}
+                                noMatch={noMatch}
                             />
                         </div>
                     </Fragment>
