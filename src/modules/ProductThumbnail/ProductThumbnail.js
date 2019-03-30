@@ -7,16 +7,23 @@ const ProductThumbnail = props => {
     const { title, cover, id, price } = props.product;
 
     return(
-        <div className='ProductThumbnail col-12 col-md-6' >
-            <Link to={'product/' + id}>
-                <img 
-                    className='ProductThumbnailPhoto' 
-                    src={process.env.PUBLIC_URL + `/images/${cover}`} 
-                    alt={title} 
-                />
-                <div className='ProductThumbnailDescription'>
-                    <p className='ProductThumbnailTitle'>{title}</p>
-                    <p className='ProductThumbnailPrice'>${price}</p>
+        <div className="ProductThumbnail col-12 col-md-6" >
+            <Link className="ProductThumbnailLink" to={"product/" + id}>
+                <div className="ProductThumbnailCover d-flex">
+                    <img 
+                        className="ProductThumbnailCoverImgFirst" 
+                        src={process.env.PUBLIC_URL + `/images/${cover}`} 
+                        alt={title} 
+                    />
+                    <img 
+                        className="ProductThumbnailCoverImgSecond" 
+                        src={process.env.PUBLIC_URL + `/images/vhs.png`} 
+                        alt={title} 
+                    />
+                </div>
+                <div className="ProductThumbnailDescription">
+                    <p className="ProductThumbnailDescriptionTitle">{title}</p>
+                    <p className="ProductThumbnailDescriptionPrice">$ {price}</p>
                 </div>
             </Link>
         </div>

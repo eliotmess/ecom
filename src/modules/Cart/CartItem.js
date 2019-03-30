@@ -1,18 +1,31 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 const CartItem = (props) => {
-    const { title, desc, cover, price, id } = props.item;
+    const { title, cover, price, id } = props.item;
     const { removeFromCart, changeQuantity, quantity } = props;
     return (
-        <Fragment>
-            <h2>{title}</h2>
-            <input 
+        <div className="CartProductListItem d-flex align-items-center justify-content-around">
+            <img 
+                className="CartProductListItemCoverImg" 
+                src={process.env.PUBLIC_URL + `/images/${cover}`} 
+                alt={title} 
+            />
+            <div className="CartProductListItemTitle">
+                <p>{title}</p>
+            </div>
+            <input
+                className="CartProductListItemQuantity"
                 type="number"
                 defaultValue={quantity}
                 onChange={(e) => changeQuantity(id, e.target.value)}
             />
-            <button onClick={() => removeFromCart(id)}>delete item</button>
-        </Fragment>
+            <button 
+                onClick={() => removeFromCart(id)}
+                className="CartProductListItemDelete"
+            >
+                delete item
+            </button>
+        </div>
     )   
 }
 

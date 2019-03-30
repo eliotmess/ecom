@@ -10,4 +10,45 @@
             height: auto;
         }
     }
+
+    &Description {
+        color: #555555;
+        padding-left: 25px;
+
+        &Title {
+            font-size: 3rem;
+            font-weight: 300;
+            padding-top: 25px;
+            margin-left: -3px;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        &Genre {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+        }
+
+        &Price {
+            padding-bottom: 25px;
+            margin-bottom: 25px;
+            border-bottom: solid #555555 .2px;
+        }
+
+        &Text {
+            line-height: 1.8;
+            font-weight: 400;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        &ToCartBtn {
+            font-weight: 500;
+            background: orange;
+            border: none;
+            padding: 6px 30px;
+        }
+    }
 }

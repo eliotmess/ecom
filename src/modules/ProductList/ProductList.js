@@ -32,6 +32,10 @@ class ProductList extends Component {
     }
 
     handleTurningPage = (currentPage) => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        })
         this.setState({ currentPage });
     }
 

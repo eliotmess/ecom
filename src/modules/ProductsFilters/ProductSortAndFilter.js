@@ -15,6 +15,7 @@ class ProductFilters extends Component {
             filteredProducts: [],
             rangeFilteredProducts: [],
             resetPriceRange: false,
+            // genreFilters: {}
             genreFilters: this.getGenreFilters().reduce(
                 (filters, filter) => ({
                     ...filters,
@@ -26,8 +27,19 @@ class ProductFilters extends Component {
     }
 
     componentDidMount() {
-        const { products } = this.props;
-        this.setState({ priceRangeProducts: products })
+        // const { products } = this.props;
+        console.log('mount');
+        const { handleSortingAndFilteringProducts, products } = this.props;
+        const genreFilters = mapValues(this.state.genreFilters, () => false);
+        console.log(genreFilters);
+        handleSortingAndFilteringProducts(products);
+        this.setState({
+            genreFilters,
+            activeSortingFilter: '',
+            resetPriceRange: true,
+            priceRangeProducts: products
+        });
+        // this.setState({ priceRangeProducts: products })
     }
 
     componentDidUpdate() {
@@ -51,7 +63,10 @@ class ProductFilters extends Component {
     }
 
     handleGenreFilterChange = (e) => {
+        // console.log('pierwszy await', this.state.genreFilters)
         const { name } = e.target;
+        // console.log(name)
+            // console.log(this.state.genreFilters[name])
         this.setState(prevState => ({
             genreFilters: {
                 ...prevState.genreFilters,
@@ -62,9 +77,12 @@ class ProductFilters extends Component {
 
     handleFilterSettings = () => {
         const { genreFilters } = this.state;
+        // console.log(genreFilters, 'drugi await')
         const { products } = this.props;
         const activeGenreFilters = keys(pickBy(genreFilters));
+        // console.log(activeGenreFilters)
         const filteredProducts = filter(products, (product) => includes(activeGenreFilters, product.genre));
+        console.log('filtered Products przed stanem ', filteredProducts)
         this.setState({ filteredProducts }, () => {
             this.handleFilteringProductList();
         })
@@ -82,11 +100,15 @@ class ProductFilters extends Component {
 
     handleFilteringProductList = () => {
         const { filteredProducts, priceRangeProducts } = this.state;
-        const rangeFilteredProducts = (filteredProducts.length > 0 && priceRangeProducts.length > 0) ? (
+        console.log(filteredProducts, priceRangeProducts);
+        console.log(filteredProducts.length, priceRangeProducts.length)
+        console.log(filter(priceRangeProducts, (product) => includes(filteredProducts, product)))
+        let rangeFilteredProducts = (filteredProducts.length > 0 && priceRangeProducts.length > 0) ? (
                 filter(priceRangeProducts, (product) => includes(filteredProducts, product))
             ) : (
                 (filteredProducts.length > 0 && priceRangeProducts.length !== 0) ? filteredProducts : priceRangeProducts
         );
+        // console.log(rangeFilteredProducts)
         this.setState({ rangeFilteredProducts }, () => {
             this.handleSortAndFilterSettings();
         })

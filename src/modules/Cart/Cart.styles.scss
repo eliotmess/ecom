@@ -1,10 +1,59 @@
 .Cart {
-    padding-top: 230px;
+    padding: 230px 50px 200px 50px;
     max-width: 1200px;
     min-height: 86vh;
     margin: 0 auto;
-    display: flex;
-    align-items: center;
     flex-direction: column;
+    position: relative;
+    color: #555555;
 
+    &ProductList {
+        width: 100%;
+
+        &Header {
+            font-size: 2.5rem;
+            font-weight: 300;
+            padding-bottom: 25px;
+            border-bottom: .5px solid rgba($color: #000000, $alpha: 0.3);
+            width: 70%;
+        }
+
+        &Empty {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 400;
+        }
+
+        &Item {
+            width: 70%;
+            padding: 25px 0 25px 0;
+            border-bottom: .5px solid rgba($color: #000000, $alpha: 0.3);
+
+            &CoverImg {
+                height: 90px;
+                width: auto;
+            }
+
+            &Title {
+                width: 20%;
+            }
+
+            &Quantity {
+
+            }
+        }
+
+    }
+
+    &Checkout {
+        position: sticky;
+        text-align: right;
+        padding: 25px;
+        background: #555555;
+        max-width: 300px;
+        left: 100%;
+        bottom: 25%;
+        color: #fefefe;
+
+    }
 }

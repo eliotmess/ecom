@@ -5,7 +5,7 @@ import './ProductPage.styles.scss';
 
 const ProductPage = (props) => {
     const { addToCart } = props;
-    const { title, desc, cover, price, id } = props.product;
+    const { title, desc, cover, price, id, year, genre } = props.product;
     
     return (
         <Row className="ProductPage">
@@ -17,14 +17,17 @@ const ProductPage = (props) => {
                 />
             </Col>
             <div className="ProductPageDescription col-12 col-md-8">
-                <h1>{title}</h1>
-                <h2>${price}</h2>
-                <p>{desc}</p>
+                <h1 className='ProductPageDescriptionTitle'>{title}</h1>
+                <h4 className='ProductPageDescriptionGenre'>{genre}, {year} release</h4>
+                <h3 className='ProductPageDescriptionPrice'>${price}</h3>
+                <p className='ProductPageDescriptionText'>{desc}</p>
                 <button
-                    className="ProductPageToCartBtn" 
+                    className="ProductPageDescriptionToCartBtn" 
                     variant="primary" 
                     onClick={() => addToCart(id, price)}
-                > Add to cart </button>
+                > 
+                    Add to cart 
+                </button>
             </div>
         </Row>
     )
