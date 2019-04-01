@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import './ProductFilters.styles.scss';
 import Filters from './Filters';
 import PriceRangeSlider from './PriceRangeSlider';
+import SortingSelect from './SortingSelect';
 
 
 class ProductFilters extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeSortingFilter: '',
             priceRangeProducts: [],
             filteredProducts: [],
             rangeFilteredProducts: [],
@@ -27,19 +27,8 @@ class ProductFilters extends Component {
     }
 
     componentDidMount() {
-        // const { products } = this.props;
-        console.log('mount');
-        const { handleSortingAndFilteringProducts, products } = this.props;
-        const genreFilters = mapValues(this.state.genreFilters, () => false);
-        console.log(genreFilters);
-        handleSortingAndFilteringProducts(products);
-        this.setState({
-            genreFilters,
-            activeSortingFilter: '',
-            resetPriceRange: true,
-            priceRangeProducts: products
-        });
-        // this.setState({ priceRangeProducts: products })
+        const { products } = this.props;
+        this.setState({ priceRangeProducts: products })
     }
 
     componentDidUpdate() {
@@ -82,7 +71,7 @@ class ProductFilters extends Component {
         const activeGenreFilters = keys(pickBy(genreFilters));
         // console.log(activeGenreFilters)
         const filteredProducts = filter(products, (product) => includes(activeGenreFilters, product.genre));
-        console.log('filtered Products przed stanem ', filteredProducts)
+        // console.log('filtered Products przed stanem ', filteredProducts)
         this.setState({ filteredProducts }, () => {
             this.handleFilteringProductList();
         })
@@ -99,87 +88,58 @@ class ProductFilters extends Component {
     }, 200)
 
     handleFilteringProductList = () => {
+        const { products } = this.props;
         const { filteredProducts, priceRangeProducts } = this.state;
-        console.log(filteredProducts, priceRangeProducts);
-        console.log(filteredProducts.length, priceRangeProducts.length)
-        console.log(filter(priceRangeProducts, (product) => includes(filteredProducts, product)))
         let rangeFilteredProducts = (filteredProducts.length > 0 && priceRangeProducts.length > 0) ? (
                 filter(priceRangeProducts, (product) => includes(filteredProducts, product))
             ) : (
                 (filteredProducts.length > 0 && priceRangeProducts.length !== 0) ? filteredProducts : priceRangeProducts
         );
-        // console.log(rangeFilteredProducts)
+        if (rangeFilteredProducts.length === 0 && filteredProducts.length > 0 && priceRangeProducts.length === products.length) {
+            rangeFilteredProducts = filteredProducts;
+        }
         this.setState({ rangeFilteredProducts }, () => {
-            this.handleSortAndFilterSettings();
+            this.handleSortingFilteredProducts();
         })
     }
 
-    handleSortAndFilterSettings = (key, order) => {
-        const { currentProducts, handleSortingAndFilteringProducts } = this.props;
-        const { rangeFilteredProducts, activeSortingFilter } = this.state;
-        const products = (currentProducts.length > 0) ? currentProducts : this.props.products;
-        const toSortProducts = (rangeFilteredProducts.length === 0) ? products : rangeFilteredProducts;
-        if (key) {
-            handleSortingAndFilteringProducts(orderBy(toSortProducts, key, order))
-            this.setState({ activeSortingFilter: [key, order] })
-        } else {
-            const key = activeSortingFilter[0];
-            const order = activeSortingFilter[1];
-            handleSortingAndFilteringProducts(orderBy(rangeFilteredProducts, key, order))
-        }
+    handleSortingFilteredProducts = () => {
+        const { handleSortedAndFilteredProducts, activeSortingFilter } = this.props;
+        const { rangeFilteredProducts } = this.state;
+        const key = activeSortingFilter[0];
+        const order = activeSortingFilter[1];
+        handleSortedAndFilteredProducts(orderBy(rangeFilteredProducts, key, order))
     }
 
     handleResetSettings = () => {
-        const { handleSortingAndFilteringProducts, products } = this.props;
+        const { handleSortedAndFilteredProducts, products, handleSortingReset } = this.props;
         const genreFilters = mapValues(this.state.genreFilters, () => false);
-        handleSortingAndFilteringProducts(products);
+        handleSortedAndFilteredProducts(products);
+        handleSortingReset();
         this.setState({
             genreFilters,
-            activeSortingFilter: '',
             resetPriceRange: true,
             priceRangeProducts: products
         });
     }
-    
 
     render() {
+        const { products } = this.props;
+        const { priceRangeProducts, genreFilters, resetPriceRange } = this.state;
         return (
             <div className="ProductFilters d-flex flex-column col-12 col-md-3">
-                <p>filtry</p>
-                <input
-                    className="ProductFiltersButton"
-                    type="button"
-                    onClick={() => this.handleSortAndFilterSettings("price", "asc")}
-                    value="Po cenie rosnąco"
-                />
-                <input
-                    className="ProductFiltersButton"
-                    type="button"
-                    onClick={() => this.handleSortAndFilterSettings("price", "desc")}
-                    value="Po cenie malejąco"
-                />
-                <input
-                    className="ProductFiltersButton"
-                    type="button"
-                    onClick={() => this.handleSortAndFilterSettings("title", "asc")}
-                    value="Po nazwie rosnąco"
-                />
-                <input
-                    className="ProductFiltersButton"
-                    type="button"
-                    onClick={() => this.handleSortAndFilterSettings("title", "desc")}
-                    value="Po nazwie malejąco"
-                />
+                <p className="ProductFiltersSubheader"> Price Range </p>
                 <PriceRangeSlider
-                    products={this.props.products}
-                    reset={this.state.resetPriceRange}
+                    products={products}
+                    reset={resetPriceRange}
                     handlePriceRange={(range) => this.handlePriceRange(range)}
                 />
-                <p className="ProductFiltersHeader"> Pick a genre </p>
-                <div className="ProductFiltersFiltersCheckList d-flex flex-column">
+                <p className="ProductFiltersSubheader"> Genre </p>
+                <div className="ProductFiltersCheckList d-flex flex-column">
                     <Filters 
+                        products={priceRangeProducts}
                         filters={this.getGenreFilters()}
-                        genreFilters={this.state.genreFilters}
+                        genreFilters={genreFilters}
                         handleFilterChanges={(e) => this.handleFilterChanges(e)}
                     />
                 </div>

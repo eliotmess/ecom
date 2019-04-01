@@ -1,5 +1,5 @@
 .ProductPage {
-    padding-top: 230px;
+    padding: 230px 25px 0 25px;
     max-width: 1200px;
     margin: 0 auto;
 
@@ -34,7 +34,7 @@
         &Price {
             padding-bottom: 25px;
             margin-bottom: 25px;
-            border-bottom: solid #555555 .2px;
+            border-bottom: solid #888888 .1px;
         }
 
         &Text {

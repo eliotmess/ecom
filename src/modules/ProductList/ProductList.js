@@ -1,10 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { orderBy, filter, includes } from 'lodash';
 import Spinner from 'react-spinkit';
 import './ProductList.styles.scss';
 import ProductThumbnail from '../ProductThumbnail/ProductThumbnail';
 import ProductFilters from '../ProductsFilters/ProductSortAndFilter';
 import PagePagination from '../PagePagination/PagePagination';
+import SortingSelect from '../ProductsFilters/SortingSelect';
 
 
 class ProductList extends Component {
@@ -14,7 +16,8 @@ class ProductList extends Component {
             currentPage: 1,
             productsPerPage: 6,
             noMatch: false,
-            currentProducts: []
+            currentProducts: [],
+            activeSortingFilter: ''
         }
     }
 
@@ -39,7 +42,26 @@ class ProductList extends Component {
         this.setState({ currentPage });
     }
 
-    handleSortingAndFilteringProducts = (currentProducts) => {
+    handleSortingBySelection = (key, order) => {
+        const { currentProducts } = this.state;
+        const products = (currentProducts.length > 0) ? currentProducts : this.props.products;
+        if (key) {
+            this.setState({ activeSortingFilter: [key, order] }, () => {
+                this.handleSortedAndFilteredProducts(orderBy(products, key, order));
+            });
+        } else {
+            const productsByPopularity = filter(this.props.products, (product) => includes(currentProducts, product));
+            this.setState({ activeSortingFilter: '' }, () => {
+                this.handleSortedAndFilteredProducts(productsByPopularity);
+            });
+        }
+    }
+
+    handleSortingReset = () => {
+        this.setState({ activeSortingFilter: '' });
+    }
+
+    handleSortedAndFilteredProducts = (currentProducts) => {
         (currentProducts.length > 0) ? (
             this.setState({ currentProducts, noMatch: false })
         ) : (
@@ -80,7 +102,7 @@ class ProductList extends Component {
 
     render() {
         const { products, isLoading } = this.props;
-        const { currentPage, noMatch, currentProducts } = this.state;
+        const { currentPage, noMatch, currentProducts, activeSortingFilter } = this.state;
         return (
             <div className="ProductListWrapper d-flex flex-wrap">
                 {(isLoading === true) ? (
@@ -91,12 +113,17 @@ class ProductList extends Component {
                     />
                 ) : (
                     <Fragment>
-                        <ProductFilters 
+                        <ProductFilters
                             products={products}
                             currentProducts={currentProducts}
-                            handleSortingAndFilteringProducts={(sortedProducts) => this.handleSortingAndFilteringProducts(sortedProducts)}
+                            activeSortingFilter={activeSortingFilter}
+                            handleSortingReset={this.handleSortingReset}
+                            handleSortedAndFilteredProducts={(sortedProducts) => this.handleSortedAndFilteredProducts(sortedProducts)}
                         />
                         <div className="ProductList col-12 col-md-9">
+                            <SortingSelect 
+                                handleSortingBySelection={(key, order) => this.handleSortingBySelection(key, order)} 
+                            />
                             <div className="d-flex justify-content-around flex-wrap">
                                 {this.renderProducts()}
                             </div>

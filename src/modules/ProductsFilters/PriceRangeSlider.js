@@ -3,6 +3,7 @@ import Slider from 'rc-slider';
 import { minBy, maxBy } from 'lodash';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
+import { NONAME } from 'dns';
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
 
@@ -60,7 +61,6 @@ class PriceRangeSlider extends Component {
         }
         return(
             <div className="ProductFiltersPriceRange">
-                <p>Choose Price Range</p>
                 <Range
                     allowCross={false} 
                     defaultValue={[0, 200]}
@@ -70,6 +70,9 @@ class PriceRangeSlider extends Component {
                     onChange={this.onSliderChange}
                     tipFormatter={value => `$${value}`}
                     marks={marks}
+                    trackStyle={[{ backgroundColor: "orange", height: "8px" }]}
+                    handleStyle={{ backgroundColor: "#fefefe", border: "2px solid orange", marginTop: "-4px" }}
+                    railStyle={{ height: "8px" }}
                 />
             </div>
         )

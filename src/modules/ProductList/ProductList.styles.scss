@@ -1,6 +1,7 @@
 .ProductListWrapper {
     padding-top: 230px;
     max-width: 1200px;
+    display: flex;
     margin: 0 auto;
 
     .SpinnerWrapper {
@@ -14,6 +15,11 @@
 
 .ProductList {
     padding: 0;
+}
+
+.ProductFilters {
+    position: sticky;
+    top: 100px;
 }
 
 .PageNumbers {
