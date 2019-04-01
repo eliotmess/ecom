@@ -33,7 +33,7 @@
 
     &CheckList {
         margin: 0;
-        max-height: 200px;
+        max-height: 150px;
         overflow-y: scroll;
 
         &Input {
@@ -41,6 +41,7 @@
         }
 
         &Label {
+            font-size: .9rem;
             padding: 2px 1px;
             color: #666666;
         }

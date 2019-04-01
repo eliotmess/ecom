@@ -93,11 +93,13 @@ class ProductFilters extends Component {
         let rangeFilteredProducts = (filteredProducts.length > 0 && priceRangeProducts.length > 0) ? (
                 filter(priceRangeProducts, (product) => includes(filteredProducts, product))
             ) : (
-                (filteredProducts.length > 0 && priceRangeProducts.length !== 0) ? filteredProducts : priceRangeProducts
+                // (filteredProducts.length > 0 && priceRangeProducts.length !== 0) ? (console.log(filteredProducts, 'filtered' ) : 
+                priceRangeProducts
         );
         if (rangeFilteredProducts.length === 0 && filteredProducts.length > 0 && priceRangeProducts.length === products.length) {
             rangeFilteredProducts = filteredProducts;
         }
+        console.log(rangeFilteredProducts)
         this.setState({ rangeFilteredProducts }, () => {
             this.handleSortingFilteredProducts();
         })

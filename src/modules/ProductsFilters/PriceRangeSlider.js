@@ -3,7 +3,6 @@ import Slider from 'rc-slider';
 import { minBy, maxBy } from 'lodash';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
-import { NONAME } from 'dns';
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
 
