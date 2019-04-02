@@ -1,5 +1,5 @@
-.ProductFilters {
-    padding: 25px 50px;
+.ProductFilter {
+    padding: 25px 0 25px 50px;
     height: 100%;
 
     &Button {
@@ -20,7 +20,6 @@
         // width: 100%;
         margin: 0 5px;
         padding-bottom: 30px;
-        // border-bottom: solid #888888 .1px;
 
         .rc-slider-dot {
             border: none;

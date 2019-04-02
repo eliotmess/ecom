@@ -24,6 +24,7 @@ class PriceRangeSlider extends Component {
     componentDidUpdate(prevProps, prevState) {
         if (prevState.reset !== this.state.reset) {
             this.getMinMaxProductValues();
+            this.handleSliderReset();
             this.setState({ reset: false });
         }
     }
@@ -38,18 +39,24 @@ class PriceRangeSlider extends Component {
 
     getMinMaxProductValues = () => {
         const { products } = this.props;
-        const lowestVal = minBy(products, (p) => p.price);
-        const highestVal = maxBy(products, (p) => p.price);
+        const minVal = minBy(products, (p) => p.price);
+        const maxVal = maxBy(products, (p) => p.price);
         this.setState({
-            value: [lowestVal.price, highestVal.price],
-            min: Math.floor(lowestVal.price),
-            max: Math.ceil(highestVal.price)
+            value: [minVal.price, maxVal.price],
+            min: Math.floor(minVal.price),
+            max: Math.ceil(maxVal.price)
         });
     }
 
     onSliderChange = (value) => {
-        this.props.handlePriceRange(value);
+        const filterType = "byPriceRange";
+        this.props.handlePriceRange(value, filterType);
         this.setState({ value });
+    }
+
+    handleSliderReset = () => {
+        const filterType = "byPriceRange";
+        this.props.handlePriceRange(this.state.value, filterType);
     }
 
     render() {
@@ -59,7 +66,7 @@ class PriceRangeSlider extends Component {
             [max]: `$${max}`
         }
         return(
-            <div className="ProductFiltersPriceRange">
+            <div className="ProductFilterPriceRange">
                 <Range
                     allowCross={false} 
                     defaultValue={[0, 200]}

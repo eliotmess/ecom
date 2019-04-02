@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './ProductFilters.styles.scss';
+import './ProductFilter.styles.scss';
 
 
 const Checkbox = ({ label, isSelected, onFilterChange, numberOfType }) => (
-    <label className="ProductFiltersCheckListLabel">
+    <label className="ProductFilterCheckListLabel">
         <input
-            className="ProductFiltersCheckListInput"
+            className="ProductFilterCheckListInput"
             type="checkbox" 
             name={label}
             checked={isSelected}

@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { orderBy, filter, includes } from 'lodash';
+// import PropTypes from 'prop-types';
+import { orderBy, filter, includes, uniq, concat, transform, countBy, isEmpty } from 'lodash';
 import Spinner from 'react-spinkit';
 import './ProductList.styles.scss';
 import ProductThumbnail from '../ProductThumbnail/ProductThumbnail';
-import ProductFilters from '../ProductsFilters/ProductSortAndFilter';
+import ProductFilter from '../ProductsFilter/ProductFilter';
 import PagePagination from '../PagePagination/PagePagination';
-import SortingSelect from '../ProductsFilters/SortingSelect';
+import SortingSelect from '../ProductsFilter/SortingSelect';
+import filterConfig from '../ProductsFilter/ProductFilterConfig';
 
 
 class ProductList extends Component {
@@ -16,8 +17,15 @@ class ProductList extends Component {
             currentPage: 1,
             productsPerPage: 6,
             noMatch: false,
-            currentProducts: [],
-            activeSortingFilter: ''
+            resetSortingSelect: false,
+            activeFilter: [],
+            activeSortingFilter: [],
+            activeGenreFilter: [],
+            filteredProducts: [],
+            range: {
+                min: 0,
+                max: 200
+            }
         }
     }
 
@@ -32,6 +40,10 @@ class ProductList extends Component {
         if(currentPage > pageNumber) {
             this.handleTurningPage(pageNumber);
         };
+
+        if (this.state.resetSortingSelect) {
+            this.setState({ resetSortingSelect: false })
+        }
     }
 
     handleTurningPage = (currentPage) => {
@@ -42,49 +54,73 @@ class ProductList extends Component {
         this.setState({ currentPage });
     }
 
-    handleSortingBySelection = (key, order) => {
-        const { currentProducts } = this.state;
-        const products = (currentProducts.length > 0) ? currentProducts : this.props.products;
-        if (key) {
-            this.setState({ activeSortingFilter: [key, order] }, () => {
-                this.handleSortedAndFilteredProducts(orderBy(products, key, order));
-            });
-        } else {
-            const productsByPopularity = filter(this.props.products, (product) => includes(currentProducts, product));
-            this.setState({ activeSortingFilter: '' }, () => {
-                this.handleSortedAndFilteredProducts(productsByPopularity);
-            });
+    handlePriceRange = (range, filterType) => {
+        let { activeFilter } = this.state;
+        if (!includes(activeFilter, filterType)) {
+            activeFilter.push(filterType)
+        };
+        this.setState({ 
+            range: {
+                min: range[0], 
+                max: range[1]
+            },
+            activeFilter
+        }, () => {
+            this.handleFilteringProducts();
+        });
+    }
+
+    handleGenreFilter = (activeGenreFilter, filterType) => {
+        let { activeFilter } = this.state;
+        if (!isEmpty(activeGenreFilter) && !includes(activeFilter, filterType)) {
+            activeFilter.push(filterType)
+        } else if (isEmpty(activeGenreFilter)) {
+            activeFilter = filter(activeFilter, (filter) => filter !== filterType)
         }
+        this.setState({ activeGenreFilter, activeFilter }, () => {
+            this.handleFilteringProducts();
+        });
+    }
+
+    handleFilteringProducts = () => {
+        const { activeFilter } = this.state;
+        let filteredProducts = this.props.products;
+        activeFilter.forEach((filter) => {
+            filteredProducts = filterConfig[filter](filteredProducts, this.state)
+        });
+        this.setState({
+            filteredProducts, 
+            noMatch: (filteredProducts.length > 0) ? false : true
+        })
+    }
+
+    handleSortingBySelection = (sortingWay) => {
+        const { key, order } = sortingWay;
+        const products = (!isEmpty(this.state.filteredProducts)) ? this.state.filteredProducts : this.props.products;
+        const filteredProducts = (key === 'default') ? (
+            filter(this.props.products, (product) => includes(this.state.filteredProducts, product))
+        ) : (
+            orderBy(products, key, order)
+        )
+        this.setState({ activeSortingFilter: [key, order], filteredProducts });
     }
 
     handleSortingReset = () => {
-        this.setState({ activeSortingFilter: '' });
-    }
-
-    handleSortedAndFilteredProducts = (currentProducts) => {
-        (currentProducts.length > 0) ? (
-            this.setState({ currentProducts, noMatch: false })
-        ) : (
-            this.setState({ currentProducts, noMatch: true })
-        )
+        this.setState({ resetSortingSelect: true, currentPage: 1 });
     }
 
     handlePageNumeration = () => {
-        const { currentProducts, productsPerPage } = this.state;
-        const products = (currentProducts.length === 0) ? this.props.products : currentProducts;
+        const { filteredProducts, productsPerPage } = this.state;
+        const products = (isEmpty(filteredProducts)) ? this.props.products : filteredProducts;
         return Math.ceil(products.length / productsPerPage);
     }
     
     renderProducts = () => {
-        const { currentPage, productsPerPage, currentProducts } = this.state;
-        const { products } = this.props;
+        const { currentPage, productsPerPage, filteredProducts } = this.state;
+        const products = (isEmpty(filteredProducts)) ? this.props.products : filteredProducts;
         const indexOfLastProduct = currentPage * productsPerPage;
         const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-        const displayedProducts = (currentProducts.length === 0) ? (
-            products.slice(indexOfFirstProduct, indexOfLastProduct)
-        ) : (
-            currentProducts.slice(indexOfFirstProduct, indexOfLastProduct)
-        );
+        const displayedProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
 
         return(
             (this.state.noMatch) ? (
@@ -102,10 +138,10 @@ class ProductList extends Component {
 
     render() {
         const { products, isLoading } = this.props;
-        const { currentPage, noMatch, currentProducts, activeSortingFilter } = this.state;
+        const { currentPage, noMatch, filteredProducts, resetSortingSelect } = this.state;
         return (
             <div className="ProductListWrapper d-flex flex-wrap">
-                {(isLoading === true) ? (
+                {(isLoading) ? (
                     <Spinner
                         name="wave"
                         fadeIn="none"
@@ -113,16 +149,17 @@ class ProductList extends Component {
                     />
                 ) : (
                     <Fragment>
-                        <ProductFilters
+                        <ProductFilter
                             products={products}
-                            currentProducts={currentProducts}
-                            activeSortingFilter={activeSortingFilter}
-                            handleSortingReset={this.handleSortingReset}
-                            handleSortedAndFilteredProducts={(sortedProducts) => this.handleSortedAndFilteredProducts(sortedProducts)}
+                            filteredProducts={filteredProducts}
+                            handlePriceRange={(range, filterType) => this.handlePriceRange(range, filterType)}
+                            handleGenreFilter={(filter, filterType) => this.handleGenreFilter(filter, filterType)}
+                            handleSortingReset={() => this.handleSortingReset()}
                         />
                         <div className="ProductList col-12 col-md-9">
                             <SortingSelect 
                                 handleSortingBySelection={(key, order) => this.handleSortingBySelection(key, order)} 
+                                reset={resetSortingSelect}
                             />
                             <div className="d-flex justify-content-around flex-wrap">
                                 {this.renderProducts()}
