@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { forEach, uniq, mapValues, pickBy, keys, debounce } from 'lodash';
+import { forEach, uniq, mapValues, pickBy, keys, debounce, isEmpty, filter } from 'lodash';
 // import PropTypes from 'prop-types';
 import './ProductFilter.styles.scss';
 import ChecklistFilter from './ChecklistFilter';
@@ -12,7 +12,14 @@ class ProductFilter extends Component {
         this.state = {
             resetPriceRange: false,
             resetReleaseYearRange: false,
-            genreFilter: this.getGenreFilter().reduce(
+            genreFilter: this.getChecklist('genre').reduce(
+                (options, option) => ({
+                    ...options,
+                    [option]: false
+                }),
+                {}
+            ),
+            badgeFilter: this.getChecklist('badge').reduce(
                 (options, option) => ({
                     ...options,
                     [option]: false
@@ -31,35 +38,34 @@ class ProductFilter extends Component {
        }
     }
 
-    getGenreFilter = () => {
+    getChecklist = (crit) => {
         const { products } = this.props;
-        let genreFilter = [];
+        let checklistOptions = [];
         forEach(products, (product) =>
-            genreFilter.push(product.genre)
+            checklistOptions.push(product[crit])
         )
-        return uniq(genreFilter);
+        return uniq(checklistOptions);
     }
 
-    async handleFilterChanges(e) {
-        await this.handleGenreFilterChange(e);
-        await this.handleFilterSettings();
+    async handleChecklistFilterChanges(e, checklistType, filterType) {
+        await this.handleChecklistChange(e, checklistType);
+        await this.handleFilterSettings(filterType, checklistType);
     }
 
-    handleGenreFilterChange = (e) => {
+    handleChecklistChange = (e, checklistType) => {
         const { name } = e.target;
         this.setState(prevState => ({
-            genreFilter: {
-                ...prevState.genreFilter,
-                [name]: !prevState.genreFilter[name]
+            [checklistType]: {
+                ...prevState[checklistType],
+                [name]: !prevState[checklistType][name]
             }
         }));
     };
 
-    handleFilterSettings = () => {
-        const { genreFilter } = this.state;
-        const filterType = "byGenre";
-        const activeGenreFilter = keys(pickBy(genreFilter));
-        this.props.handleGenreFilter(activeGenreFilter, filterType);
+    handleFilterSettings = (filterType, checklistType) => {
+        const checklist = this.state[checklistType];
+        const activeFilter = keys(pickBy(checklist));
+        this.props.handleChecklist(activeFilter, filterType);
     }
 
     handleRangeFilter = debounce((range, rangeType, filterType) => {
@@ -72,11 +78,11 @@ class ProductFilter extends Component {
 
     handleResetSettings = () => {
         const genreFilter = mapValues(this.state.genreFilter, () => false);
-        const filterType = "byGenre";
-        this.props.handleGenreFilter([], filterType);
-        this.props.handleSortingReset();
+        const badgeFilter = mapValues(this.state.badgeFilter, () => false);
+        this.props.handleReset();
         this.setState({
             genreFilter,
+            badgeFilter,
             resetPriceRange: true,
             resetReleaseYearRange: true
         });
@@ -84,7 +90,7 @@ class ProductFilter extends Component {
 
     render() {
         const { products, rangeFilteredProducts } = this.props;
-        const { genreFilter, resetPriceRange, resetReleaseYearRange } = this.state;
+        const { genreFilter, badgeFilter, resetPriceRange, resetReleaseYearRange } = this.state;
         return (
             <div className="ProductFilter d-flex flex-column col-12 col-md-3">
                 <p className="ProductFilterSubheader"> Price Range </p>
@@ -109,20 +115,24 @@ class ProductFilter extends Component {
                 />
                 <p className="ProductFilterSubheader"> Genre </p>
                 <div className="ProductFilterCheckList d-flex flex-column">
-                    <ChecklistFilter 
+                    <ChecklistFilter
+                        crit={'genre'}
+                        filterType={'byGenre'}
+                        checklistType={'genreFilter'}
                         products={rangeFilteredProducts}
-                        checklist={this.getGenreFilter()}
-                        genreFilter={genreFilter}
-                        handleFilterChanges={(e) => this.handleFilterChanges(e)}
+                        checklist={genreFilter}
+                        handleChecklistChanges={(e, checklistType, filterType) => this.handleChecklistFilterChanges(e, checklistType, filterType)}
                     />
                 </div>
-                <p className="ProductFilterSubheader"> Genre </p>
+                <p className="ProductFilterSubheader"> Badge </p>
                 <div className="ProductFilterCheckList d-flex flex-column">
-                    <ChecklistFilter 
+                    <ChecklistFilter
+                        crit={'badge'}
+                        filterType={'byBadge'}
+                        checklistType={'badgeFilter'}
                         products={rangeFilteredProducts}
-                        checklist={this.getGenreFilter()}
-                        genreFilter={genreFilter}
-                        handleFilterChanges={(e) => this.handleFilterChanges(e)}
+                        checklist={badgeFilter}
+                        handleChecklistChanges={(e, checklistType, filterType) => this.handleChecklistFilterChanges(e, checklistType, filterType)}
                     />
                 </div>
                 <input

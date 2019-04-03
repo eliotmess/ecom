@@ -6,6 +6,7 @@
         "genre": "horror",
         "price": 14.99,
         "year": 1994,
+        "badge": "cult classic",
         "id": "91e9c921-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -15,6 +16,7 @@
         "genre": "horror",
         "price": 19.99,
         "year": 2000,
+        "badge": "cult classic",
         "id": "91e9f030-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -24,6 +26,7 @@
         "genre": "sci-fi",
         "price": 80.99,
         "year": 1993,
+        "badge": "rare",
         "id": "91ea1740-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -33,6 +36,7 @@
         "genre": "horror",
         "price": 24.99,
         "year": 1998,
+        "badge": "forgotten",
         "id": "91ea3e50-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -42,6 +46,7 @@
         "genre": "horror",
         "price": 49.99,
         "year": 1999,
+        "badge": "rare",
         "id": "91ea6560-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -51,6 +56,7 @@
         "genre": "documentary",
         "price": 22.99,
         "year": 1995,
+        "badge": "rare",
         "id": "91ea8c70-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -60,6 +66,7 @@
         "genre": "sci-fi",
         "price": 29.99,
         "year": 1997,
+        "badge": "forgotten",
         "id": "91ea8c71-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -69,6 +76,7 @@
         "genre": "horror",
         "price": 119.99,
         "year": 1991,
+        "badge": "rare",
         "id": "91eab380-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -78,6 +86,7 @@
         "genre": "horror",
         "price": 199.99,
         "year": 2000,
+        "badge": "rare",
         "id": "91eab381-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -87,6 +96,7 @@
         "genre": "horror",
         "price": 49.99,
         "year": 1997,
+        "badge": "cult classic",
         "id": "91eada90-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -96,6 +106,7 @@
         "genre": "drama",
         "price": 99.99,
         "year": 1990,
+        "badge": "cult classic",
         "id": "91eada91-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -105,6 +116,7 @@
         "genre": "drama",
         "price": 99.99,
         "year": 1991,
+        "badge": "rare",
         "id": "91eb01a0-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -114,6 +126,7 @@
         "genre": "children",
         "price": 9.99,
         "year": 2001,
+        "badge": "90s nostalgia",
         "id": "91eb28b0-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -123,6 +136,7 @@
         "genre": "comedy",
         "price": 1.99,
         "year": 1997,
+        "badge": "90s nostalgia",
         "id": "91eb4fc0-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -132,6 +146,7 @@
         "genre": "sport",
         "price": 9.99,
         "year": 1996,
+        "badge": "90s nostalgia",
         "id": "91eb4fc1-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -141,6 +156,7 @@
         "genre": "sport",
         "price": 1.99,
         "year": 1990,
+        "badge": "90s nostalgia",
         "id": "91ebec00-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -150,6 +166,7 @@
         "genre": "documentary",
         "price": 9.99,
         "year": 2001,
+        "badge": "forgotten",
         "id": "91ebec01-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -159,6 +176,7 @@
         "genre": "action",
         "price": 19.99,
         "year": 1997,
+        "badge": "forgotten",
         "id": "91e81b70-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -168,6 +186,7 @@
         "genre": "sport",
         "price": 2.45,
         "year": 2000,
+        "badge": "90s nostalgia",
         "id": "91e86990-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -177,6 +196,7 @@
         "genre": "comedy",
         "price": 0.49,
         "year": 2002,
+        "badge": "90s nostalgia",
         "id": "91e890a0-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -186,6 +206,7 @@
         "genre": "action",
         "price": 24.95,
         "year": 1991,
+        "badge": "forgotten",
         "id": "91e890a0-48bc-11e9-993e-35556f3de7fb"
     },
     {
@@ -195,6 +216,7 @@
         "genre": "children",
         "price": 4.99,
         "year": 1995,
+        "badge": "90s nostalgia",
         "id": "91e8b7b0-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -204,6 +226,7 @@
         "genre": "drama",
         "price": 1.99,
         "year": 1997,
+        "badge": "forgotten",
         "id": "91e8dec0-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -213,6 +236,7 @@
         "genre": "children",
         "price": 3.99,
         "year": 1997,
+        "badge": "90s nostalgia",
         "id": "91e92ce0-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -222,6 +246,7 @@
         "genre": "sport",
         "price": 109.99,
         "year": 1996,
+        "badge": "90s nostalgia",
         "id": "91e953f0-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -231,6 +256,7 @@
         "genre": "children",
         "price": 8.99,
         "year": 1995,
+        "badge": "90s nostalgia",
         "id": "91e97b00-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -240,6 +266,7 @@
         "genre": "children",
         "price": 13.99,
         "year": 1996,
+        "badge": "90s nostalgia",
         "id": "91e97b01-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -249,6 +276,7 @@
         "genre": "comedy",
         "price": 3.99,
         "year": 2000,
+        "badge": "rare",
         "id": "91e9a210-48bc-11e9-993e-35cb6f3de7fb"
     },
     {
@@ -258,6 +286,7 @@
         "genre": "horror",
         "price": 13.99,
         "year": 2001,
+        "badge": "rare",
         "id": "91e9c920-48bc-11e9-993e-35cb6f3de7fb"
     }
 ]

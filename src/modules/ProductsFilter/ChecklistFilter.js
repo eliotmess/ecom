@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { sumBy } from 'lodash';
+import { sumBy, keys } from 'lodash';
 import './ProductFilter.styles.scss';
 import Checkbox from './Checkbox';
 
-const ChecklistFilter = ({ checklist, genreFilter, handleFilterChanges, products }) => (
-    checklist.map(option => {
+const ChecklistFilter = ({ checklist, handleChecklistChanges, products, filterType, checklistType, crit }) => (
+    keys(checklist).map(option => {
         return(
             <Checkbox 
                 label={option}
                 key={option}
-                numberOfType={sumBy(products, ({ genre }) => genre === option)}
-                isSelected={genreFilter[option]}
-                onFilterChange={handleFilterChanges}
+                numberOfType={sumBy(products, (product) => product[crit] === option)}
+                isSelected={checklist[option]}
+                onFilterChange={(e) => handleChecklistChanges(e, checklistType, filterType)}
             />
         );
     })

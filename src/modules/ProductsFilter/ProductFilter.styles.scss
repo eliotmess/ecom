@@ -1,5 +1,5 @@
 .ProductFilter {
-    padding: 25px 0 25px 50px;
+    padding: 25px 0;
     height: 100%;
 
     &Button {
@@ -33,7 +33,7 @@
     &CheckList {
         margin: 0;
         max-height: 150px;
-        overflow-y: scroll;
+        overflow-y: auto;
 
         &Input {
             margin-right: 5px;
@@ -66,7 +66,7 @@
 }
 
 .SortingSelect {
-    padding: 25px 50px;
+    padding: 25px 0;
 
     &Label {
         margin: 0 10px 0 0;

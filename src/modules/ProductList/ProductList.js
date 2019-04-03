@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 // import PropTypes from 'prop-types';
-import { orderBy, filter, includes, uniq, concat, transform, countBy, isEmpty } from 'lodash';
+import { orderBy, filter, includes, isEmpty } from 'lodash';
 import Spinner from 'react-spinkit';
 import './ProductList.styles.scss';
 import ProductThumbnail from '../ProductThumbnail/ProductThumbnail';
@@ -20,7 +20,8 @@ class ProductList extends Component {
             resetSortingSelect: false,
             activeFilter: [],
             activeSortingFilter: [],
-            activeGenreFilter: [],
+            byGenre: [],
+            byBadge: [],
             filteredProducts: [],
             rangeFilteredProducts: [],
             priceRange: {
@@ -59,7 +60,7 @@ class ProductList extends Component {
         this.setState({ currentPage });
     }
 
-    handleRange = (range, rangeType, filterType) => {
+    handleRangeFilter = (range, rangeType, filterType) => {
         let { activeFilter } = this.state;
         if (!includes(activeFilter, filterType)) {
             activeFilter.push(filterType)
@@ -71,40 +72,41 @@ class ProductList extends Component {
             },
             activeFilter
         }, () => {
-            this.handleFilteringProducts();
-            this.getRangeFilteredProducts();
+            this.handleFilteringProducts(filterType);
         });
     }
 
-    handleGenreFilter = (activeGenreFilter, filterType) => {
+    handleChecklistFilter = (activeChecklistFilter, filterType) => {
         let { activeFilter } = this.state;
-        if (!isEmpty(activeGenreFilter) && !includes(activeFilter, filterType)) {
+        if (!isEmpty(activeChecklistFilter) && !includes(activeFilter, filterType)) {
             activeFilter.push(filterType)
-        } else if (isEmpty(activeGenreFilter)) {
+        } else if (isEmpty(activeChecklistFilter)) {
             activeFilter = filter(activeFilter, (filter) => filter !== filterType)
         }
-        this.setState({ activeGenreFilter, activeFilter }, () => {
-            this.handleFilteringProducts();
+        this.setState({ [filterType]: activeChecklistFilter, activeFilter }, () => {
+            this.handleFilteringProducts(filterType);
         });
     }
 
-    handleFilteringProducts = () => {
+    handleFilteringProducts = (filterType) => {
         const { activeFilter } = this.state;
         let filteredProducts = this.props.products;
         activeFilter.forEach((filter) => {
             filteredProducts = filterConfig[filter](filteredProducts, this.state)
         });
         this.setState({
-            filteredProducts, 
+            filteredProducts,
             noMatch: (filteredProducts.length > 0) ? false : true
+        }, () => {
+            this.getRangeFilteredProducts();
         })
     }
 
     getRangeFilteredProducts = () => {
-        const filter = ["byPriceRange", "byReleaseYear"];
+        const rangeFilter = ["byPriceRange", "byReleaseYear"];
         let rangeFilteredProducts = this.props.products;
-        filter.forEach((filter) => {
-            rangeFilteredProducts = filterConfig[filter](rangeFilteredProducts, this.state)
+        rangeFilter.forEach((filter) => {
+            rangeFilteredProducts = filterConfig[filter](rangeFilteredProducts, this.state);
         });
         this.setState({ rangeFilteredProducts })
     }
@@ -120,8 +122,14 @@ class ProductList extends Component {
         this.setState({ activeSortingFilter: [key, order], filteredProducts });
     }
 
-    handleSortingReset = () => {
-        this.setState({ resetSortingSelect: true, currentPage: 1 });
+    handleProductListReset = () => {
+        this.setState({ 
+            resetSortingSelect: true, 
+            currentPage: 1,
+            activeFilter: []
+        }, () => {
+            this.handleFilteringProducts()
+        });
     }
 
     handlePageNumeration = () => {
@@ -139,7 +147,9 @@ class ProductList extends Component {
 
         return(
             (this.state.noMatch) ? (
-                <div><p>no match sorry</p></div>
+                <div className="d-flex justify-content-center">
+                    <p>no match sorry</p>
+                </div>
             ) : (
                 displayedProducts.map(product => {
                     return <ProductThumbnail
@@ -153,7 +163,7 @@ class ProductList extends Component {
 
     render() {
         const { products, isLoading } = this.props;
-        const { currentPage, noMatch, rangeFilteredProducts, resetSortingSelect } = this.state;
+        const { currentPage, noMatch, resetSortingSelect, rangeFilteredProducts } = this.state;
         return (
             <div className="ProductListWrapper d-flex flex-wrap">
                 {(isLoading) ? (
@@ -167,16 +177,16 @@ class ProductList extends Component {
                         <ProductFilter
                             products={products}
                             rangeFilteredProducts={(isEmpty(rangeFilteredProducts)) ? products : rangeFilteredProducts}
-                            handleRange={(range, rangeType, filterType) => this.handleRange(range, rangeType, filterType)}
-                            handleGenreFilter={(filter, filterType) => this.handleGenreFilter(filter, filterType)}
-                            handleSortingReset={() => this.handleSortingReset()}
+                            handleRange={(range, rangeType, filterType) => this.handleRangeFilter(range, rangeType, filterType)}
+                            handleChecklist={(filter, filterType) => this.handleChecklistFilter(filter, filterType)}
+                            handleReset={() => this.handleProductListReset()}
                         />
                         <div className="ProductList col-12 col-md-9">
                             <SortingSelect 
                                 handleSortingBySelection={(key, order) => this.handleSortingBySelection(key, order)} 
                                 reset={resetSortingSelect}
                             />
-                            <div className="d-flex justify-content-around flex-wrap">
+                            <div className="d-flex justify-content-center flex-wrap">
                                 {this.renderProducts()}
                             </div>
                             <PagePagination

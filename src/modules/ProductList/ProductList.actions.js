@@ -9,7 +9,7 @@ export function getProducts(products) {
 }
 
 export function fetchProductList() {
-    const API_URL = 'https://api.myjson.com/bins/ynxwa';
+    const API_URL = 'https://api.myjson.com/bins/l7wts';
     return function(dispatch) {
         fetch(API_URL)
             .then(resp => resp.json())

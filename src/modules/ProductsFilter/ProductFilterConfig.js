@@ -1,7 +1,8 @@
-import { filter, includes, reject } from 'lodash';
+import { includes, reject } from 'lodash';
 
 const filterConfig = {
-    byGenre: (products, state) => filter(products, (product) => includes(state.activeGenreFilter, product.genre)),
+    byGenre: (products, state) => reject(products, (product) => !includes(state.byGenre, product.genre)),
+    byBadge: (products, state) => reject(products, (product) => !includes(state.byBadge, product.badge)),
     byPriceRange: (products, state) => reject(products, (product) => (
         product.price < state.priceRange.min || product.price > state.priceRange.max
     )),
