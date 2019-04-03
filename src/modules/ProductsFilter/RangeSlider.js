@@ -6,7 +6,7 @@ import 'rc-tooltip/assets/bootstrap.css';
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
 
-class PriceRangeSlider extends Component {
+class RangeSlider extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -38,35 +38,36 @@ class PriceRangeSlider extends Component {
     }
 
     getMinMaxProductValues = () => {
-        const { products } = this.props;
-        const minVal = minBy(products, (p) => p.price);
-        const maxVal = maxBy(products, (p) => p.price);
+        const { products, crit } = this.props;
+        const minVal = minBy(products, (p) => p[crit]);
+        const maxVal = maxBy(products, (p) => p[crit]);
         this.setState({
-            value: [minVal.price, maxVal.price],
-            min: Math.floor(minVal.price),
-            max: Math.ceil(maxVal.price)
+            value: [minVal[crit], maxVal[crit]],
+            min: Math.floor(minVal[crit]),
+            max: Math.ceil(maxVal[crit])
         });
     }
 
     onSliderChange = (value) => {
-        const filterType = "byPriceRange";
-        this.props.handlePriceRange(value, filterType);
+        const { handleRange, rangeType, filterType } = this.props;
+        handleRange(value, rangeType, filterType);
         this.setState({ value });
     }
 
     handleSliderReset = () => {
-        const filterType = "byPriceRange";
-        this.props.handlePriceRange(this.state.value, filterType);
+        const { handleRangeReset, rangeType, filterType } = this.props;
+        handleRangeReset(this.state.value, rangeType, filterType);
     }
 
     render() {
         const { min, max, value } = this.state;
+        const { crit } = this.props;
         const marks = {
-            [min]: `$${min}`,
-            [max]: `$${max}`
+            [min]: `${(crit === 'price') ? '$' : ''}${min}`,
+            [max]: `${(crit === 'price') ? '$' : ''}${max}`
         }
         return(
-            <div className="ProductFilterPriceRange">
+            <div className="ProductFilterRange">
                 <Range
                     allowCross={false} 
                     defaultValue={[0, 200]}
@@ -74,7 +75,7 @@ class PriceRangeSlider extends Component {
                     min={min}
                     max={max}
                     onChange={this.onSliderChange}
-                    tipFormatter={value => `$${value}`}
+                    tipFormatter={value => `${(crit === 'price') ? '$' : ''}${value}`}
                     marks={marks}
                     trackStyle={[{ backgroundColor: "orange", height: "8px" }]}
                     handleStyle={{ backgroundColor: "#fefefe", border: "2px solid orange", marginTop: "-4px" }}
@@ -85,4 +86,4 @@ class PriceRangeSlider extends Component {
     }
 }
 
-export default PriceRangeSlider;
+export default RangeSlider;

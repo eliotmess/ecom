@@ -22,9 +22,14 @@ class ProductList extends Component {
             activeSortingFilter: [],
             activeGenreFilter: [],
             filteredProducts: [],
-            range: {
+            rangeFilteredProducts: [],
+            priceRange: {
                 min: 0,
                 max: 200
+            },
+            releaseYearRange: {
+                min: 0,
+                max: 2010
             }
         }
     }
@@ -54,19 +59,20 @@ class ProductList extends Component {
         this.setState({ currentPage });
     }
 
-    handlePriceRange = (range, filterType) => {
+    handleRange = (range, rangeType, filterType) => {
         let { activeFilter } = this.state;
         if (!includes(activeFilter, filterType)) {
             activeFilter.push(filterType)
         };
         this.setState({ 
-            range: {
+            [rangeType]: {
                 min: range[0], 
                 max: range[1]
             },
             activeFilter
         }, () => {
             this.handleFilteringProducts();
+            this.getRangeFilteredProducts();
         });
     }
 
@@ -92,6 +98,15 @@ class ProductList extends Component {
             filteredProducts, 
             noMatch: (filteredProducts.length > 0) ? false : true
         })
+    }
+
+    getRangeFilteredProducts = () => {
+        const filter = ["byPriceRange", "byReleaseYear"];
+        let rangeFilteredProducts = this.props.products;
+        filter.forEach((filter) => {
+            rangeFilteredProducts = filterConfig[filter](rangeFilteredProducts, this.state)
+        });
+        this.setState({ rangeFilteredProducts })
     }
 
     handleSortingBySelection = (sortingWay) => {
@@ -138,7 +153,7 @@ class ProductList extends Component {
 
     render() {
         const { products, isLoading } = this.props;
-        const { currentPage, noMatch, filteredProducts, resetSortingSelect } = this.state;
+        const { currentPage, noMatch, rangeFilteredProducts, resetSortingSelect } = this.state;
         return (
             <div className="ProductListWrapper d-flex flex-wrap">
                 {(isLoading) ? (
@@ -151,8 +166,8 @@ class ProductList extends Component {
                     <Fragment>
                         <ProductFilter
                             products={products}
-                            filteredProducts={filteredProducts}
-                            handlePriceRange={(range, filterType) => this.handlePriceRange(range, filterType)}
+                            rangeFilteredProducts={(isEmpty(rangeFilteredProducts)) ? products : rangeFilteredProducts}
+                            handleRange={(range, rangeType, filterType) => this.handleRange(range, rangeType, filterType)}
                             handleGenreFilter={(filter, filterType) => this.handleGenreFilter(filter, filterType)}
                             handleSortingReset={() => this.handleSortingReset()}
                         />
