@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import './ProductThumbnail.styles.scss';
 
-const ProductThumbnail = props => {
+const ProductThumbnail = (props) => {
+    const { discount } = props;
     const { title, cover, id, price } = props.product;
 
     return(
@@ -23,7 +24,16 @@ const ProductThumbnail = props => {
                 </div>
                 <div className="ProductThumbnailDescription">
                     <p className="ProductThumbnailDescriptionTitle">{title}</p>
-                    <p className="ProductThumbnailDescriptionPrice">$ {price}</p>
+                    <p className="ProductThumbnailDescriptionPrice">
+                        {(discount) ? (
+                            <Fragment>
+                                <span className="PrevPrice">$ {price}</span>
+                                $ {(price * discount).toFixed(2)}
+                            </Fragment>
+                        ) : (
+                            `$ ${price}`
+                        )}
+                    </p>
                 </div>
             </Link>
         </div>

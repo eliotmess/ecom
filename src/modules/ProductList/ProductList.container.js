@@ -4,7 +4,8 @@ import { fetchProductList } from './ProductList.actions';
 
 const mapStateToProps = (state) => {
     const { products, isLoading } = state.productList;
-    return { products, isLoading };
+    const { discount } = state.cartReducer;
+    return { products, isLoading, discount };
 };
 
 const mapDispatchToProps = {

@@ -14,7 +14,7 @@ export default(
         <Route exact path={'/product/:id'} component={ProductPage} />
         <Route exact path={'/faq'} component={Faq} />
         <Route exact path={'/terms'} component={Terms} />
-        <Route exact path={'/cart'} component={Cart} />
+        {/* <Route exact path={'/cart'} component={Cart} /> */}
         <Route component={NotFound} />
     </Switch>
 );

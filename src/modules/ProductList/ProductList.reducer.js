@@ -1,9 +1,8 @@
-// import products from '../../products.json';
 import { GET_PRODUCTS } from './ProductList.actions';
-
 
 const initialState = {
     products: [],
+    discountedProducts: [],
     isLoading: true
 };
 

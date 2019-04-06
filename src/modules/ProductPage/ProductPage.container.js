@@ -10,20 +10,22 @@ class ProductPageContainer extends Component {
         const selectedProduct = find(this.props.products, { 'id': this.props.match.params.id });
 
         return (
-            <ProductPage product={selectedProduct} addToCart={this.props.addToCart} />
+            <ProductPage product={selectedProduct} addToCart={this.props.addToCart} discount={this.props.discount} />
         ) 
     }   
 }
 
 const mapStateToProps = (state) => {
     const { products } = state.productList;
+    const { discount } = state.cartReducer;
     return {
-         products, 
+         products,
+         discount 
     }
 };
 
 const mapDispatchToProps = {
-    addToCart,
+    addToCart
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductPageContainer);

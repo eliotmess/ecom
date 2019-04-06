@@ -1,3 +1,30 @@
-.container {
-    // max-width: 997px;
+.MainLayoutWrapper {
+    position: relative;
 }
+
+.MainLayoutModalBackground {
+    position: fixed;
+    z-index: 950;
+    background: linear-gradient(90deg, rgb(238, 180, 171) 0%, rgb(199, 117, 120) 100%);
+    background: rgba(0, 0, 0, .3);
+    height: 100vh;
+    width: 100vw;
+}
+
+.cartBackground-enter {
+    opacity: 0.01;
+  }
+  
+  .cartBackground-enter.cartBackground-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-in;
+  }
+  
+  .cartBackground-leave {
+    opacity: 1;
+  }
+  
+  .cartBackground-leave.cartBackground-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
+  }

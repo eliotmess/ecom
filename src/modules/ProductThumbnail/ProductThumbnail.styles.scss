@@ -34,9 +34,8 @@
             transition: .4s;
 
             &First {
-                height: 600px;
-                width: auto;
-                max-width: 300px;
+                height: 515px;
+                width: 290px;
                 transition: .4s;
             }
 
@@ -47,7 +46,7 @@
                 bottom: 0;
                 left: 0;
                 right: 0;
-                height: 604px;
+                height: 515px;
                 left: 50%;
                 transform: translateX(-50%);
                 transition: .4s;
@@ -58,7 +57,7 @@
 
     &Description {
         max-width: 300px;
-        padding: 5px 0;
+        padding: 10px 0;
         text-align: center;
         color: #222222;
         text-decoration: none;
@@ -77,6 +76,12 @@
             font-weight: 500;
             font-size: 1rem;
             margin: 0;
+
+            .PrevPrice {
+                text-decoration: line-through;
+                color: #adadad;
+                margin-right: 10px;
+            }
         }
 
     }

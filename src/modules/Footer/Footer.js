@@ -1,15 +1,15 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import './Footer.scss';
 
 const Footer = props => (
-    <div className='Footer'>
-        <div className='FooterWrapper'>
-            <div className='FooterText'>©2019 O_G</div>
-            <nav className='FooterNav'>
-                <Link to='/'>Home</Link>
-                <Link to='/faq'>Faq</Link>
-                <Link to='/terms'>Terms & Conditions</Link>
+    <div className="Footer">
+        <div className="FooterWrapper">
+            <div className="FooterText">©2019 O_G</div>
+            <nav className="FooterNav">
+                <NavLink className="FooterNavLink" to="/">Home</NavLink>
+                <NavLink className="FooterNavLink" to="/faq">Faq</NavLink>
+                <NavLink className="FooterNavLink" to="/terms">Terms & Conditions</NavLink>
             </nav>
         </div>
     </div>

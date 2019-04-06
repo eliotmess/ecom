@@ -77,9 +77,9 @@ class RangeSlider extends Component {
                     onChange={this.onSliderChange}
                     tipFormatter={value => `${(crit === 'price') ? '$' : ''}${value}`}
                     marks={marks}
-                    trackStyle={[{ backgroundColor: "orange", height: "8px" }]}
-                    handleStyle={{ backgroundColor: "#fefefe", border: "2px solid orange", marginTop: "-4px" }}
-                    railStyle={{ height: "8px" }}
+                    trackStyle={[{ backgroundColor: "#ff735f", height: "4px" }]}
+                    handleStyle={{ backgroundColor: "#ff735f", border: "2px solid #ff735f"}}
+                    railStyle={{ height: "4px" }}
                 />
             </div>
         )

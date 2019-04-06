@@ -1,16 +1,17 @@
 import { find, uniqBy, reject, merge, forEach } from 'lodash';
 
-import { ADD_TO_CART, REMOVE_FROM_CART, CHANGE_QUANTITY, CALCULATE_CART } from './Cart.actions';
+import { ADD_TO_CART, REMOVE_FROM_CART, CHANGE_QUANTITY, CALCULATE_CART, APPLY_DISCOUNT } from './Cart.actions';
 
 const initialState = {
     productsInCart: [], 
-    valueInCart: 0
+    valueInCart: 0,
+    discount: false
 };
 
 export default function cart(state = initialState, action) {
     switch (action.type) {
         case ADD_TO_CART: {
-            const addedProduct = { 'id': action.id, 'price': action.price };
+            const addedProduct = { 'id': action.id, 'price': (state.discount) ? (action.price * state.discount) : action.price };
             const existedProduct = find(state.productsInCart, { 'id': action.id });
             (existedProduct) ? (
                 addedProduct.quantity = ++existedProduct.quantity
@@ -33,11 +34,17 @@ export default function cart(state = initialState, action) {
             return { ...state, productsInCart };
         }
         case CALCULATE_CART: {
+            let productsInCart = [...state.productsInCart];
             let valueInCart = 0;
-            forEach(state.productsInCart, (product) => {
+            forEach(productsInCart, (product) => {
                 valueInCart += product.quantity * product.price;
             });
             return { ...state, valueInCart };
+        }
+        case APPLY_DISCOUNT: {
+            const productsInCart = action.productsInCart;
+            const discount = action.discount;
+            return { ...state, productsInCart, discount };
         }
         default: {
             return state;

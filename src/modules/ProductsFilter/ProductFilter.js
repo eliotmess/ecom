@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { forEach, uniq, mapValues, pickBy, keys, debounce, isEmpty, filter } from 'lodash';
+import { forEach, uniq, mapValues, pickBy, keys, debounce } from 'lodash';
 // import PropTypes from 'prop-types';
 import './ProductFilter.styles.scss';
 import ChecklistFilter from './ChecklistFilter';
@@ -10,6 +10,7 @@ class ProductFilter extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            showMore: false,
             resetPriceRange: false,
             resetReleaseYearRange: false,
             genreFilter: this.getChecklist('genre').reduce(
@@ -88,11 +89,26 @@ class ProductFilter extends Component {
         });
     }
 
+    handleShowMore = () => {
+        this.setState({ showMore: true })
+    }
+
     render() {
         const { products, rangeFilteredProducts } = this.props;
-        const { genreFilter, badgeFilter, resetPriceRange, resetReleaseYearRange } = this.state;
+        const { genreFilter, badgeFilter, resetPriceRange, resetReleaseYearRange, showMore } = this.state;
         return (
             <div className="ProductFilter d-flex flex-column col-12 col-md-3">
+            <p className="ProductFilterSubheader"> Genre </p>
+            <div className="ProductFilterCheckList d-flex flex-column">
+                <ChecklistFilter
+                    crit={'genre'}
+                    filterType={'byGenre'}
+                    checklistType={'genreFilter'}
+                    products={rangeFilteredProducts}
+                    checklist={genreFilter}
+                    handleChecklistChanges={(e, checklistType, filterType) => this.handleChecklistFilterChanges(e, checklistType, filterType)}
+                />
+            </div>
                 <p className="ProductFilterSubheader"> Price Range </p>
                 <RangeSlider
                     crit={'price'}
@@ -103,43 +119,44 @@ class ProductFilter extends Component {
                     handleRange={(range, rangeType, filterType) => this.handleRangeFilter(range, rangeType, filterType)}
                     handleRangeReset={(range, rangeType, filterType) => this.handleRangeReset(range, rangeType, filterType)}
                 />
-                <p className="ProductFilterSubheader"> Year of Release </p>
-                <RangeSlider
-                    crit={'year'}
-                    rangeType={'releaseYearRange'}
-                    filterType={'byReleaseYear'}
-                    products={products}
-                    reset={resetReleaseYearRange}
-                    handleRange={(range, rangeType, filterType) => this.handleRangeFilter(range, rangeType, filterType)}
-                    handleRangeReset={(range, rangeType, filterType) => this.handleRangeReset(range, rangeType, filterType)}
-                />
-                <p className="ProductFilterSubheader"> Genre </p>
-                <div className="ProductFilterCheckList d-flex flex-column">
-                    <ChecklistFilter
-                        crit={'genre'}
-                        filterType={'byGenre'}
-                        checklistType={'genreFilter'}
-                        products={rangeFilteredProducts}
-                        checklist={genreFilter}
-                        handleChecklistChanges={(e, checklistType, filterType) => this.handleChecklistFilterChanges(e, checklistType, filterType)}
+                <div className={`ProductFilterShowMore ${(showMore) ? "ProductFilterShowMoreActive" : ""}`}>
+                    <p className="ProductFilterSubheader"> Badge </p>
+                    <div className="ProductFilterCheckList d-flex flex-column">
+                        <ChecklistFilter
+                            crit={'badge'}
+                            filterType={'byBadge'}
+                            checklistType={'badgeFilter'}
+                            products={rangeFilteredProducts}
+                            checklist={badgeFilter}
+                            handleChecklistChanges={(e, checklistType, filterType) => this.handleChecklistFilterChanges(e, checklistType, filterType)}
+                        />
+                    </div>
+                    <p className="ProductFilterSubheader"> Year of Release </p>
+                    <RangeSlider
+                        crit={'year'}
+                        rangeType={'releaseYearRange'}
+                        filterType={'byReleaseYear'}
+                        products={products}
+                        reset={resetReleaseYearRange}
+                        handleRange={(range, rangeType, filterType) => this.handleRangeFilter(range, rangeType, filterType)}
+                        handleRangeReset={(range, rangeType, filterType) => this.handleRangeReset(range, rangeType, filterType)}
                     />
                 </div>
-                <p className="ProductFilterSubheader"> Badge </p>
-                <div className="ProductFilterCheckList d-flex flex-column">
-                    <ChecklistFilter
-                        crit={'badge'}
-                        filterType={'byBadge'}
-                        checklistType={'badgeFilter'}
-                        products={rangeFilteredProducts}
-                        checklist={badgeFilter}
-                        handleChecklistChanges={(e, checklistType, filterType) => this.handleChecklistFilterChanges(e, checklistType, filterType)}
+                {(showMore) ? (
+                    ""
+                ) : (
+                    <input
+                        className="ProductFilterButton"
+                        type="button"
+                        onClick={() => this.handleShowMore()}
+                        value="Show more"
                     />
-                </div>
+                )}
                 <input
                     className="ProductFilterButton"
                     type="button"
                     onClick={() => this.handleResetSettings()}
-                    value="reset"
+                    value="Reset filter"
                 />
             </div>
         );

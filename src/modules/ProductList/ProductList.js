@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 // import PropTypes from 'prop-types';
+import { CSSTransitionGroup } from 'react-transition-group'
 import { orderBy, filter, includes, isEmpty } from 'lodash';
 import Spinner from 'react-spinkit';
 import './ProductList.styles.scss';
@@ -72,7 +73,7 @@ class ProductList extends Component {
             },
             activeFilter
         }, () => {
-            this.handleFilteringProducts(filterType);
+            this.handleFilteringProducts();
         });
     }
 
@@ -84,11 +85,11 @@ class ProductList extends Component {
             activeFilter = filter(activeFilter, (filter) => filter !== filterType)
         }
         this.setState({ [filterType]: activeChecklistFilter, activeFilter }, () => {
-            this.handleFilteringProducts(filterType);
+            this.handleFilteringProducts();
         });
     }
 
-    handleFilteringProducts = (filterType) => {
+    handleFilteringProducts = () => {
         const { activeFilter } = this.state;
         let filteredProducts = this.props.products;
         activeFilter.forEach((filter) => {
@@ -96,7 +97,7 @@ class ProductList extends Component {
         });
         this.setState({
             filteredProducts,
-            noMatch: (filteredProducts.length > 0) ? false : true
+            noMatch: (!isEmpty(filteredProducts)) ? false : true
         }, () => {
             this.getRangeFilteredProducts();
         })
@@ -155,6 +156,7 @@ class ProductList extends Component {
                     return <ProductThumbnail
                         key={product.id}
                         product={product}
+                        discount={this.props.discount}
                     />  
                 })
             )
@@ -187,7 +189,13 @@ class ProductList extends Component {
                                 reset={resetSortingSelect}
                             />
                             <div className="d-flex justify-content-center flex-wrap">
-                                {this.renderProducts()}
+                                <CSSTransitionGroup
+                                component={Fragment}
+                                transitionName="productsShow"
+                                transitionEnterTimeout={300}
+                                transitionLeaveTimeout={300}>
+                                    {this.renderProducts()}
+                                </CSSTransitionGroup>
                             </div>
                             <PagePagination
                                 products={products}

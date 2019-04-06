@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import { Row, Col } from 'reactstrap';
 import './ProductPage.styles.scss';
 
 const ProductPage = (props) => {
-    const { addToCart } = props;
+    const { addToCart, discount } = props;
     const { title, desc, cover, price, id, year, genre } = props.product;
     
     return (
@@ -19,7 +19,16 @@ const ProductPage = (props) => {
             <div className="ProductPageDescription col-12 col-md-8">
                 <h1 className='ProductPageDescriptionTitle'>{title}</h1>
                 <h4 className='ProductPageDescriptionGenre'>{genre}, {year} release</h4>
-                <h3 className='ProductPageDescriptionPrice'>${price}</h3>
+                <h3 className='ProductPageDescriptionPrice'>
+                    {(discount) ? (
+                        <Fragment>
+                            <span className="PrevPrice">$ {price}</span>
+                            $ {(price * discount).toFixed(2)}
+                        </Fragment>
+                    ) : (
+                        `$ ${price}`
+                    )}
+                </h3>
                 <p className='ProductPageDescriptionText'>{desc}</p>
                 <button
                     className="ProductPageDescriptionToCartBtn" 
