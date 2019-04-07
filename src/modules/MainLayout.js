@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { forEach } from 'lodash';
 import Header from '../modules/Header/Header';
 import Footer from '../modules/Footer/Footer';
-import Cart from './Cart/Cart';
+import Cart from './Cart/Cart.container';
 import './MainLayout.scss';
 import { connect } from 'react-redux';
 import { CSSTransitionGroup } from 'react-transition-group'

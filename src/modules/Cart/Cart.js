@@ -1,16 +1,14 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { find, forEach, isEmpty } from 'lodash';
+import React, { Component } from 'react';
+import { find, isEmpty } from 'lodash';
 import CartItem from './CartItem';
-import { removeFromCart, changeQuantity, calculateCart, applyDiscount } from './Cart.actions';
+import DiscountInput from './DiscountInput';
 import './Cart.styles.scss';
 
 class Cart extends Component {
     constructor(props) {
         super(props);
         this.state = ({
-            shippingPrice: 14,
-            discountApplied: false
+            shippingPrice: 14
         })
     }
 
@@ -32,58 +30,16 @@ class Cart extends Component {
         this.props.changeQuantity(id, quantity);
     }
 
-    applyDiscount = (productsInCart, discount) => {
-        forEach(productsInCart, (product) => {
-            product.price = product.price * discount;
-        });
-        this.props.applyDiscount(productsInCart, discount);
-        this.setState({ discountApplied: true });
-    }
-
-    onSubmitDiscount = (e) => {
-        e.preventDefault();
-        if(isEmpty(this.discountCode.value)) { return };
-        const { productsInCart } = this.props;
-        const discountCode = this.discountCode.value.trim().toUpperCase();
-        let discount;
-        switch(discountCode) {
-            case "FREESHIP":
-                this.setState({ shippingPrice: 0, discountApplied: true });
-                break;
-            case "20PER":
-                discount = .8;
-                this.applyDiscount(productsInCart, discount);
-            break;
-            case "BAGUVIX":
-                discount = .01;
-                this.applyDiscount(productsInCart, discount);
-                this.setState({ shippingPrice: 0 });
-            break;
-            default:
-                this.discountCode.parentNode.classList.add('wrongCode');
-                this.discountCode.setAttribute('placeholder', 'Sorry! Code is wrong.');
-        }
-        this.discountCode.value = '';
-    }
-
-    onCancelDiscount = () => {
-        if (this.props.discount) {
-            let productsInCart = this.props.productsInCart;
-            const discount = false;
-            forEach(productsInCart, (product) => {
-                product.price = product.price / this.props.discount;
-            });
-            this.props.applyDiscount(productsInCart, discount);
-        }
-        this.setState({ discountApplied: false, shippingPrice: 14 });
+    recountShip = (shippingPrice) => {
+        this.setState({ shippingPrice });
     }
 
     render() {
         return (
             <div className={`Cart d-flex ${(this.props.cartIn) && `CartVisible`}`}>
-                <div className="CartProductList">
+                <div className="CartProductList d-flex flex-column justify-content-between">
                     {!isEmpty(this.props.productsInCart) ?
-                        <Fragment>
+                        <div className="CartProductListHeaderWrapper">
                             <div className="CartProductListHeader d-flex justify-content-between">
                                 <h1 className="CartProductListHeaderText">Cart</h1>
                                 <button 
@@ -108,9 +64,9 @@ class Cart extends Component {
                                     />    
                                 )}
                             </div>
-                        </Fragment>
+                        </div>
                         :
-                        <Fragment>
+                        <div className="CartProductListHeaderWrapper">
                             <div className="CartProductListHeader d-flex justify-content-end">
                                 <button 
                                     className="CartProductListHeaderBtn"
@@ -120,44 +76,17 @@ class Cart extends Component {
                                 </button>
                             </div>
                             <h2 className="CartProductListEmpty">Cart is empty.</h2>
-                        </Fragment>
+                        </div>
                     }
                     <div className="CartProductListCheckout d-flex flex-column">
                         <h5 className="CartProductListCheckoutTotalPrice">total: <span className="Amount">$ {this.props.valueInCart.toFixed(2)}</span></h5>
                         <h6 className="CartProductListCheckoutShippingInfo">{(this.state.shippingPrice > 0) ? `+ $ ${this.state.shippingPrice.toFixed(2)} for Express Shipping` : "FREE SHIPPING INCLUDED!"}</h6>
-                        <div className="CartProductListCheckoutDiscount d-flex justify-content-end align-items-center">  
-                            {(this.state.discountApplied) ? (
-                                <div className="CartProductListCheckoutDiscountApplied d-flex align-items-center">
-                                    <p className="CartProductListCheckoutDiscountAppliedText">Your discount is applied!</p>
-                                    <button 
-                                        type="text"
-                                        className="CartProductListCheckoutDiscountAppliedCancel" 
-                                        onClick={() => this.onCancelDiscount()
-                                    }>
-                                        Cancel it
-                                    </button>
-                                </div>
-                            ) : (
-                                <Fragment>
-                                    <form 
-                                        onSubmit={(e) => this.onSubmitDiscount(e)}
-                                        className="CartProductListCheckoutDiscountForm"   
-                                    >
-                                        <input
-                                            className="CartProductListCheckoutDiscountFormInput"
-                                            placeholder="Got coupon?"
-                                            type="text"
-                                            ref={code => this.discountCode = code}
-                                        />
-                                        <button
-                                            className="CartProductListCheckoutDiscountFormSubmit"
-                                        >
-                                        >
-                                        </button>
-                                    </form>
-                                </Fragment>
-                            )}
-                        </div>
+                        <DiscountInput
+                            applyDiscount={this.props.applyDiscount}
+                            countShip={(val) => this.recountShip(val)}
+                            productsInCart={this.props.productsInCart}
+                            discount={this.props.discount}
+                        />
                         <button 
                             className="CartProductListCheckoutBtn"
                             disabled={(isEmpty(this.props.productsInCart)) ? true : false}
@@ -172,23 +101,4 @@ class Cart extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    const { products } = state.productList;
-    const { productsInCart, valueInCart, discount } = state.cartReducer;
-
-    return {
-        products,
-        productsInCart,
-        valueInCart,
-        discount
-    }
-};
-
-const mapDispatchToProps = {
-    removeFromCart,
-    changeQuantity,
-    calculateCart,
-    applyDiscount
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default Cart;

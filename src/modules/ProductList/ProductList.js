@@ -190,11 +190,11 @@ class ProductList extends Component {
                             />
                             <div className="d-flex justify-content-center flex-wrap">
                                 <CSSTransitionGroup
-                                component={Fragment}
-                                transitionName="productsShow"
-                                transitionEnterTimeout={300}
-                                transitionLeaveTimeout={300}>
-                                    {this.renderProducts()}
+                                    component={Fragment}
+                                    transitionName="productsShow"
+                                    transitionEnterTimeout={300}
+                                    transitionLeaveTimeout={300}>
+                                        {this.renderProducts()}
                                 </CSSTransitionGroup>
                             </div>
                             <PagePagination
