@@ -10,6 +10,7 @@ class SortingSelect extends Component {
                 key: 'default',
                 order: 'custom'
             },
+            sortingType: "sortingBySelection",
             reset: false
         }
     }
@@ -24,7 +25,8 @@ class SortingSelect extends Component {
                 }
             };
             this.setState({ reset: false, value: defaultSettings.value, sortingWay: defaultSettings.sortingWay }, () => {
-                this.props.handleSortingBySelection(this.state.sortingWay);
+                const { key, order } = this.state.sortingWay;
+                this.props.handleSortingBySelection(key, order, this.state.sortingType);
             });
         }
     }
@@ -39,7 +41,8 @@ class SortingSelect extends Component {
 
     onSelect = (e) => {
         this.setState({ value: e.target.value, sortingWay: sortingConfig[e.target.value] }, () => {
-            this.props.handleSortingBySelection(this.state.sortingWay);
+            const { key, order } = this.state.sortingWay;
+            this.props.handleSortingBySelection(key, order, this.state.sortingType);
         });
     }
     

@@ -5,7 +5,7 @@ import Footer from '../modules/Footer/Footer';
 import Cart from './Cart/Cart.container';
 import './MainLayout.scss';
 import { connect } from 'react-redux';
-import { CSSTransitionGroup } from 'react-transition-group'
+import { CSSTransitionGroup } from 'react-transition-group';
 
 
 class MainLayout extends Component {

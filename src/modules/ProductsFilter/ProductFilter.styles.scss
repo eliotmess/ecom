@@ -53,12 +53,17 @@
         max-height: 150px;
         overflow-y: auto;
 
+        input[type=checkbox] {
+            height: auto;
+            width: auto;
+            vertical-align: middle;
+        }
+
         &Input {
             position: absolute;
             opacity: 0;
 
             &Label {
-                // font-family: 'Rubik', sans-serif;
                 position: relative;
                 cursor: pointer;
                 padding: 0;
@@ -179,6 +184,41 @@
             border-color: #666666;
             color: #555555; 
             outline: none;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    
+    .ProductFilter {
+        padding: 25px;
+    
+        &Button {
+            margin: 7px 0;
+            padding: 5px 0;
+            font-size: .9rem;
+            color: #666666;
+            background: none;
+            border: solid #aaaaaa .1px;
+    
+            &:first-of-type {
+                margin-top: 30px;
+            }
+    
+            &:hover {
+                color: #666666;
+                background: none;
+            }
+        }
+    
+        &CheckList {
+    
+            &Input {
+    
+                &:hover + &Label::before {
+                    background: none;
+                }
+            }
         }
     }
 }

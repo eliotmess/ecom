@@ -8,6 +8,9 @@ const filterConfig = {
     )),
     byReleaseYear: (products, state) => reject(products, (product) => (
         product.year < state.releaseYearRange.min || product.year > state.releaseYearRange.max
+    )),
+    bySearchQuery: (products, state) => reject(products, (product) => (
+        !includes(product.title.toLowerCase(), state.searchQuery.toLowerCase().trim())
     ))
 }
 

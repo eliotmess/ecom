@@ -1,15 +1,16 @@
 import { connect } from 'react-redux';
 import ProductList from './ProductList';
-import { fetchProductList } from './ProductList.actions';
+import { fetchProductList, setSearchQuery } from './ProductList.actions';
 
 const mapStateToProps = (state) => {
-    const { products, isLoading } = state.productList;
+    const { products, isLoading, searchQuery } = state.productList;
     const { discount } = state.cartReducer;
-    return { products, isLoading, discount };
+    return { products, isLoading, discount, searchQuery };
 };
 
 const mapDispatchToProps = {
-    fetchProductList
+    fetchProductList,
+    setSearchQuery
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductList);

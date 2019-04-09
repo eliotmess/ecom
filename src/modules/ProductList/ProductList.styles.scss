@@ -49,21 +49,64 @@
 //Show products transitions
 
 .productsShow-enter {
-    opacity: 0.01;
-    overflow: hidden;
-  }
+    filter: blur(8px);
+}
   
-  .productsShow-enter.productsShow-enter-active {
-    opacity: 1;
-    transform: translateY(0);
-    transition: all 300ms ease-in;
-  }
-  
-  .productsShow-leave {
-    opacity: 1;
-  }
-  
-  .productsShow-leave.productsShow-leave-active {
-    opacity: 0.01;
-    transition: opacity 300ms ease-in;
+.productsShow-enter.productsShow-enter-active {
+    filter: blur(2px);
+    transition: filter 300ms ease-in-out;
+}
+
+.productsShow-leave {
+    filter: blur(2px);
+}
+
+.productsShow-leave.productsShow-leave-active {
+    filter: blur(8px);
+    transition: filter 200ms ease-in-out;
+}
+
+  // media queries
+
+  @media (max-width: 768px) {
+
+    .ProductListWrapper {
+        padding: 230px 35px 0 35px;
+        max-width: 1200px;
+        display: flex;
+        margin: 0 auto;
+    
+        .SpinnerWrapper {
+            margin: 0 auto;
+        }
+    
+        .sk-spinner {
+            transform: scale(2.5);
+        }
+    }
+    
+    .ProductList {
+        padding: 0;
+    }
+    
+    .ProductFilter {
+        position: static;
+    }
+    
+    .PageNumbers {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+        li {
+    
+            &:hover {
+                cursor: pointer;
+                margin: 10px;
+                border: none;
+                
+            }
+        }
+    }
+    
   }

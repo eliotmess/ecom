@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 // import PropTypes from 'prop-types';
-import { CSSTransitionGroup } from 'react-transition-group'
-import { orderBy, filter, includes, isEmpty } from 'lodash';
+import { CSSTransitionGroup } from 'react-transition-group';
+import { filter, includes, isEmpty } from 'lodash';
 import Spinner from 'react-spinkit';
 import './ProductList.styles.scss';
 import ProductThumbnail from '../ProductThumbnail/ProductThumbnail';
@@ -9,6 +9,7 @@ import ProductFilter from '../ProductsFilter/ProductFilter';
 import PagePagination from '../PagePagination/PagePagination';
 import SortingSelect from '../ProductsFilter/SortingSelect';
 import filterConfig from '../ProductsFilter/ProductFilterConfig';
+import sortConfig from './SortConfig';
 
 
 class ProductList extends Component {
@@ -21,9 +22,10 @@ class ProductList extends Component {
             resetSortingSelect: false,
             activeFilter: [],
             activeSortingFilter: [],
+            filteredProducts: [],
+            searchQuery: '',
             byGenre: [],
             byBadge: [],
-            filteredProducts: [],
             rangeFilteredProducts: [],
             priceRange: {
                 min: 0,
@@ -40,7 +42,7 @@ class ProductList extends Component {
         this.props.fetchProductList();
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
         // moving to last visible page after filtering product list
         const { currentPage } = this.state;
         const pageNumber = this.handlePageNumeration();
@@ -51,6 +53,17 @@ class ProductList extends Component {
         if (this.state.resetSortingSelect) {
             this.setState({ resetSortingSelect: false })
         }
+
+        if (prevProps.searchQuery !== this.props.searchQuery) {
+            const filterType = 'bySearchQuery';
+            this.handleSearch(filterType);
+        }
+    }
+
+    handlePageNumeration = () => {
+        const { productsPerPage, filteredProducts } = this.state;
+        let products = (isEmpty(filteredProducts)) ? this.props.products : filteredProducts;
+        return Math.ceil(products.length / productsPerPage);
     }
 
     handleTurningPage = (currentPage) => {
@@ -89,62 +102,73 @@ class ProductList extends Component {
         });
     }
 
+    handleSearch = (filterType) => {
+        const { searchQuery } = this.props;
+        let { activeFilter } = this.state;
+        if (!isEmpty(searchQuery) && !includes(activeFilter, filterType)) {
+            activeFilter.push(filterType)
+        } else if (isEmpty(searchQuery)) {
+            activeFilter = filter(activeFilter, (filter) => filter !== filterType)
+        }
+        this.setState({ activeFilter, searchQuery }, () => {
+            this.handleFilteringProducts();
+        });
+    }
+
     handleFilteringProducts = () => {
         const { activeFilter } = this.state;
-        let filteredProducts = this.props.products;
+        const { products } = this.props;
+        let filteredProducts = products;
         activeFilter.forEach((filter) => {
             filteredProducts = filterConfig[filter](filteredProducts, this.state)
         });
         this.setState({
-            filteredProducts,
-            noMatch: (!isEmpty(filteredProducts)) ? false : true
+            noMatch: (!isEmpty(filteredProducts)) ? false : true,
+            filteredProducts
         }, () => {
             this.getRangeFilteredProducts();
         })
     }
 
     getRangeFilteredProducts = () => {
-        const rangeFilter = ["byPriceRange", "byReleaseYear"];
-        let rangeFilteredProducts = this.props.products;
+        // to recount quantity of available products
+        const rangeFilter = ["byPriceRange", "byReleaseYear", "bySearchQuery"];
+        let rangeFilteredProducts = this.props.products.slice();
         rangeFilter.forEach((filter) => {
             rangeFilteredProducts = filterConfig[filter](rangeFilteredProducts, this.state);
         });
         this.setState({ rangeFilteredProducts })
     }
 
-    handleSortingBySelection = (sortingWay) => {
-        const { key, order } = sortingWay;
-        const products = (!isEmpty(this.state.filteredProducts)) ? this.state.filteredProducts : this.props.products;
-        const filteredProducts = (key === 'default') ? (
-            filter(this.props.products, (product) => includes(this.state.filteredProducts, product))
-        ) : (
-            orderBy(products, key, order)
-        )
-        this.setState({ activeSortingFilter: [key, order], filteredProducts });
+    handleSortingBySelection = (key, order, sortingType) => {
+        this.setState({ activeSortingFilter: {key, order, sortingType} });
     }
 
     handleProductListReset = () => {
         this.setState({ 
             resetSortingSelect: true, 
             currentPage: 1,
-            activeFilter: []
+            activeFilter: [],
+            searchQuery: ''
         }, () => {
-            this.handleFilteringProducts()
+            this.handleFilteringProducts();
+            this.props.setSearchQuery(this.state.searchQuery);
         });
     }
 
-    handlePageNumeration = () => {
-        const { filteredProducts, productsPerPage } = this.state;
-        const products = (isEmpty(filteredProducts)) ? this.props.products : filteredProducts;
-        return Math.ceil(products.length / productsPerPage);
+    getDisplayedProducts = () => {
+        const { currentPage, productsPerPage, filteredProducts, activeSortingFilter } = this.state;
+        let products = (isEmpty(filteredProducts)) ? this.props.products : filteredProducts;
+        if (!isEmpty(activeSortingFilter)) {
+            products = sortConfig[activeSortingFilter.sortingType](products, this.props.products, this.state)
+        };
+        const indexOfLastProduct = currentPage * productsPerPage;
+        const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+        return products.slice(indexOfFirstProduct, indexOfLastProduct);
     }
     
     renderProducts = () => {
-        const { currentPage, productsPerPage, filteredProducts } = this.state;
-        const products = (isEmpty(filteredProducts)) ? this.props.products : filteredProducts;
-        const indexOfLastProduct = currentPage * productsPerPage;
-        const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-        const displayedProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+        const displayedProducts = this.getDisplayedProducts();
 
         return(
             (this.state.noMatch) ? (
@@ -185,7 +209,7 @@ class ProductList extends Component {
                         />
                         <div className="ProductList col-12 col-md-9">
                             <SortingSelect 
-                                handleSortingBySelection={(key, order) => this.handleSortingBySelection(key, order)} 
+                                handleSortingBySelection={(key, order, sortingType) => this.handleSortingBySelection(key, order, sortingType)} 
                                 reset={resetSortingSelect}
                             />
                             <div className="d-flex justify-content-center flex-wrap">
@@ -193,7 +217,7 @@ class ProductList extends Component {
                                     component={Fragment}
                                     transitionName="productsShow"
                                     transitionEnterTimeout={300}
-                                    transitionLeaveTimeout={300}>
+                                    transitionLeaveTimeout={200}>
                                         {this.renderProducts()}
                                 </CSSTransitionGroup>
                             </div>

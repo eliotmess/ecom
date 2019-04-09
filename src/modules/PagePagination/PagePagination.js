@@ -51,13 +51,15 @@ class PagePagination extends Component {
             ) : (
                 <div className='PageNumbers'>
                     <input
-                        type='button' 
+                        type='button'
+                        className='PageNumbersBtn'
                         onClick={() => this.decreaseProductPage()} 
                         value='<' 
                     />
                     {this.renderPageNumbers()}
                     <input 
-                        type='button' 
+                        type='button'
+                        className='PageNumbersBtn'
                         onClick={() => this.increaseProductPage()} 
                         value='>' 
                     />

@@ -6,41 +6,41 @@ const CartItem = (props) => {
     const prevPrice = props.item.price;
     
     return (
-        <div className="CartProductListItem d-flex align-items-center">
+        <div className="CartContentItem d-flex align-items-center">
             <img 
-                className="CartProductListItemCoverImg" 
+                className="CartContentItemCoverImg" 
                 src={process.env.PUBLIC_URL + `/images/${cover}`} 
                 alt={title} 
             />
-            <div className="CartProductListInfoWrapper d-flex flex-column">
-                <div className="CartProductListItemTitle d-flex justify-content-between">
-                    <p className="CartProductListItemTitleTxt">{title}</p>
-                    <button className="CartProductListItemTitleRemoveBtn" onClick={() => removeFromCart(id)}>
-                        <img className="CartProductListItemTitleRemoveBtnImg" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0xMiAxMS4yOTNsMTAuMjkzLTEwLjI5My43MDcuNzA3LTEwLjI5MyAxMC4yOTMgMTAuMjkzIDEwLjI5My0uNzA3LjcwNy0xMC4yOTMtMTAuMjkzLTEwLjI5MyAxMC4yOTMtLjcwNy0uNzA3IDEwLjI5My0xMC4yOTMtMTAuMjkzLTEwLjI5My43MDctLjcwNyAxMC4yOTMgMTAuMjkzeiIvPjwvc3ZnPg==" alt="remove" />
+            <div className="CartContentInfoWrapper d-flex flex-column">
+                <div className="CartContentItemTitle d-flex justify-content-between">
+                    <p className="CartContentItemTitleTxt">{title}</p>
+                    <button className="CartContentItemTitleRemoveBtn" onClick={() => removeFromCart(id)}>
+                        <img className="CartContentItemTitleRemoveBtnImg" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0xMiAxMS4yOTNsMTAuMjkzLTEwLjI5My43MDcuNzA3LTEwLjI5MyAxMC4yOTMgMTAuMjkzIDEwLjI5My0uNzA3LjcwNy0xMC4yOTMtMTAuMjkzLTEwLjI5MyAxMC4yOTMtLjcwNy0uNzA3IDEwLjI5My0xMC4yOTMtMTAuMjkzLTEwLjI5My43MDctLjcwNyAxMC4yOTMgMTAuMjkzeiIvPjwvc3ZnPg==" alt="remove" />
                     </button>
                 </div>
                 <div className="d-flex justify-content-between">
-                    <div className="CartProductListItemQuantity">
+                    <div className="CartContentItemQuantity">
                         <input
-                            className="CartProductListItemQuantityBtn"
+                            className="CartContentItemQuantityBtn"
                             type="button"
                             value="-"
                             onClick={() => decreaseQuantity(id, quantity)}
                         />
                         <input
-                            className="CartProductListItemQuantityInput"
+                            className="CartContentItemQuantityInput"
                             type="number"
                             value={quantity}
                             onChange={(e) => changeQuantity(id, e.target.value)}
                         />
                         <input
-                            className="CartProductListItemQuantityBtn"
+                            className="CartContentItemQuantityBtn"
                             type="button"
                             value="+"
                             onClick={() => increaseQuantity(id, quantity)}
                         />
                     </div>
-                    <p className="CartProductListItemPrice">
+                    <p className="CartContentItemPrice">
                     {(discount) ? (
                         <Fragment>
                             <span className="PrevPrice">$ {prevPrice}</span>

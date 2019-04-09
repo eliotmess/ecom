@@ -60,22 +60,15 @@
             margin-left: 20px;
             position: relative;
 
-            &Cart {
-                width: 30px;
-                margin-right: 4px;
-            }
-
-            &User {
-                width: 25px;
-            }
-
             &:hover {
                 text-decoration: none;
+                cursor: pointer;
             }
 
             &:visited {
                 color: #222222;
             }
+
             &.NavLinkActive {
                 font-weight: 500;
             }
@@ -95,6 +88,31 @@
                 border-radius: 50%;
                 min-height: 18px;
                 min-width: 18px;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+
+    .Header {
+    
+        &Logo {
+            padding: 25px 0 0 0;
+            font-size: 2.1rem;
+        }
+    
+    
+        &Nav {
+            margin-bottom: 15px;
+    
+            &SearchBar {
+    
+                &:active,
+                &:focus {
+                    width: 180px;
+                    background-position: 155px 6px;
+                }
             }
         }
     }

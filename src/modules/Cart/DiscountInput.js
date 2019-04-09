@@ -64,13 +64,13 @@ class DiscountInput extends Component {
 
     render() {
         return (
-            <div className="CartProductListCheckoutDiscount d-flex justify-content-end align-items-center">  
+            <div className="CartCheckoutDiscount d-flex justify-content-end align-items-center">  
                 {(this.state.discountApplied) ? (
-                    <div className="CartProductListCheckoutDiscountApplied d-flex align-items-center">
-                        <p className="CartProductListCheckoutDiscountAppliedText">Your discount is applied!</p>
+                    <div className="CartCheckoutDiscountApplied d-flex align-items-center">
+                        <p className="CartCheckoutDiscountAppliedText">Your discount is applied!</p>
                         <button 
                             type="text"
-                            className="CartProductListCheckoutDiscountAppliedCancel" 
+                            className="CartCheckoutDiscountAppliedCancel" 
                             onClick={() => this.onCancelDiscount()}
                         >
                             Cancel it
@@ -80,16 +80,16 @@ class DiscountInput extends Component {
                     <Fragment>
                         <form 
                             onSubmit={(e) => this.onSubmitDiscount(e)}
-                            className="CartProductListCheckoutDiscountForm"   
+                            className="CartCheckoutDiscountForm"   
                         >
                             <input
-                                className="CartProductListCheckoutDiscountFormInput"
+                                className="CartCheckoutDiscountFormInput"
                                 placeholder="Got coupon?"
                                 type="text"
                                 ref={value => this.discountCode = value}
                             />
                             <button
-                                className="CartProductListCheckoutDiscountFormSubmit"
+                                className="CartCheckoutDiscountFormSubmit"
                             >
                             >
                             </button>

@@ -1,0 +1,23 @@
+.PageNumbers {
+
+    &Btn {
+        border: none;
+        padding: 3px 10px;
+
+        &:hover {
+            cursor: pointer;
+            color: #fefefe;
+            background: rgb(255,115,95);
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .PageNumbers {
+
+        &Btn {
+            color: #fefefe;
+            background: rgb(255,115,95);
+        }
+    }
+}

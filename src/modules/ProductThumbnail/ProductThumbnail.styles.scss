@@ -1,8 +1,5 @@
 .ProductThumbnail {
     background: none;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
     padding: 0;
     margin-bottom: 40px;
 
@@ -84,5 +81,74 @@
             }
         }
 
+    }
+}
+
+@media (max-width: 1024px) {
+
+    .ProductThumbnail {
+    
+        &Cover {
+    
+            &Img {
+    
+                &First {
+                    height: 450px;
+                    width: 263px;
+                }
+    
+                &Second {
+                    height: 450px;
+                }
+            }
+        }
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .ProductThumbnail {
+    
+        &Link:hover {
+            text-decoration: none;
+        }
+    
+        &Link:hover &Cover {
+            transform: rotate(0);
+            transition: 0s;
+        }
+    
+        &Link:hover &CoverImgFirst {
+            transform: scale(1);
+            transition: 0;
+        }
+    
+        &Link:hover &CoverImgSecond {
+            transform: translateX(-50%);
+            transition-delay: 0s;
+            transition: 0s;
+        }
+    
+        &Cover {
+            position: relative;
+            transition: 0s;
+    
+            &Img {
+                transition: 0s;
+    
+                &First {
+                    height: 515px;
+                    width: 290px;
+                    transition: 0s;
+                }
+    
+                &Second {
+                    height: 515px;
+                    transform: translateX(-50%);
+                    transition: 0s;
+                }
+            }
+        }
     }
 }

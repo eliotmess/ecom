@@ -2,28 +2,22 @@ import React from "react";
 import { Row } from 'reactstrap';
 import { Link, NavLink } from 'react-router-dom';
 import './Header.scss';
+import SearchBar from './SearchBar';
 
 const Header = props => (
     <div className="Header">
-        <Row className="HeaderWrapper justify-content-between">
+        <Row className="HeaderWrapper justify-content-center justify-content-md-between flex-column flex-md-row">
             <div className="HeaderLogo"><Link to="/">Video Dreams</Link></div>
-            <nav className="HeaderNav d-flex justify-content-end align-items-center">
-                {/* <NavLink exact to="/" activeClassName="NavLinkActive">Home</NavLink>
-                <NavLink exact to="/faq" activeClassName="NavLinkActive">Faq</NavLink>
-                <NavLink exact to="/terms" activeClassName="NavLinkActive">Terms & Conditions</NavLink> */}
-                <input
-                    type="text"
-                    className="HeaderNavSearchBar"
-                />
+            <nav className="HeaderNav d-flex justify-content-center align-items-center">
+                <SearchBar />
                 <NavLink to="/cart" className="HeaderNavIcon" activeClassName="NavLinkActive">
-                    <img className="HeaderNavIconUser" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjAuODIyIDE4LjA5NmMtMy40MzktLjc5NC02LjY0MS0xLjQ5LTUuMDktNC40MTggNC43MTktOC45MTIgMS4yNTEtMTMuNjc4LTMuNzMyLTEzLjY3OC01LjA4MiAwLTguNDY1IDQuOTQ5LTMuNzMyIDEzLjY3OCAxLjU5OCAyLjk0NS0xLjcyNSAzLjY0MS01LjA5IDQuNDE4LTIuOTc5LjY4OC0zLjE3OCAyLjE0My0zLjE3OCA0LjY2M2wuMDA1IDEuMjQxaDEuOTk1YzAtMy4xMzQtLjEyNS0zLjU1IDEuODM4LTQuMDAzIDIuODUxLS42NTcgNS41NDMtMS4yNzggNi41MjUtMy40NTYuMzU5LS43OTUuNTkyLTIuMTAzLS4zMzgtMy44MTUtMi4wNTgtMy43OTktMi41NzgtNy4wODktMS40MjMtOS4wMjYgMS4zNTQtMi4yNzUgNS40MjYtMi4yNjQgNi43NjctLjAzNCAxLjE1IDEuOTExLjYzOSA1LjIxOS0xLjQwMyA5LjA3Ni0uOTEgMS43MTktLjY3MSAzLjAyMy0uMzEgMy44MTQuOTkgMi4xNjcgMy43MDcgMi43OTQgNi41ODQgMy40NTggMS44NzkuNDM2IDEuNzYuODgyIDEuNzYgMy45ODZoMS45OTVsLjAwNS0xLjI0MWMwLTIuNTItLjE5OS0zLjk3NS0zLjE3OC00LjY2M3oiLz48L3N2Zz4=" 
-                    alt="User" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path d="M20.822 18.096c-3.439-.794-6.641-1.49-5.09-4.418 4.719-8.912 1.251-13.678-3.732-13.678-5.082 0-8.465 4.949-3.732 13.678 1.598 2.945-1.725 3.641-5.09 4.418-2.979.688-3.178 2.143-3.178 4.663l.005 1.241h1.995c0-3.134-.125-3.55 1.838-4.003 2.851-.657 5.543-1.278 6.525-3.456.359-.795.592-2.103-.338-3.815-2.058-3.799-2.578-7.089-1.423-9.026 1.354-2.275 5.426-2.264 6.767-.034 1.15 1.911.639 5.219-1.403 9.076-.91 1.719-.671 3.023-.31 3.814.99 2.167 3.707 2.794 6.584 3.458 1.879.436 1.76.882 1.76 3.986h1.995l.005-1.241c0-2.52-.199-3.975-3.178-4.663z"/></svg>
                 </NavLink>
                 <div
                     className="HeaderNavIcon"
                     onClick={props.handleCartVisibility}
                 >
-                    <img className="HeaderNavIconCart" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNC41NTggN2w0LjcwMS00LjcwMmMuMTk5LS4xOTguNDYtLjI5OC43MjEtLjI5OC42MTMgMCAxLjAyLjUwNSAxLjAyIDEuMDI5IDAgLjI1LS4wOTIuNTA0LS4yOTkuNzExbC0zLjI2IDMuMjZoLTIuODgzem0xMi4wMDEgMGgyLjg4M2wtNC43MDEtNC43MDJjLS4xOTktLjE5OC0uNDYtLjI5OC0uNzIxLS4yOTgtLjYxMyAwLTEuMDIuNTA1LTEuMDIgMS4wMjkgMCAuMjUuMDkyLjUwNC4yOTkuNzExbDMuMjYgMy4yNnptMy43MDMgNGwtLjAxNi4wNDEtMy41OTggOC45NTloLTkuMjk2bC0zLjU5Ny04Ljk2MS0uMDE2LS4wMzloMTYuNTIzem0zLjczOC0yaC0yNHYyaC42NDNjLjUzNCAwIDEuMDIxLjMwNCAxLjI1Ni43ODRsNC4xMDEgMTAuMjE2aDEybDQuMTAyLTEwLjIxNGMuMjMzLS40ODEuNzIyLS43ODYgMS4yNTYtLjc4NmguNjQydi0yeiIvPjwvc3ZnPg==" alt="Cart" />
+                    <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" width="30" height="30" viewBox="0 0 24 24"><path d="M4.558 7l4.701-4.702c.199-.198.46-.298.721-.298.613 0 1.02.505 1.02 1.029 0 .25-.092.504-.299.711l-3.26 3.26h-2.883zm12.001 0h2.883l-4.701-4.702c-.199-.198-.46-.298-.721-.298-.613 0-1.02.505-1.02 1.029 0 .25.092.504.299.711l3.26 3.26zm3.703 4l-.016.041-3.598 8.959h-9.296l-3.597-8.961-.016-.039h16.523zm3.738-2h-24v2h.643c.534 0 1.021.304 1.256.784l4.101 10.216h12l4.102-10.214c.233-.481.722-.786 1.256-.786h.642v-2z"/></svg>
                     <span className="CartQuantity">{props.productsInCart}</span>
                 </div>
             </nav>
