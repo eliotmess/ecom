@@ -9,7 +9,7 @@ const ProductThumbnail = (props) => {
 
     return(
         <div className="ProductThumbnail col-12 col-md-6 d-flex flex-column align-items-center align-items-md-end" >
-            <Link className="ProductThumbnailLink" to={"product/" + id}>
+            <Link className="ProductThumbnailLink" to={"products/" + id}>
                 <div className="ProductThumbnailCover d-flex">
                     <img 
                         className="ProductThumbnailCoverImgFirst" 

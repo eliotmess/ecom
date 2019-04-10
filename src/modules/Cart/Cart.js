@@ -20,8 +20,11 @@ class Cart extends Component {
         this.props.calculateCart();
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
         this.props.calculateCart();
+        if (prevProps.cartIn !== this.props.cartIn) {
+            this.setState({ checkout: false });
+        }
     }
 
     increaseQuantity = (id, qty) => {
@@ -47,10 +50,10 @@ class Cart extends Component {
         const order = {
             id: uuid.v4(),
             ordered: this.props.productsInCart,
-            value: this.props.valueInCart,
+            totalValue: this.props.valueInCart,
             shippingPrice: this.state.shippingPrice
         }
-        console.log(order);
+        this.props.sendOrder(order);
     }
 
     renderOrderSummary = () => {
