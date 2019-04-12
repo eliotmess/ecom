@@ -27,14 +27,15 @@ body {
   
 .routeFade-enter.routeFade-enter-active {
   opacity: 1;
-  transition: opacity 300ms ease-in-out;
+  transition: opacity 500ms ease-in-out;
 }
 
-.routeFade-leave {
-  opacity: 1;
+.routeFade-exit {
+  opacity: 0;
+  overflow: hidden;
 }
 
-.routeFade-leave.routeFade-leave-active {
-  opacity: 0.01;
-  transition: opacity 300ms ease-in-out;
+.routeFade-exit.routeFade-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in-out;
 }

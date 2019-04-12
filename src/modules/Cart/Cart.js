@@ -5,6 +5,7 @@ import uuid from 'uuid';
 import moment from 'moment';
 import { CSSTransitionGroup } from 'react-transition-group';
 
+
 import CartItem from './CartItem';
 import DiscountInput from './DiscountInput';
 import CartSummary from './CartSummary';
@@ -38,9 +39,7 @@ class Cart extends Component {
     }
 
     changeQuantity = (id, qty) => {
-        if(this.state.productsAppearance) {
-            this.setState({ productsAppearance: false })
-        };
+        this.setState({ productsAppearance: false })
         this.props.changeQuantity(id, qty);
     }
 
@@ -97,7 +96,7 @@ class Cart extends Component {
                 changeQuantity={(id, qty) => this.changeQuantity(id, qty)}
             />   
         );
-
+       
         return (
             <div key={uuid.v4()} className="CartContentItems d-flex flex-column">
                 <CSSTransitionGroup
@@ -111,7 +110,7 @@ class Cart extends Component {
                     {cartItems}
                 </CSSTransitionGroup>
             </div>
-        )
+        ) 
     }
 
 

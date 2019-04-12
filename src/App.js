@@ -1,12 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
 import { Route, Switch } from 'react-router-dom';
-import { TransitionGroup, Transition, CSSTransition } from "react-transition-group";
-// import routes from './routes';
-// import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { TransitionGroup, CSSTransition } from 'react-transition-group-v2';
 
 import MainLayout from './modules/MainLayout';
 import ProductList from './modules/ProductList/ProductList.container';
@@ -30,16 +28,9 @@ class App extends Component {
                   return (
                     <TransitionGroup>
                       <CSSTransition
-                        // key={key}
-                        // timeout={{ enter: 300, exit: 300 }}
-                        // classNames={'routeFade'}
-                        // transitionName="routeFade"
-                        // transitionAppear={true}
-                        // transitionAppearTimeout={5000}
-                        // transitionEnter={true}
-                        // transitionEnterTimeout={5000}
-                        // transitionLeave={true}
-                        // transitionLeaveTimeout={5000}
+                        key={key}
+                        timeout={{ enter: 300, exit: 300 }}
+                        classNames={'routeFade'}
                       >
                         <Switch key={key} location={location}>
                           <Route exact path={'/'} component={ProductList} />
