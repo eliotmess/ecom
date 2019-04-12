@@ -43,6 +43,7 @@
         margin: 0;
         max-height: 150px;
         overflow-y: auto;
+        @extend %custom-scroll;
 
         input[type=checkbox] {
             height: auto;
@@ -53,8 +54,6 @@
         &Input {
             position: absolute;
             opacity: 0;
-            @extend %custom-scroll;
-
 
             &Label {
                 position: relative;
@@ -168,6 +167,8 @@
     
     .ProductFilter {
         padding: 25px;
+        max-width: 400px;
+        margin: 0 auto;
     
         &Button {
             margin: 7px 0;

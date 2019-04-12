@@ -39,6 +39,7 @@ export default function cart(state = initialState, action) {
             forEach(productsInCart, (product) => {
                 valueInCart += product.quantity * product.price;
             });
+            // localStorage.setItem('inCart', JSON.stringify(productsInCart));
             return { ...state, valueInCart };
         }
         case APPLY_DISCOUNT: {

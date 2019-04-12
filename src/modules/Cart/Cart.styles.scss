@@ -320,17 +320,17 @@
     transition: .5s;
 }
 
-// .productsAppear-enter {
-//     transform: translateY(60px);
-//     opacity: 0;
-// }
+.productsAppear-enter {
+    transform: translateY(60px);
+    opacity: 0;
+}
   
-// .productsAppear-enter.productsAppear-enter-active {
-//     transform: translateY(0px);
-//     opacity: 1;
-//     transition: transform 0.55s cubic-bezier(0.165, 0.84, 0.44, 1) 0.255s, opacity 0.55s cubic-bezier(0.165, 0.84, 0.44, 1) 0.33s;
+.productsAppear-enter.productsAppear-enter-active {
+    transform: translateY(0px);
+    opacity: 1;
+    transition: transform 0.55s cubic-bezier(0.165, 0.84, 0.44, 1) 0.255s, opacity 0.55s cubic-bezier(0.165, 0.84, 0.44, 1) 0.33s;
 
-// }
+}
 
 .productsAppear-appear {
     transform: translateY(60px);

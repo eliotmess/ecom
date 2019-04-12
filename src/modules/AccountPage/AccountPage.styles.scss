@@ -67,6 +67,8 @@
                         &:active {
                             outline: none;
                             @extend %contrast-button-hover;
+                            background: $bittersweet;
+                            color: #fefefe;
     
                             .arrow-down {
                                 fill: #fefefe;

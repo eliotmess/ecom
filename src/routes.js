@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import ProductList from './modules/ProductList/ProductList.container';
@@ -9,12 +9,12 @@ import Terms from './modules/Terms/Terms';
 import NotFound from './modules/NotFound/NotFound';
 
 export default(
-    <Switch>
+    <Fragment>
         <Route exact path={'/'} component={ProductList} />
         <Route exact path={'/products/:id'} component={ProductPage} />
         <Route exact path={'/myaccount'} component={AccountPage} />
         <Route exact path={'/faq'} component={Faq} />
         <Route exact path={'/terms'} component={Terms} />
         <Route component={NotFound} />
-    </Switch>
+    </Fragment>
 );

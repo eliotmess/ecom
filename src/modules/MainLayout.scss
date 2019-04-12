@@ -11,19 +11,19 @@
 }
 
 .cartBackground-enter {
-    opacity: 0.01;
-  }
+  opacity: 0.01;
+}
   
-  .cartBackground-enter.cartBackground-enter-active {
-    opacity: 1;
-    transition: opacity 300ms ease-in;
-  }
-  
-  .cartBackground-leave {
-    opacity: 1;
-  }
-  
-  .cartBackground-leave.cartBackground-leave-active {
-    opacity: 0.01;
-    transition: opacity 300ms ease-in;
-  }
+.cartBackground-enter.cartBackground-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+
+.cartBackground-leave {
+  opacity: 1;
+}
+
+.cartBackground-leave.cartBackground-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

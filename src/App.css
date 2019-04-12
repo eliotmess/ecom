@@ -8,3 +8,33 @@ body {
   font-family: 'Rubik', sans-serif;
   background: #fefefe;
 }
+
+.route-group {
+  position: relative;
+}
+
+.route-section {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+
+.routeFade-enter {
+  opacity: 0.01;
+}
+  
+.routeFade-enter.routeFade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in-out;
+}
+
+.routeFade-leave {
+  opacity: 1;
+}
+
+.routeFade-leave.routeFade-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in-out;
+}
