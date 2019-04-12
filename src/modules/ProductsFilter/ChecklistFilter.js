@@ -7,7 +7,7 @@ import Checkbox from './Checkbox';
 const ChecklistFilter = ({ checklist, handleChecklistChanges, products, filterType, checklistType, crit }) => (
     keys(checklist).map(option => {
         return(
-            <Checkbox 
+            <Checkbox
                 label={option}
                 key={option}
                 numberOfType={sumBy(products, (product) => product[crit] === option)}

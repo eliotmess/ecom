@@ -6,7 +6,6 @@ let Product = require('../models/product');
 ProductRoute.route('/products').get(function (req, res) {
     Product.find(function (err, products) {
         if(err){
-            console.log('err', err);
             res.status(500).send(err);
         } else {
             res.status(200).json(products);

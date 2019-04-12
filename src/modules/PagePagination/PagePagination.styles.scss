@@ -1,23 +1,24 @@
+@import '../../sass/variables';
+
 .PageNumbers {
 
     &Btn {
         border: none;
         padding: 3px 10px;
-
-        &:hover {
-            cursor: pointer;
-            color: #fefefe;
-            background: rgb(255,115,95);
-        }
+        @extend %contrast-button-hover;
     }
 }
 
 @media (max-width: 768px) {
     .PageNumbers {
 
+        &Num {
+            padding: 3px 5px;
+        }
+
         &Btn {
             color: #fefefe;
-            background: rgb(255,115,95);
+            background: $bittersweet;
         }
     }
 }

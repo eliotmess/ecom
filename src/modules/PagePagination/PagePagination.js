@@ -32,7 +32,7 @@ class PagePagination extends Component {
             pageNumbers.map(num => {
                 return (
                     <li
-                        className={(num === currentPage) ? 'active' : ''}
+                        className={`PageNumbersNum ${(num === currentPage) ? 'active' : ''}`}
                         key={num}
                         id={num}
                         onClick={() => this.changeProductPage(num)}
@@ -49,7 +49,7 @@ class PagePagination extends Component {
             (this.props.noMatch) ? (
                 <div></div>
             ) : (
-                <div className='PageNumbers'>
+                <div className='PageNumbers d-flex justify-content-center align-items-center'>
                     <input
                         type='button'
                         className='PageNumbersBtn'

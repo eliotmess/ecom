@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { find, isEmpty } from 'lodash';
+import { Link } from 'react-router-dom';
 import uuid from 'uuid';
+import moment from 'moment';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import CartItem from './CartItem';
 import DiscountInput from './DiscountInput';
@@ -12,7 +14,8 @@ class Cart extends Component {
         super(props);
         this.state = ({
             shippingPrice: 14,
-            checkout: false
+            checkout: false,
+            checkoutComplete: false,
         })
     }
 
@@ -23,7 +26,7 @@ class Cart extends Component {
     componentDidUpdate(prevProps) {
         this.props.calculateCart();
         if (prevProps.cartIn !== this.props.cartIn) {
-            this.setState({ checkout: false });
+            this.setState({ checkout: false, checkoutComplete: false });
         }
     }
 
@@ -42,18 +45,22 @@ class Cart extends Component {
     }
 
     handleCheckout = () => {
-        const { checkout } = this.state;
+        const { checkout, checkoutComplete } = this.state;
+        if (checkoutComplete) {
+            this.setState({ checkoutComplete: !checkoutComplete })
+        }
         this.setState({ checkout: !checkout });
     }
 
     handleOrderConfirmation = () => {
         const order = {
-            id: uuid.v4(),
+            date: moment().format('MMMM Do YYYY, H:mm:ss'),
             ordered: this.props.productsInCart,
             totalValue: this.props.valueInCart,
             shippingPrice: this.state.shippingPrice
-        }
+        };
         this.props.sendOrder(order);
+        this.setState({ checkoutComplete: true });
     }
 
     renderOrderSummary = () => {
@@ -72,21 +79,32 @@ class Cart extends Component {
     }
 
     renderProductsInCart = () => {
+        const cartItems = this.props.productsInCart.map(item =>
+            <CartItem
+                key={item.id}
+                item={find(this.props.products, { 'id': item.id })} 
+                quantity={item.quantity}
+                price={item.price}
+                discount={this.props.discount}
+                removeFromCart={this.props.removeFromCart}
+                changeQuantity={this.props.changeQuantity}
+                increaseQuantity={this.increaseQuantity}
+                decreaseQuantity={this.decreaseQuantity}
+            />   
+        );
+
         return (
             <div key={uuid.v4()} className="CartContentItems d-flex flex-column">
-                {this.props.productsInCart.map(item =>
-                    <CartItem
-                        key={item.id}
-                        item={find(this.props.products, { 'id': item.id })} 
-                        quantity={item.quantity}
-                        price={item.price}
-                        discount={this.props.discount}
-                        removeFromCart={this.props.removeFromCart}
-                        changeQuantity={this.props.changeQuantity}
-                        increaseQuantity={this.increaseQuantity}
-                        decreaseQuantity={this.decreaseQuantity}
-                    />   
-                )} 
+            <CSSTransitionGroup
+                transitionName="productsAppear"
+                style={{overflow: "hidden"}}
+                transitionAppear={true}
+                transitionAppearTimeout={500}
+                transitionEnter={false}
+                // transitionEnterTimeout={550}
+                transitionLeave={false}>
+                {cartItems}
+            </CSSTransitionGroup>
             </div>
         )
     }
@@ -117,22 +135,41 @@ class Cart extends Component {
                     </div>  
                     <div className="CartContent d-flex flex-column">
                         {!isEmpty(this.props.productsInCart) ? (
-                            <CSSTransitionGroup
-                            transitionName="productsAppear"
-                            style={{overflow: "hidden"}}
-                            transitionEnterTimeout={550}
-                            transitionLeave={false}>
-                                {(!this.state.checkout) ? (
+                            // <CSSTransitionGroup
+                            // transitionName="productsAppear"
+                            // style={{overflow: "hidden"}}
+                            // transitionEnterTimeout={550}
+                            // transitionLeave={false}>
+                                (!this.state.checkout) ? (
                                     this.renderProductsInCart()
                                 ) : (
                                     this.renderOrderSummary()
-                                )}
-                            </CSSTransitionGroup>
+                                )
+                            // </CSSTransitionGroup>
                         ) : (
-                            <h2 className="CartContentEmpty">Cart is empty.</h2>
+                            <Fragment>
+                                {(!this.state.checkoutComplete) ? (
+                                    <h2 className="CartContentEmpty">
+                                        Cart is empty.
+                                    </h2>
+                                ) : (
+                                    <Fragment>
+                                        <h2 className="CartContentEmpty">
+                                            Thank you!
+                                        </h2>
+                                        <Link to="/myaccount"
+                                            onClick={() => this.props.handleCartVisibility()} 
+                                            className="CartContentEmptyBtn"
+                                        >
+                                            &lt;  Back to my account
+                                        </Link>
+                                    </Fragment>
+                                )}
+                            </Fragment>
                         )}
                     </div>
-                    {(!this.state.checkout) ? (
+                    {(!this.state.checkoutComplete) ? (
+                        (!this.state.checkout) ? (
                         <div className="CartCheckout d-flex flex-column">
                             <h5 className="CartCheckoutTotalPrice">total: <span className="Amount">$ {this.props.valueInCart.toFixed(2)}</span></h5>
                             <h6 className="CartCheckoutShippingInfo">{(this.state.shippingPrice > 0) ? `+ $ ${this.state.shippingPrice.toFixed(2)} for Express Shipping` : "FREE SHIPPING INCLUDED!"}</h6>
@@ -152,7 +189,7 @@ class Cart extends Component {
                         </div>
                     ) : (
                         <div className="CartCheckout CartCheckoutConfirmation d-flex flex-column justify-content-between">
-                            <h6 className="CartCheckoutShippingTime">Confirm your order now to enjoy movies you picked before <span>{`${((new Date()).getDate() + 2)}.${((new Date()).getMonth() + 1)}.${(new Date()).getFullYear()}`}!</span></h6>
+                            <h6 className="CartCheckoutShippingTime">Confirm your order now to enjoy movies you picked before <span>{`${moment().format('dddd, MMMM Do')}`}!</span></h6>
                             <button 
                                 className="CartCheckoutBtn"
                                 onClick={() => this.handleOrderConfirmation()}
@@ -160,6 +197,8 @@ class Cart extends Component {
                             Confirm order
                             </button>
                         </div>
+                    )) : (
+                        <div></div>
                     )}
                 </div>
             </div>

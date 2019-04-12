@@ -25,18 +25,10 @@ export function fetchProductList() {
     };
 };
 
-// export function fetchProduct(id) {
-//     return (dispatch) => {
-//         return axios.get(`${apiUrl}/${id}`)
-//             .then(response => {
-//                 dispatch
-//             })
-//     }
-// }
-
-export function setSearchQuery(searchQuery) {
+export function setSearchQuery(searchQuery, filterType) {
     return {
         type: SET_SEARCH_QUERY,
-        searchQuery
+        searchQuery,
+        filterType
     }
 }

@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import './ProductFilter.styles.scss';
 
 
 const Checkbox = ({ label, isSelected, onFilterChange, numberOfType }) => (
-    <Fragment>
+    <div>
         <input
             className="ProductFilterCheckListInput"
             type="checkbox" 
@@ -16,7 +16,7 @@ const Checkbox = ({ label, isSelected, onFilterChange, numberOfType }) => (
         <label htmlFor={label} className="ProductFilterCheckListInputLabel">
             {label} ({Number(numberOfType)})
         </label>
-    </Fragment>
+    </div>
 );
 
 export default Checkbox;

@@ -4,7 +4,7 @@ export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const CHANGE_QUANTITY = 'CHANGE_QUANTITY';
 export const CALCULATE_CART = 'CALCULATE_CART';
 export const APPLY_DISCOUNT = 'APPLY_DISCOUNT';
-export const PLACE_ORDER = 'PLACE_ORDER';
+export const REFRESH_CART = 'REFRESH_CART';
 
 const apiUrl = 'http://localhost:8080/orders';
 
@@ -46,21 +46,21 @@ export function applyDiscount(productsInCart, discount) {
     }
 }
 
-export function placeOrder(order) {
-    return {
-        type: PLACE_ORDER,
-        order
-    }
-}
-
 export function sendOrder(order) {
     return (dispatch) => {
         return axios.post(`${apiUrl}/add`, order)
-            .then(response => 
-                response.data
+            .then(response => {
+                    dispatch(refreshCart());
+                }
             )
             .catch(error => {
                 throw(error);
             });
     };
+}
+
+export function refreshCart() {
+    return {
+        type: REFRESH_CART
+    }
 }

@@ -1,12 +1,10 @@
 import React, {Fragment} from 'react';
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import { Row, Col } from 'reactstrap';
 import './ProductPage.styles.scss';
 
 const ProductPage = (props) => {
     const { addToCart, discount } = props;
     const { title, desc, cover, price, id, year, genre } = props.product;
-    
     return (
         <Row className="ProductPage">
             <Col className="ProductPageCover col-12 col-md-4">

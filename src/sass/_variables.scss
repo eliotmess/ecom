@@ -1,0 +1,68 @@
+
+$bittersweet: #FF735F;
+$s-orange: #F0514B;
+$gradient: linear-gradient(90deg, $bittersweet 0%, $s-orange 100%);
+$gradient-back: linear-gradient(90deg, $s-orange 0%, $bittersweet 100%);
+
+%page-wrapper {
+    padding: 185px 25px 0 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+%custom-scroll {
+
+    &::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        border-radius: 10px;
+        background-color: #F5F5F5;
+    }
+
+    &::-webkit-scrollbar {
+        width: 5px;
+        background-color: #F5F5F5;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: #888888;
+    }
+}
+
+%contrast-button-hover {    
+    
+    &:hover {
+        cursor: pointer;
+        color: #fefefe;
+        background: $bittersweet;
+    }
+
+    &:active,
+    &:focus {
+        border: 2px solid rgba($color: #000000, $alpha: 0.3);
+        outline: 6px solid rgba($color: #000000, $alpha: 0.3);
+    }
+}
+
+%gradient-btn {
+    font-weight: 500;
+    color: #fefefe;
+    background: $bittersweet;
+    background: $gradient;
+    border: none;
+    padding: 8px 0;
+    @extend %contrast-button-hover;
+    
+    &:hover {
+        
+        border: 2px solid rgba($color: #000000, $alpha: 0.3);
+        padding: 6px 0;
+        background: $gradient-back;
+    }
+
+    &:active,
+    &:focus {
+        padding: 6px 0;
+    }
+}

@@ -10,7 +10,7 @@ const ProductThumbnail = (props) => {
     return(
         <div className="ProductThumbnail col-12 col-md-6 d-flex flex-column align-items-center align-items-md-end" >
             <Link className="ProductThumbnailLink" to={"products/" + id}>
-                <div className="ProductThumbnailCover d-flex">
+                <div className="ProductThumbnailCover d-flex justify-content-center align-items-center">
                     <img 
                         className="ProductThumbnailCoverImgFirst" 
                         src={process.env.PUBLIC_URL + `/images/${cover}`} 

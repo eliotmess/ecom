@@ -40,6 +40,11 @@ class ProductList extends Component {
 
     componentDidMount() {
         this.props.fetchProductList();
+
+        if (!isEmpty(this.props.searchQuery)) {
+            const { query, filterType } = this.props.searchQuery;
+            this.handleSearch(query, filterType);
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -55,8 +60,8 @@ class ProductList extends Component {
         }
 
         if (prevProps.searchQuery !== this.props.searchQuery) {
-            const filterType = 'bySearchQuery';
-            this.handleSearch(filterType);
+            const { query, filterType } = this.props.searchQuery;
+            this.handleSearch(query, filterType);
         }
     }
 
@@ -102,8 +107,8 @@ class ProductList extends Component {
         });
     }
 
-    handleSearch = (filterType) => {
-        const { searchQuery } = this.props;
+    handleSearch = (query, filterType) => {
+        const searchQuery = query;
         let { activeFilter } = this.state;
         if (!isEmpty(searchQuery) && !includes(activeFilter, filterType)) {
             activeFilter.push(filterType)

@@ -4,6 +4,7 @@ mongoose.plugin(schema => { schema.options.usePushEach = true });
 
 const orderSchema = new Schema({
     id: { type: 'String', required: true, unique: true },
+    date: { type: 'String', required: true },
     ordered: { type: 'Object', required: true },
     totalValue: { type: 'Number', required: true },
     shippingPrice: { type: 'Number' }

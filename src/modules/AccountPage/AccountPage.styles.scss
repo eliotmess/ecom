@@ -1,0 +1,156 @@
+@import '../../sass/variables';
+
+.AccountPage {
+    @extend %page-wrapper;
+    color: #555555;
+
+    &Header {
+        font-size: 2rem;
+        padding: 50px 0 50px 10px;;
+        margin-bottom: 25px;
+        border-bottom: .5px solid rgba($color: #000000, $alpha: 0.3);
+
+        &Text {
+            font-size: 2rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            margin: 0;
+        }
+    }
+
+    &Orders {
+
+        &Wrapper {
+            margin: 50px 0;
+            padding: 35px;
+            border: 1px solid #dee2e6;
+
+        }
+
+        &Header {
+            margin-bottom: 35px;
+        }
+
+        &List {
+
+            .PreviousOrder {
+                margin: 0;
+                border: 1px solid #dee2e6;
+
+                &:hover {
+                    cursor: pointer;
+                    border: 1px solid #555555;
+                }
+    
+                &Header {
+    
+                    &Text {
+                        margin: 0;
+                        line-height: 1;
+                        font-size: 1.15rem;
+                        padding: 15px 25px 15px 15px;
+                    }
+    
+                    &Btn {
+                        font-family: 'Rubik', sans-serif;
+                        padding: 0 10px;
+                        font-size: 1rem;
+                        border: none;
+                        background: none;
+    
+                        .arrow-down {
+                            margin-left: 10px;
+                        }
+    
+                        &:hover,
+                        &:focus,
+                        &:active {
+                            outline: none;
+                            @extend %contrast-button-hover;
+    
+                            .arrow-down {
+                                fill: #fefefe;
+                            }
+                        }
+                    }
+                }
+        
+                &Table {
+                    @extend %custom-scroll;
+                    max-height: 0;
+                    overflow: hidden;
+                    transition: all .5s ease-in-out;
+                }
+
+                &TableShow {
+                    max-height: 330px;
+                    overflow-y: auto;
+                    transition: all .5s ease-in-out;
+                }
+            }
+
+        }
+    }
+}
+
+@media (max-width: 768px) {
+
+    .AccountPage {
+    
+        &Header {
+            padding: 50px 0 50px 10px;
+    
+            &Text {
+                font-size: 2rem;
+                font-weight: 500;
+                letter-spacing: 2px;
+                margin: 0;
+            }
+        }
+    
+        &Orders {
+    
+            &Header {
+                margin-bottom: 35px;
+            }
+    
+            &List {
+    
+                .PreviousOrder {
+        
+                    &Header {
+        
+                        &Text {
+                            font-size: 1rem;
+                            padding-right: 0;
+                        }
+        
+                        &Btn {
+                            font-size: .8rem;
+
+                            &:hover,
+                            &:focus,
+                            &:active {
+                                background: none;
+                                color: #555555;
+                                outline: none;
+        
+                                .arrow-down {
+                                    fill: #555555;
+                                }
+                            }
+        
+                            .arrow-down {
+                                margin-left: 0;
+                            }
+                        }
+                    }
+                }
+
+                .optional {
+                    display: none;
+                }
+            }
+        }
+    }
+}

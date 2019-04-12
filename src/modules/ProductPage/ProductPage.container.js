@@ -10,7 +10,7 @@ class ProductPageContainer extends Component {
     constructor(props) {
         super(props);
         this.state = ({
-            selectedProduct: {}
+            selectedProduct: []
         })
     }
 
@@ -33,11 +33,15 @@ class ProductPageContainer extends Component {
 
     render() {
         return (
-            <ProductPage 
-                product={this.state.selectedProduct} 
-                addToCart={this.props.addToCart} 
-                discount={this.props.discount} 
-            />
+            (!isEmpty(this.state.selectedProduct)) ? (
+                <ProductPage 
+                    product={this.state.selectedProduct} 
+                    addToCart={this.props.addToCart} 
+                    discount={this.props.discount} 
+                />
+            ) : (
+                null
+            )
         ) 
     }   
 }

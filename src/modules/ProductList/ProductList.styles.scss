@@ -1,8 +1,7 @@
+@import '../../sass/variables';
+
 .ProductListWrapper {
-    padding: 230px 35px 0 35px;
-    max-width: 1200px;
-    display: flex;
-    margin: 0 auto;
+    @extend %page-wrapper;
 
     .SpinnerWrapper {
         margin: 0 auto;
@@ -23,11 +22,8 @@
 }
 
 .PageNumbers {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
-    li {
+    &Num {
         list-style: none;
         margin: 10px;
         padding: 3px 10px;
@@ -40,7 +36,7 @@
         }
 
         &.active {
-            margin: 10px;
+            margin: 10px 9px;
             border: 1px solid #222222;
         }
     }
@@ -71,42 +67,27 @@
   @media (max-width: 768px) {
 
     .ProductListWrapper {
-        padding: 230px 35px 0 35px;
-        max-width: 1200px;
-        display: flex;
-        margin: 0 auto;
+        
     
-        .SpinnerWrapper {
-            margin: 0 auto;
+        .ProductList {
+            
         }
-    
-        .sk-spinner {
-            transform: scale(2.5);
+        
+        .ProductFilter {
+            position: static;
         }
-    }
-    
-    .ProductList {
-        padding: 0;
-    }
-    
-    .ProductFilter {
-        position: static;
-    }
-    
-    .PageNumbers {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    
-        li {
-    
-            &:hover {
-                cursor: pointer;
-                margin: 10px;
-                border: none;
-                
+        
+        .PageNumbers {
+
+            &Num {
+        
+                &:hover {
+                    cursor: pointer;
+                    margin: 10px;
+                    border: none;
+                    
+                }
             }
         }
     }
-    
-  }
+}

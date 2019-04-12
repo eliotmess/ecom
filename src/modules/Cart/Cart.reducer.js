@@ -1,6 +1,6 @@
 import { find, uniqBy, reject, merge, forEach } from 'lodash';
 
-import { ADD_TO_CART, REMOVE_FROM_CART, CHANGE_QUANTITY, CALCULATE_CART, APPLY_DISCOUNT } from './Cart.actions';
+import { ADD_TO_CART, REMOVE_FROM_CART, CHANGE_QUANTITY, CALCULATE_CART, APPLY_DISCOUNT, REFRESH_CART } from './Cart.actions';
 
 const initialState = {
     productsInCart: [], 
@@ -45,6 +45,11 @@ export default function cart(state = initialState, action) {
             const productsInCart = action.productsInCart;
             const discount = action.discount;
             return { ...state, productsInCart, discount };
+        }
+       case REFRESH_CART: {
+            const productsInCart = [];
+            const valueInCart = 0;
+            return { ...state, productsInCart, valueInCart };
         }
         default: {
             return state;

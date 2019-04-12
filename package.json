@@ -9,6 +9,7 @@
     "chalk": "^2.4.2",
     "cors": "^2.8.5",
     "lodash": "^4.17.11",
+    "moment": "^2.24.0",
     "mongoose": "^5.5.0",
     "node-sass": "^4.11.0",
     "rc-slider": "^8.6.7",
@@ -30,7 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "nodemon server.js"
+    "server": "nodemon server/server.js"
   },
   "browserslist": [
     ">0.2%",

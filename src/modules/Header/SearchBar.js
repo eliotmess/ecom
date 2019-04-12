@@ -1,23 +1,30 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setSearchQuery } from '../ProductList/ProductList.actions';
 
 class SearchBar extends Component {
 
     componentDidUpdate() {
-        if (this.props.searchQuery === '') {
+        if (this.props.searchQuery.query === '') {
             this.searchQuery.value = '';
         };
     }
 
     handleChange = (e) => {
-        this.props.setSearchQuery(e.target.value);
+        const filterType = 'bySearchQuery';
+        this.props.setSearchQuery(e.target.value, filterType);
+    }
+
+    handleSearch = (e) => {
+        e.preventDefault();
+		this.props.history.push('/');
     }
 
 
     render() {
         return (
-            <form onSubmit={(e) => e.preventDefault()}>
+            <form onSubmit={(e) => this.handleSearch(e)}>
                 <input
                     type="text"
                     className="HeaderNavSearchBar"
@@ -38,4 +45,4 @@ const mapDispatchToProps = {
     setSearchQuery
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchBar));
