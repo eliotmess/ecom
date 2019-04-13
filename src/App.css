@@ -27,7 +27,7 @@ body {
   
 .routeFade-enter.routeFade-enter-active {
   opacity: 1;
-  transition: opacity 500ms ease-in-out;
+  transition: opacity 300ms ease-in-out;
 }
 
 .routeFade-exit {
@@ -37,5 +37,5 @@ body {
 
 .routeFade-exit.routeFade-exit-active {
   opacity: 0;
-  transition: opacity 500ms ease-in-out;
+  transition: opacity 300ms ease-in-out;
 }

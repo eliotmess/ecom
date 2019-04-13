@@ -32,12 +32,12 @@ class MainLayout extends Component {
     render() {
         return(
             <div className="MainLayoutWrapper">
-                {/* <CSSTransitionGroup
+                <CSSTransitionGroup
                     transitionName="cartBackground"
                     transitionEnterTimeout={300}
-                    transitionLeaveTimeout={300}> */}
+                    transitionLeaveTimeout={300}>
                     {(this.state.cartIn) && <div className="MainLayoutModalBackground" onClick={() => this.onCartInOrOut()} />}
-                {/* </CSSTransitionGroup> */}
+                </CSSTransitionGroup>
                 <Header 
                     productsInCart={this.getProductsInCart()} 
                     handleCartVisibility={() => this.onCartInOrOut()}

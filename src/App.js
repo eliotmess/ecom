@@ -24,10 +24,10 @@ class App extends Component {
           <BrowserRouter>
               <MainLayout>
                 <Route render={({ location }) => {
-                  const { pathname, key } = location;
+                  const { key } = location;
                   return (
                     <TransitionGroup>
-                      <CSSTransition
+                       <CSSTransition
                         key={key}
                         timeout={{ enter: 300, exit: 300 }}
                         classNames={'routeFade'}
@@ -40,8 +40,8 @@ class App extends Component {
                           <Route exact path={'/terms'} component={Terms} />
                           <Route component={NotFound} />
                         </Switch>
-                       </CSSTransition>
-                      </TransitionGroup>
+                      </CSSTransition>
+                    </TransitionGroup>
                   )
                 }}/>      
               </MainLayout>

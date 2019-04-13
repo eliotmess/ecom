@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 // import PropTypes from 'prop-types';
-// import { CSSTransitionGroup } from 'react-transition-group';
+import { CSSTransitionGroup } from 'react-transition-group';
 import { filter, includes, isEmpty } from 'lodash';
 import Spinner from 'react-spinkit';
 import './ProductList.styles.scss';
@@ -218,13 +218,13 @@ class ProductList extends Component {
                                 reset={resetSortingSelect}
                             />
                             <div className="d-flex justify-content-center flex-wrap">
-                                {/* <CSSTransitionGroup
+                                <CSSTransitionGroup
                                     component={Fragment}
                                     transitionName="productsShow"
                                     transitionEnterTimeout={300}
-                                    transitionLeaveTimeout={200}> */}
+                                    transitionLeaveTimeout={200}>
                                         {this.renderProducts()}
-                                {/* </CSSTransitionGroup> */}
+                                </CSSTransitionGroup>
                             </div>
                             <PagePagination
                                 products={products}

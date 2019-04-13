@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { isEmpty } from 'lodash';
+import { isEmpty, find } from 'lodash';
 import { addToCart } from '../Cart/Cart.actions';
 import { fetchProductList } from '../ProductList/ProductList.actions';
 import ProductPage from './ProductPage';
@@ -10,7 +10,7 @@ class ProductPageContainer extends Component {
     constructor(props) {
         super(props);
         this.state = ({
-            selectedProduct: []
+            selectedProduct: find(this.props.products, { 'id': this.props.match.params.id })
         })
     }
 
@@ -33,22 +33,20 @@ class ProductPageContainer extends Component {
 
     render() {
         return (
-            (!isEmpty(this.state.selectedProduct)) ? (
                 <ProductPage 
                     product={this.state.selectedProduct} 
                     addToCart={this.props.addToCart} 
                     discount={this.props.discount} 
                 />
-            ) : (
-                null
-            )
         ) 
     }   
 }
 
 const mapStateToProps = (state) => {
     const { discount } = state.cartReducer;
+    const { products } = state.productList
     return {
+        products,
         discount 
     }
 };
