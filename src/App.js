@@ -45,7 +45,6 @@ class App extends Component {
                   )
                 }}/>      
               </MainLayout>
-              {/* <DevTools /> */}
           </BrowserRouter>
         </Provider>
       )
