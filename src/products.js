@@ -1,4 +1,4 @@
-[
+const products = [
     {
         "title": "Dawn of the Dead",
         "cover": "41VS2CWzOmL.jpg",
@@ -289,4 +289,6 @@
         "badge": "rare",
         "id": "91e9c920-48bc-11e9-993e-35cb6f3de7fb"
     }
-]
+];
+
+export default products;

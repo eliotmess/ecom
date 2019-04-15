@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { forEach, uniq, mapValues, pickBy, keys, debounce } from 'lodash';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import './ProductFilter.styles.scss';
 import ChecklistFilter from './ChecklistFilter';
 import RangeSlider from './RangeSlider';
@@ -142,16 +142,15 @@ class ProductFilter extends Component {
                         handleRangeReset={(range, rangeType, filterType) => this.handleRangeReset(range, rangeType, filterType)}
                     />
                 </div>
-                {(showMore) ? (
-                    ""
-                ) : (
+                {
+                    (!showMore) && 
                     <input
                         className="ProductFilterButton"
                         type="button"
                         onClick={() => this.handleShowMore()}
                         value="Show more"
                     />
-                )}
+                }
                 <input
                     className="ProductFilterButton"
                     type="button"
@@ -161,6 +160,14 @@ class ProductFilter extends Component {
             </div>
         );
     }
-};
+}; 
+
+ProductFilter.propTypes = {
+    products: PropTypes.arrayOf(PropTypes.object),
+    rangeFilteredProducts: PropTypes.arrayOf(PropTypes.object),
+    handleRange: PropTypes.func,
+    handleChecklist: PropTypes.func,
+    handleReset: PropTypes.func
+}
 
 export default ProductFilter;

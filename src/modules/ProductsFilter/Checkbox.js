@@ -14,9 +14,16 @@ const Checkbox = ({ label, isSelected, onFilterChange, numberOfType }) => (
             onChange={onFilterChange}
         />
         <label htmlFor={label} className="ProductFilterCheckListInputLabel">
-            {label} ({Number(numberOfType)})
+            {label} ({numberOfType})
         </label>
     </div>
 );
+
+Checkbox.propTypes = {
+    label: PropTypes.string.isRequired,
+    numberOfType: PropTypes.number.isRequired,
+    isSelected: PropTypes.bool.isRequired,
+    onFilterChange: PropTypes.func
+}
 
 export default Checkbox;

@@ -15,15 +15,14 @@ mongoose.connect(config.DB).then(
   () => { console.log('DB is connected') },
   err => { console.log('Can\'t connect to DB' + err) }
 );
+
 const productroutes = require('./routes/ProductRoute');
 const orderroutes = require('./routes/OrderRoute');
 
 app.use(express.static(path.join(__dirname, '../build')));
-// app.use(bodyParser.urlencoded({ extended: false })); co to jest
 app.use(bodyParser.json());
 app.use(cors());
 app.use(pino);
-const port = process.env.PORT || 8080;
 
 app.use('/', productroutes);
 app.use('/', orderroutes);
@@ -32,6 +31,7 @@ app.use('/', orderroutes);
    res.sendFile(path.join(__dirname, '../build', 'index.html'));
  });
  
+const port = process.env.PORT || 8080;
  app.listen(port, () => 
   console.log('server is running at :8080')
  );

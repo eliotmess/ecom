@@ -18,4 +18,13 @@ const ChecklistFilter = ({ checklist, handleChecklistChanges, products, filterTy
     })
 );
 
+ChecklistFilter.propTypes = {
+    crit: PropTypes.string.isRequired,
+    filterType: PropTypes.string.isRequired,
+    checklistType: PropTypes.string.isRequired,
+    products: PropTypes.arrayOf(PropTypes.object),
+    checklist: PropTypes.object,
+    handleChecklistChanges: PropTypes.func
+}
+
 export default ChecklistFilter;

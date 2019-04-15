@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import './Header.scss';
 import SearchBar from './SearchBar';
 
@@ -23,5 +24,10 @@ const Header = props => (
         </div>
     </div>
 )
+
+Header.propTypes = {
+    handleCartVisibility: PropTypes.func,
+    productsInCart: PropTypes.number
+}
 
 export default Header;

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isEmpty, find } from 'lodash';
 import { addToCart } from '../Cart/Cart.actions';
@@ -33,13 +34,24 @@ class ProductPageContainer extends Component {
 
     render() {
         return (
+            (this.state.selectedProduct) ? (
                 <ProductPage 
                     product={this.state.selectedProduct} 
                     addToCart={this.props.addToCart} 
                     discount={this.props.discount} 
                 />
+            ) : (
+                <div></div>
+            )
         ) 
     }   
+}
+
+ProductPageContainer.propTypes = {
+    products: PropTypes.arrayOf(PropTypes.object).isRequired,
+    discount: PropTypes.any,
+    addToCart: PropTypes.func,
+    fetchProductList: PropTypes.func
 }
 
 const mapStateToProps = (state) => {

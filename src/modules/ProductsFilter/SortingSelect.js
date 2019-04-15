@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import sortingConfig from './SortingSelectConfig';
+import PropTypes from 'prop-types';
 
 class SortingSelect extends Component {
     constructor(props) {
@@ -64,6 +65,11 @@ class SortingSelect extends Component {
             </div>
         )
     }
+}
+
+SortingSelect.propTypes = {
+    handleSortingBySelection: PropTypes.func, 
+    reset: PropTypes.bool
 }
 
 export default SortingSelect;

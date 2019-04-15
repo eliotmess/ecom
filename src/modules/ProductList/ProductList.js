@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-// import PropTypes from 'prop-types';
 import { CSSTransitionGroup } from 'react-transition-group';
 import { filter, includes, isEmpty } from 'lodash';
 import Spinner from 'react-spinkit';
@@ -136,7 +135,7 @@ class ProductList extends Component {
     }
 
     getRangeFilteredProducts = () => {
-        // to recount quantity of available products
+        // to recount quantity of available products in checklists
         const rangeFilter = ["byPriceRange", "byReleaseYear", "bySearchQuery"];
         let rangeFilteredProducts = this.props.products.slice();
         rangeFilter.forEach((filter) => {

@@ -1,5 +1,5 @@
-
 import React, {Component, Fragment} from 'react';
+import PropTypes from 'prop-types';
 
 class CartItem extends Component {
 
@@ -67,6 +67,15 @@ class CartItem extends Component {
             </div>
         )   
     }
+}
+
+CartItem.propTypes = {
+    item: PropTypes.object.isRequired,
+    quantity: PropTypes.number,
+    price: PropTypes.number,
+    discount: PropTypes.any,
+    removeFromCart: PropTypes.func,
+    changeQuantity: PropTypes.func
 }
 
 export default CartItem;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setSearchQuery } from '../ProductList/ProductList.actions';
 
@@ -34,6 +35,11 @@ class SearchBar extends Component {
             </form>
         )
     }
+}
+
+SearchBar.propTypes = {
+    setSearchQuery: PropTypes.func,
+    searchQuery: PropTypes.object
 }
 
 const mapStateToProps = (state) => {

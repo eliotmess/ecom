@@ -1,3 +1,5 @@
+@import '../../sass/variables';
+
 .Terms {
-    padding-top: 120px;
+    @extend %page-wrapper;
 }

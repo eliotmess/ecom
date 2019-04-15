@@ -1,5 +1,6 @@
 import React from 'react';
 import { find } from 'lodash';
+import PropTypes from 'prop-types';
 
 const CartSummary = (props) => {
     
@@ -56,6 +57,13 @@ const CartSummary = (props) => {
             </tbody>
         </table>
     )   
+}
+
+CartSummary.propTypes = {
+    productsInCart: PropTypes.arrayOf(PropTypes.object).isRequired,
+    shippingPrice: PropTypes.number,
+    valueInCart: PropTypes.number,
+    products: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
 export default CartSummary;

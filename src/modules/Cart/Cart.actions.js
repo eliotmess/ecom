@@ -5,6 +5,7 @@ export const CHANGE_QUANTITY = 'CHANGE_QUANTITY';
 export const CALCULATE_CART = 'CALCULATE_CART';
 export const APPLY_DISCOUNT = 'APPLY_DISCOUNT';
 export const REFRESH_CART = 'REFRESH_CART';
+export const COUNT_SHIPPING = 'COUNT_SHIPPING';
 
 const apiUrl = 'http://localhost:8080/orders';
 
@@ -38,18 +39,26 @@ export function calculateCart() {
     }
 }
 
-export function applyDiscount(productsInCart, discount) {
+export function applyDiscount(productsInCart, discount, discountApplied) {
     return {
         type: APPLY_DISCOUNT,
         productsInCart,
-        discount
+        discount,
+        discountApplied
+    }
+}
+
+export function countShipping(shippingPrice) {
+    return {
+        type: COUNT_SHIPPING,
+        shippingPrice
     }
 }
 
 export function sendOrder(order) {
     return (dispatch) => {
         return axios.post(`${apiUrl}/add`, order)
-            .then(response => {
+            .then(() => {
                     dispatch(refreshCart());
                 }
             )

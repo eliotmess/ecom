@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CartSummary from '../Cart/CartSummary';
+import PropTypes from 'prop-types';
 
 class PreviousOrder extends Component {
     constructor(props) {
@@ -40,6 +41,11 @@ class PreviousOrder extends Component {
             </div>
         )
     }
+}
+
+PreviousOrder.propTypes = {
+    products: PropTypes.arrayOf(PropTypes.object),
+    orders: PropTypes.arrayOf(PropTypes.object)
 }
 
 export default PreviousOrder;

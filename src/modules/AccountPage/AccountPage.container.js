@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
 import { fetchProductList } from '../ProductList/ProductList.actions';
@@ -36,6 +37,11 @@ class AccountPageContainer extends Component {
             />
         ) 
     }   
+}
+
+AccountPageContainer.propTypes = {
+    products: PropTypes.arrayOf(PropTypes.object),
+    fetchProductList: PropTypes.func
 }
 
 const mapStateToProps = (state) => {

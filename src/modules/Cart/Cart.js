@@ -5,7 +5,6 @@ import uuid from 'uuid';
 import moment from 'moment';
 import { CSSTransitionGroup } from 'react-transition-group';
 
-
 import CartItem from './CartItem';
 import DiscountInput from './DiscountInput';
 import CartSummary from './CartSummary';
@@ -15,11 +14,9 @@ class Cart extends Component {
     constructor(props) {
         super(props);
         this.state = ({
-            shippingPrice: 14,
             checkout: false,
             checkoutComplete: false,
-            productsAppearance: false,
-            inCart: {}
+            productsAppearance: false
         })
     }
 
@@ -35,7 +32,7 @@ class Cart extends Component {
     }
 
     recountShip = (shippingPrice) => {
-        this.setState({ shippingPrice });
+        this.props.countShipping(shippingPrice);
     }
 
     changeQuantity = (id, qty) => {
@@ -63,9 +60,14 @@ class Cart extends Component {
             date: moment().format('MMMM Do YYYY, H:mm:ss'),
             ordered: this.props.productsInCart,
             totalValue: this.props.valueInCart,
-            shippingPrice: this.state.shippingPrice
+            shippingPrice: this.props.shippingPrice
         };
         this.props.sendOrder(order);
+        const discount = false;
+        const discountApplied = false;
+        this.props.applyDiscount([], discount, discountApplied);
+        const shippingPrice = 14;
+        this.recountShip(shippingPrice);
         this.setState({ checkoutComplete: true });
     }
 
@@ -76,7 +78,7 @@ class Cart extends Component {
                 <p className="CartContentSummaryInfoText">Please take a look on summary of your current order. If it's all you need at the moment - just confirm it and we will take good care of it. We hope you're familiar with our Terms & Conditions, because, along with your order, you accept our rules. Remember that <span>you can manage all your previous orders through your personal account</span> - just click in top right corner on main screen and log in!</p>
                 <CartSummary
                     productsInCart={this.props.productsInCart}
-                    shippingPrice={this.state.shippingPrice}
+                    shippingPrice={this.props.shippingPrice}
                     valueInCart={this.props.valueInCart}
                     products={this.props.products}
                 />
@@ -101,7 +103,6 @@ class Cart extends Component {
             <div key={uuid.v4()} className="CartContentItems d-flex flex-column">
                 <CSSTransitionGroup
                     transitionName="productsAppear"
-                    style={{overflow: "hidden"}}
                     transitionAppear={this.state.productsAppearance ? true : false}
                     transitionAppearTimeout={500}
                     transitionEnter={false}
@@ -170,12 +171,14 @@ class Cart extends Component {
                         (!this.state.checkout) ? (
                         <div className="CartCheckout d-flex flex-column">
                             <h5 className="CartCheckoutTotalPrice">total: <span className="Amount">$ {this.props.valueInCart.toFixed(2)}</span></h5>
-                            <h6 className="CartCheckoutShippingInfo">{(this.state.shippingPrice > 0) ? `+ $ ${this.state.shippingPrice.toFixed(2)} for Express Shipping` : "FREE SHIPPING INCLUDED!"}</h6>
+                            <h6 className="CartCheckoutShippingInfo">{(this.props.shippingPrice > 0) ? `+ $ ${this.props.shippingPrice.toFixed(2)} for Express Shipping` : "FREE SHIPPING INCLUDED!"}</h6>
                             <DiscountInput
                                 applyDiscount={this.props.applyDiscount}
                                 countShip={(val) => this.recountShip(val)}
                                 productsInCart={this.props.productsInCart}
                                 discount={this.props.discount}
+                                checkoutComplete={this.state.checkoutComplete}
+                                discountApplied={this.props.discountApplied}
                             />
                             <button 
                                 className="CartCheckoutBtn"
@@ -187,7 +190,7 @@ class Cart extends Component {
                         </div>
                     ) : (
                         <div className="CartCheckout CartCheckoutConfirmation d-flex flex-column justify-content-between">
-                            <h6 className="CartCheckoutShippingTime">Confirm your order now to enjoy movies you picked before <span>{`${moment().format('dddd, MMMM Do')}`}!</span></h6>
+                            <h6 className="CartCheckoutShippingTime">Confirm your order now to enjoy movies you picked before <span>{`${moment().add(2, 'd').format('dddd, MMMM Do')}`}!</span></h6>
                             <button 
                                 className="CartCheckoutBtn"
                                 onClick={() => this.handleOrderConfirmation()}

@@ -1,11 +1,13 @@
 import { find, uniqBy, reject, merge, forEach } from 'lodash';
 
-import { ADD_TO_CART, REMOVE_FROM_CART, CHANGE_QUANTITY, CALCULATE_CART, APPLY_DISCOUNT, REFRESH_CART } from './Cart.actions';
+import { ADD_TO_CART, REMOVE_FROM_CART, CHANGE_QUANTITY, CALCULATE_CART, APPLY_DISCOUNT, REFRESH_CART, COUNT_SHIPPING } from './Cart.actions';
 
 const initialState = {
     productsInCart: [], 
     valueInCart: 0,
-    discount: false
+    discount: false,
+    discountApplied: false,
+    shippingPrice: 14
 };
 
 export default function cart(state = initialState, action) {
@@ -39,15 +41,19 @@ export default function cart(state = initialState, action) {
             forEach(productsInCart, (product) => {
                 valueInCart += product.quantity * product.price;
             });
-            // localStorage.setItem('inCart', JSON.stringify(productsInCart));
             return { ...state, valueInCart };
         }
         case APPLY_DISCOUNT: {
             const productsInCart = action.productsInCart;
             const discount = action.discount;
-            return { ...state, productsInCart, discount };
+            const discountApplied = action.discountApplied;
+            return { ...state, productsInCart, discount, discountApplied };
         }
-       case REFRESH_CART: {
+        case COUNT_SHIPPING: {
+            const shippingPrice = action.shippingPrice;
+            return { ...state, shippingPrice };
+        }
+        case REFRESH_CART: {
             const productsInCart = [];
             const valueInCart = 0;
             return { ...state, productsInCart, valueInCart };

@@ -46,7 +46,8 @@ ProductThumbnail.propTypes = {
         cover: PropTypes.string.isRequired,
         id: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired
-    })
+    }),
+    discount: PropTypes.any
 }
 
 export default ProductThumbnail;

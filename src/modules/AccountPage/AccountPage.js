@@ -2,6 +2,7 @@ import React from 'react';
 import { isEmpty } from 'lodash';
 import PreviousOrder from './PreviousOrder';
 import './AccountPage.styles.scss';
+import PropTypes from 'prop-types';
 
 const AccountPage = (props) => {
     return (
@@ -27,6 +28,11 @@ const AccountPage = (props) => {
             </div>
         </div>
     )
+}
+
+AccountPage.propTypes = {
+    products: PropTypes.arrayOf(PropTypes.object),
+    orders: PropTypes.arrayOf(PropTypes.object)
 }
 
 export default AccountPage;

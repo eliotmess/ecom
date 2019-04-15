@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { forEach } from 'lodash';
+import PropTypes from 'prop-types';
 import Header from '../modules/Header/Header';
 import Footer from '../modules/Footer/Footer';
 import Cart from './Cart/Cart.container';
@@ -53,6 +54,10 @@ class MainLayout extends Component {
     }
 }
 
+MainLayout.propTypes = {
+    children: PropTypes.element.isRequired,
+    productsInCart: PropTypes.array
+}
 
 const mapStateToProps = (state) => {
     const { productsInCart } = state.cartReducer;

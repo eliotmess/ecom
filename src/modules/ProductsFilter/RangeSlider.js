@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Slider from 'rc-slider';
+import PropTypes from 'prop-types';
 import { minBy, maxBy } from 'lodash';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
@@ -84,6 +85,16 @@ class RangeSlider extends Component {
             </div>
         )
     }
+}
+
+RangeSlider.propTypes = {
+    crit: PropTypes.string.isRequired,
+    rangeType: PropTypes.string.isRequired,
+    filterType: PropTypes.string.isRequired,
+    products: PropTypes.arrayOf(PropTypes.object),
+    reset: PropTypes.bool,
+    handleRange: PropTypes.func,
+    handleRangeReset: PropTypes.func
 }
 
 export default RangeSlider;

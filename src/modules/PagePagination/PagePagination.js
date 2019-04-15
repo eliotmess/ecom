@@ -69,4 +69,11 @@ class PagePagination extends Component {
     }
 };
 
+PagePagination.propTypes = {
+    noMatch: PropTypes.bool,
+    pageNumber: PropTypes.number,
+    currentPage: PropTypes.number,
+    handleTurningPage: PropTypes.func
+}
+
 export default PagePagination;

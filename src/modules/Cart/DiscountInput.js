@@ -1,21 +1,19 @@
 import React, { Component, Fragment } from 'react';
 import { forEach, isEmpty } from 'lodash';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 class DiscountInput extends Component {
-    constructor(props) {
-        super(props);
-        this.state = ({
-            discountApplied: false
-        });
-    }
 
     applyDiscount = (productsInCart, discount) => {
-        forEach(productsInCart, (product) => {
-            product.price = product.price * discount;
-        });
-        this.props.applyDiscount(productsInCart, discount);
-        this.setState({ discountApplied: true });
+        if (discount !== undefined) {
+            forEach(productsInCart, (product) => {
+                product.price = product.price * discount;
+            });
+        } else {
+            discount = false;
+        }
+        const discountApplied = true;
+        this.props.applyDiscount(productsInCart, discount, discountApplied);
     }
     
     onSubmitDiscount = (e) => {
@@ -29,7 +27,7 @@ class DiscountInput extends Component {
             case "FREESHIP":
                 shippingPrice = 0;
                 this.props.countShip(shippingPrice);
-                this.setState({ discountApplied: true });
+                this.applyDiscount(productsInCart, discount);
                 break;
             case "20PER":
                 discount = .8;
@@ -49,23 +47,23 @@ class DiscountInput extends Component {
     }
     
     onCancelDiscount = () => {
+        let productsInCart = this.props.productsInCart;
+        const discount = false;
+        const discountApplied = false;
+        const shippingPrice = 14;
         if (this.props.discount) {
-            let productsInCart = this.props.productsInCart;
-            const discount = false;
             forEach(productsInCart, (product) => {
                 product.price = product.price / this.props.discount;
             });
-            this.props.applyDiscount(productsInCart, discount);
         }
-        const shippingPrice = 14;
+        this.props.applyDiscount(productsInCart, discount, discountApplied);
         this.props.countShip(shippingPrice);
-        this.setState({ discountApplied: false });
     }
 
     render() {
         return (
             <div className="CartCheckoutDiscount d-flex justify-content-end align-items-center">  
-                {(this.state.discountApplied) ? (
+                {(this.props.discountApplied) ? (
                     <div className="CartCheckoutDiscountApplied d-flex align-items-center">
                         <p className="CartCheckoutDiscountAppliedText">Your discount is applied!</p>
                         <button 
@@ -99,6 +97,15 @@ class DiscountInput extends Component {
             </div>
         );
     }
+}
+
+DiscountInput.propTypes = {
+    productsInCart: PropTypes.arrayOf(PropTypes.object),
+    applyDiscount: PropTypes.func,
+    countShip: PropTypes.func,
+    discount: PropTypes.any,
+    checkoutComplete: PropTypes.bool,
+    discountApplied: PropTypes.bool
 }
 
 export default DiscountInput;
