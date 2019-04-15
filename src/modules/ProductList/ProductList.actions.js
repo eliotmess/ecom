@@ -4,7 +4,7 @@ export const FETCH_PRODUCT_LIST = 'FETCH_PRODUCT_LIST';
 export const FETCH_PRODUCT = 'FETCH_PRODUCT';
 export const SET_SEARCH_QUERY = 'SET_SEARCH_QUERY'
 
-const apiUrl = 'http://localhost:8080/products';
+const apiUrl = 'videodreams.herokuapp.com/products';
 
 export function getProducts(products) {
     return {

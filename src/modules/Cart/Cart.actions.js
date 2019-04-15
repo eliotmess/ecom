@@ -7,7 +7,7 @@ export const APPLY_DISCOUNT = 'APPLY_DISCOUNT';
 export const REFRESH_CART = 'REFRESH_CART';
 export const COUNT_SHIPPING = 'COUNT_SHIPPING';
 
-const apiUrl = 'http://localhost:8080/orders';
+const apiUrl = 'videodreams.herokuapp.com/orders';
 
 
 export function addToCart(id, price) {
