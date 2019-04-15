@@ -14,8 +14,6 @@ import Faq from './modules/Faq/Faq';
 import Terms from './modules/Terms/Terms';
 import NotFound from './modules/NotFound/NotFound';
 
-// import DevTools from './DevTools';
-
 class App extends Component {
 
   render() {
