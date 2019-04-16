@@ -3,7 +3,7 @@ const ProductRoute = express.Router();
 
 let Product = require('../models/product');
 
-ProductRoute.route('/products').get(function (req, res) {
+ProductRoute.route('/').get(function (req, res) {
     Product.find(function (err, products) {
         if(err){
             res.status(500).send(err);
