@@ -32,7 +32,7 @@ class App extends Component {
                         classNames={'routeFade'}
                       >
                         <Switch key={key} location={location}>
-                          <Route exact path={'/'} component={ProductList} />
+                          <Route path={'/'} component={ProductList} />
                           <Route exact path={'/products/:id'} component={ProductPage} />
                           <Route exact path={'/myaccount'} component={AccountPage} />
                           <Route exact path={'/faq'} component={Faq} />
