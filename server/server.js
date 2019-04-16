@@ -27,7 +27,7 @@ app.use(pino);
 app.use('/', productroutes);
 app.use('/', orderroutes);
 
- app.get('/', function (req, res) {
+ app.get('/*', function (req, res) {
    res.sendFile(path.join(__dirname, '../build', 'index.html'));
  });
  
