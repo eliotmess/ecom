@@ -24,16 +24,11 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(pino);
 
-app.use('/*', productroutes);
-app.use('/*', orderroutes);
+app.use('/', productroutes);
+app.use('/', orderroutes);
 
  app.get('/*', function (req, res) {
-  //  res.sendFile(path.join(__dirname, '../build', 'index.html'));
-  let url = path.join(__dirname, '../build', 'index.html');
-  if (!url.startsWith('/'))
-    url = url.substring(1);
-    console.log(url);
-  res.sendFile(url);
+   res.sendFile(path.join(__dirname, '../build', 'index.html'));
  });
  
 const port = process.env.PORT || 8080;
