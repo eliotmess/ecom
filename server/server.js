@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(pino);
 
-app.use('/', productroutes);
+app.use('/products', productroutes);
 app.use('/', orderroutes);
 
  app.get('*', function (req, res) {
