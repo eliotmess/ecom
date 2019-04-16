@@ -28,7 +28,12 @@ app.use('/*', productroutes);
 app.use('/*', orderroutes);
 
  app.get('/*', function (req, res) {
-   res.sendFile(path.join(__dirname, '../build', 'index.html'));
+  //  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+  let url = path.join(__dirname, '../build', 'index.html');
+  if (!url.startsWith('/'))
+    url = url.substring(1);
+    console.log(url);
+  res.sendFile(url);
  });
  
 const port = process.env.PORT || 8080;
