@@ -16,6 +16,7 @@ OrderRoute.route('/orders').get(function (req, res) {
 
 OrderRoute.route('/orders/add').post(function (req, res) {
     const order = new Order(req.body);
+    console.log(order);
     order.id = uuid();
     order.save()
         .then(order => {

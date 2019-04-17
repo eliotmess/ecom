@@ -27,11 +27,11 @@ app.use(pino);
 app.use('/', productroutes);
 app.use('/', orderroutes);
 
- app.get('/*', function (req, res) {
-   res.sendFile(path.join(__dirname, '../build', 'index.html'));
- });
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+});
  
-const port = process.env.PORT || 8080;
- app.listen(port, () => 
-  console.log('server is running at :8080')
- );
+const port = process.env.PORT || 8081;
+app.listen(port, () => 
+  console.log(`server is running at :${port}`)
+);
