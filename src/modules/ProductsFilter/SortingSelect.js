@@ -54,6 +54,7 @@ class SortingSelect extends Component {
                 <select
                     value={this.state.value}
                     onChange={this.onSelect}
+                    aria-label="Pick sorting method"
                     className="SortingSelectOptions"
                 >
                     <option value="byPopularity">Popularity</option>

@@ -18,10 +18,11 @@ class AccountPageContainer extends Component {
         if (isEmpty(this.props.products)) {
             this.props.fetchProductList();
         }
-        const apiUrl = 'http://localhost:8080/orders';
+        const apiUrl = 'https://videodreams-76475.firebaseio.com/orders.json';
         axios.get(apiUrl)
             .then(response => {
                 const orders = response.data;
+                console.log(orders)
                 this.setState({ orders });
             })
             .catch(error => {

@@ -21,7 +21,7 @@ const Checkbox = ({ label, isSelected, onFilterChange, numberOfType }) => (
 
 Checkbox.propTypes = {
     label: PropTypes.string.isRequired,
-    numberOfType: PropTypes.number.isRequired,
+    numberOfType: PropTypes.number,
     isSelected: PropTypes.bool.isRequired,
     onFilterChange: PropTypes.func
 }

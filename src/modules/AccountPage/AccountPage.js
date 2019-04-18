@@ -1,5 +1,5 @@
 import React from 'react';
-import { isEmpty } from 'lodash';
+import { isEmpty, map } from 'lodash';
 import PreviousOrder from './PreviousOrder';
 import './AccountPage.styles.scss';
 import PropTypes from 'prop-types';
@@ -16,13 +16,13 @@ const AccountPage = (props) => {
                     {isEmpty(props.orders) ? (
                         <h2>You have not placed any orders yet.</h2>
                     ) : (
-                        props.orders.map((order) => (
-                            <PreviousOrder
+                        map(props.orders, ((order) => {
+                            return <PreviousOrder
                                 key={order.id}
                                 order={order}
                                 products={props.products}
                             />
-                        ))
+                        }))
                     )}
                 </div>
             </div>
@@ -32,7 +32,7 @@ const AccountPage = (props) => {
 
 AccountPage.propTypes = {
     products: PropTypes.arrayOf(PropTypes.object),
-    orders: PropTypes.arrayOf(PropTypes.object)
+    // orders: PropTypes.arrayOf(PropTypes.object)
 }
 
 export default AccountPage;

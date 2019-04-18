@@ -6,7 +6,7 @@ const ProductPage = (props) => {
     const { addToCart, discount } = props;
     const { title, desc, cover, price, id, year, genre } = props.product;
     return (
-        <div className="d-flex ProductPage">
+        <div className="d-flex ProductPage flex-column flex-md-row ">
             <div className="ProductPageCover d-flex flex-column col-12 col-md-4">
                 <img 
                     className="ProductPageCoverPhoto"

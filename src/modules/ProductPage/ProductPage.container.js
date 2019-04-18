@@ -18,18 +18,19 @@ class ProductPageContainer extends Component {
     componentDidMount() {
         if (isEmpty(this.props.products)) {
             this.props.fetchProductList();
-        }
-        const apiUrl = 'http://localhost:8080/products';
-        const { id } = this.props.match.params;
+            const apiUrl = 'https://videodreams-76475.firebaseio.com/products.json';
+            const { id } = this.props.match.params;
 
-        axios.get(`${apiUrl}/${id}`)
-            .then(response => {
-                const selectedProduct = response.data;
-                this.setState({ selectedProduct });
-            })
-            .catch(error => {
-                throw(error);
-            })
+            axios.get(`${apiUrl}/${id}`)
+                .then(response => {
+                    const selectedProduct = response.data;
+                    this.setState({ selectedProduct });
+                })
+                .catch(error => {
+                    throw(error);
+                })
+        }
+        
     }
 
     render() {

@@ -57,6 +57,7 @@ class Cart extends Component {
 
     handleOrderConfirmation = () => {
         const order = {
+            id: uuid(),
             date: moment().format('MMMM Do YYYY, H:mm:ss'),
             ordered: this.props.productsInCart,
             totalValue: this.props.valueInCart,
@@ -123,7 +124,8 @@ class Cart extends Component {
                         <h1 className="CartHeaderText">{(!this.state.checkout) ? "Cart" : "Summary"}</h1>
                         <div>
                             {(this.state.checkout) && (
-                                <button 
+                                <button
+                                    aria-label="back"
                                     className="CartHeaderBtn"
                                     onClick={() => this.handleCheckout()}
                                 >
@@ -131,6 +133,7 @@ class Cart extends Component {
                                 </button>
                             )}
                             <button 
+                                aria-label="close"
                                 className="CartHeaderBtn"
                                 onClick={() => this.props.handleCartVisibility()}
                             >

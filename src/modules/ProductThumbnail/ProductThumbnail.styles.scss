@@ -18,6 +18,7 @@
     }
 
     &Link:hover &CoverImgSecond {
+        opacity: 1;
         transform: translateX(-20%);
         transition-delay: .2s;
         transition: .4s;
@@ -38,6 +39,7 @@
 
             &Second {
                 position: absolute;
+                opacity: 0;
                 z-index: -99;
                 top: 0;
                 bottom: 0;

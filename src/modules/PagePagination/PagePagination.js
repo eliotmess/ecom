@@ -49,19 +49,21 @@ class PagePagination extends Component {
             (this.props.noMatch) ? (
                 <div></div>
             ) : (
-                <div className='PageNumbers d-flex justify-content-center align-items-center'>
+                <div className="PageNumbers d-flex justify-content-center align-items-center">
                     <input
-                        type='button'
-                        className='PageNumbersBtn'
+                        type="button"
+                        className="PageNumbersBtn"
                         onClick={() => this.decreaseProductPage()} 
-                        value='<' 
+                        value="<" 
                     />
-                    {this.renderPageNumbers()}
+                    <ul className="PageNumbersList d-flex">
+                        {this.renderPageNumbers()}
+                    </ul>
                     <input 
-                        type='button'
-                        className='PageNumbersBtn'
+                        type="button"
+                        className="PageNumbersBtn"
                         onClick={() => this.increaseProductPage()} 
-                        value='>' 
+                        value=">" 
                     />
                 </div>
             )

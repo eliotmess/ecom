@@ -82,6 +82,7 @@ class DiscountInput extends Component {
                         >
                             <input
                                 className="CartCheckoutDiscountFormInput"
+                                aria-label="Put coupon code here"
                                 placeholder="Got coupon?"
                                 type="text"
                                 ref={value => this.discountCode = value}

@@ -28,6 +28,7 @@ class SearchBar extends Component {
             <form onSubmit={(e) => this.handleSearch(e)}>
                 <input
                     type="text"
+                    aria-label="Search site"
                     className="HeaderNavSearchBar"
                     onChange={(e) => this.handleChange(e)}
                     ref={value => this.searchQuery = value}

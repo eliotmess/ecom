@@ -1,6 +1,11 @@
 {
     "root": "build/",
     "clean_urls": false,
+    "headers": {
+      "/**":  {
+        "Cache-Control": "max-age=31536000"
+      }
+    },
     "routes": {
       "/**": "index.html"
     }

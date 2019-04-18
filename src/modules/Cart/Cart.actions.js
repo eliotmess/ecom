@@ -7,8 +7,8 @@ export const APPLY_DISCOUNT = 'APPLY_DISCOUNT';
 export const REFRESH_CART = 'REFRESH_CART';
 export const COUNT_SHIPPING = 'COUNT_SHIPPING';
 
-const apiUrl = 'https://videodreams.herokuapp.com/orders';
-// const apiUrl = 'http://localhost:8080/orders';
+// const apiUrl = 'https://videodreams.herokuapp.com/orders';
+const apiUrl = 'https://videodreams-76475.firebaseio.com/orders';
 
 
 export function addToCart(id, price) {
@@ -58,7 +58,8 @@ export function countShipping(shippingPrice) {
 
 export function sendOrder(order) {
     return (dispatch) => {
-        return axios.post(`${apiUrl}/add`, order)
+        console.log(order);
+        return axios.post(`${apiUrl}/.json`, order)
             .then(() => {
                     dispatch(refreshCart());
                 }

@@ -7,7 +7,7 @@ const ProductThumbnail = (props) => {
     const { discount } = props;
     const { title, cover, id, price } = props.product;
 
-    return(
+    return (
         <div className="ProductThumbnail col-12 col-md-6 d-flex flex-column align-items-center align-items-md-end" >
             <Link className="ProductThumbnailLink" to={"products/" + id}>
                 <div className="ProductThumbnailCover d-flex justify-content-center align-items-center">

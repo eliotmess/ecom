@@ -11,10 +11,10 @@ const app = express();
 mongoose.set('useCreateIndex', true);
 mongoose.set('useNewUrlParser', true);
 mongoose.Promise = global.Promise;
-mongoose.connect(config.DB).then(
-  () => { console.log('DB is connected') },
-  err => { console.log('Can\'t connect to DB' + err) }
-);
+// mongoose.connect(database).then(
+//   () => { console.log('DB is connected') },
+//   err => { console.log('Can\'t connect to DB' + err) }
+// );
 
 const productroutes = require('./routes/ProductRoute');
 const orderroutes = require('./routes/OrderRoute');

@@ -2,6 +2,11 @@
 
 .PageNumbers {
 
+    &List {
+        margin: 0;
+        padding: 0;
+    }
+
     &Btn {
         border: none;
         padding: 3px 10px;

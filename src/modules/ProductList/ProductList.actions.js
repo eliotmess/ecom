@@ -2,10 +2,9 @@ import axios from 'axios';
 export const GET_PRODUCTS = 'GET_PRODUCTS';
 export const FETCH_PRODUCT_LIST = 'FETCH_PRODUCT_LIST';
 export const FETCH_PRODUCT = 'FETCH_PRODUCT';
-export const SET_SEARCH_QUERY = 'SET_SEARCH_QUERY'
+export const SET_SEARCH_QUERY = 'SET_SEARCH_QUERY';
 
-const apiUrl = 'https://videodreams.herokuapp.com/products';
-// const apiUrl = 'http://localhost:8080/products';
+const apiUrl = 'https://videodreams-76475.firebaseio.com/products.json';
 
 
 export function getProducts(products) {
