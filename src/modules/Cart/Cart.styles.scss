@@ -343,3 +343,12 @@
     transition: transform 0.55s cubic-bezier(0.165, 0.84, 0.44, 1) 0.255s, opacity 0.55s cubic-bezier(0.165, 0.84, 0.44, 1) 0.33s;
 
 }
+
+//MEDIA QUERIES
+
+@media (max-width: 768px) {
+
+    .CartWrapper {
+        padding: 40px 30px 25px 30px;
+    }
+}

@@ -22,7 +22,6 @@ class AccountPageContainer extends Component {
         axios.get(apiUrl)
             .then(response => {
                 const orders = response.data;
-                console.log(orders)
                 this.setState({ orders });
             })
             .catch(error => {

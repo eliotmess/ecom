@@ -58,7 +58,6 @@ export function countShipping(shippingPrice) {
 
 export function sendOrder(order) {
     return (dispatch) => {
-        console.log(order);
         return axios.post(`${apiUrl}/.json`, order)
             .then(() => {
                     dispatch(refreshCart());
