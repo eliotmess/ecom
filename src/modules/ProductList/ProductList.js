@@ -38,7 +38,9 @@ class ProductList extends Component {
     }
 
     componentDidMount() {
+        if (isEmpty(this.props.products)) {
         this.props.fetchProductList();
+        }
 
         if (!isEmpty(this.props.searchQuery)) {
             const { query, filterType } = this.props.searchQuery;
