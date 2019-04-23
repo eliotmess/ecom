@@ -7,7 +7,7 @@ const ProductPage = (props) => {
     const { title, desc, cover, price, id, year, genre } = props.product;
     return (
         <div className="d-flex ProductPage flex-column flex-md-row ">
-            <div className="ProductPageCover d-flex flex-column col-12 col-md-4">
+            <div className="ProductPageCover d-flex flex-column align-items-center col-12 col-md-4">
                 <img 
                     className="ProductPageCoverPhoto"
                     src={process.env.PUBLIC_URL + `/images/${cover}`} 

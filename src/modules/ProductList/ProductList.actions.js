@@ -6,7 +6,6 @@ export const SET_SEARCH_QUERY = 'SET_SEARCH_QUERY';
 
 const apiUrl = 'https://videodreams-76475.firebaseio.com/products.json';
 
-
 export function getProducts(products) {
     return {
         type: GET_PRODUCTS,

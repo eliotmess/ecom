@@ -62,5 +62,14 @@
 @media (max-width: 768px) {
     .ProductPage {
         padding: 160px 0 0 0;
+
+        &Cover {
+    
+            &Photo {
+                width: 62%;
+                height: auto;
+                margin: 0 auto;
+            }
+        }
     }
 }

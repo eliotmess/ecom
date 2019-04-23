@@ -32,7 +32,7 @@ const AccountPage = (props) => {
 
 AccountPage.propTypes = {
     products: PropTypes.arrayOf(PropTypes.object),
-    // orders: PropTypes.arrayOf(PropTypes.object)
+    orders: PropTypes.objectOf(PropTypes.object)
 }
 
 export default AccountPage;

@@ -5,12 +5,10 @@ import PropTypes from 'prop-types';
 class DiscountInput extends Component {
 
     applyDiscount = (productsInCart, discount) => {
-        if (discount !== undefined) {
+        if (discount !== false) {
             forEach(productsInCart, (product) => {
                 product.price = product.price * discount;
             });
-        } else {
-            discount = false;
         }
         const discountApplied = true;
         this.props.applyDiscount(productsInCart, discount, discountApplied);
@@ -25,6 +23,7 @@ class DiscountInput extends Component {
         let shippingPrice;
         switch(discountCode) {
             case "FREESHIP":
+                discount = false;
                 shippingPrice = 0;
                 this.props.countShip(shippingPrice);
                 this.applyDiscount(productsInCart, discount);

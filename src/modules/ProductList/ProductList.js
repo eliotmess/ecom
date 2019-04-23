@@ -28,11 +28,11 @@ class ProductList extends Component {
             rangeFilteredProducts: [],
             priceRange: {
                 min: 0,
-                max: 200
+                max: 0
             },
             releaseYearRange: {
                 min: 0,
-                max: 2010
+                max: 0
             }
         }
     }
