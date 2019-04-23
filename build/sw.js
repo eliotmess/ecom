@@ -187,7 +187,7 @@ self.__precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "d9c6df0ecaff36896ced2edf378b1164"
+    "revision": "68c6bf55095c6103ede3177e7e52fb61"
   },
   {
     "url": "launch/launch-1125x2436.jpg",
@@ -218,12 +218,12 @@ self.__precacheManifest = [
     "revision": "dd22f09509badb0827bf821c28931620"
   },
   {
-    "url": "precache-manifest.60b6ca83468233e831aa8805520f4712.js",
-    "revision": "60b6ca83468233e831aa8805520f4712"
+    "url": "precache-manifest.187a554abdaedd52333e503a5ae9ff64.js",
+    "revision": "187a554abdaedd52333e503a5ae9ff64"
   },
   {
     "url": "service-worker.js",
-    "revision": "d78a43db7eeaa82c6a536bda90ee6c65"
+    "revision": "0c6f0393ae7f7f5d7c3b184cbff18186"
   },
   {
     "url": "static/css/2.9616a389.chunk.css",
