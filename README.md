@@ -16,8 +16,6 @@ In order to install and run project execute `npm i && npm start` command in proj
 To build production version execute `npm run build`. Make sure if workbox-cli ^4.3.0 is installed, if not install it globally with `npm i -g workbox-cli`.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-LAST COMMIT: https://github.com/eliotmess/ecom/commit/01b82ee6caaa8d82dc3be3ec16629efb9313a956
-
 ## Available Scripts
 
 In the project directory, you can run:
